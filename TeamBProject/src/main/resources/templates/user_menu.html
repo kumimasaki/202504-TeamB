@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>テンプレート</title>
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header>
+		<div th:if="${loginFlg}">
+			<h1><img src="/img/logo.png"></h1>
+			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+			<p style="color: white;"><a href="/lesson/show/cart">カート一覧</a></p>
+			<p id="user_register_6" style="color: white;" text="userName"></p>
+			<p style="color: white;"><a th:href="/user/logout">ログアウト</a></p>
+		</div>
+		<div th:if="${!loginFlg}">
+			<h1><img src="/img/logo.png"></h1>
+			<p id="mypage"><a th:href="/lesson/mypage">マイページ</a></p>
+			<p id="mypage"><a th:href="/user/login">ログイン</a></p>
+			<p text=logoutMessage style="color: white;"></p>
+		</div>
+	</header>
+	<article>
+		<h2>開催講座一覧</h2>
+		<button class="menu_btn" onclick="location.href='/lesson/show/cart'">申し込み予定講座</button>
+		<ul class="menu">
+			<li th:each="lesson:${lessonList}"><a th:href="@{/lesson/detail/{lessonId}(lessonId=${lesson.lessonId})}">
+					<img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+					<p
+						th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
+					</p>
+					<h3 th:text="${lesson.lessonName}"></h3>
+					<p id="description" th:text="${lesson.lessonDetail}">
+					</p>
+				</a>
+
+				<form action="/lesson/cart/all" method="post">
+					<div class="cart">
+						<p id="price" th:text="${lesson.lessonFee}+'円（税込み）'"></p>
+						<input type="hidden" th:value="${lesson.lessonId}" name="lessonId">
+						<button>カートに追加</button>
+					</div>
+				</form>
+
+			</li>
+		</ul>
+	</article>
+	<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
+</body>
+
+</html>

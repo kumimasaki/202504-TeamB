@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>テンプレート</title>
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+ <header>
+        <div th:if="${loginFlg}">
+             <h1><img src="/img/logo.png"></h1>
+             <p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+             <p id="user_register_6" style="color: white;" text="userName"></p>   
+        </div>
+         <div th:if="${!loginFlg}">
+             <h1><img src="/img/logo.png"></h1>
+             <p id="mypage"><a href="/lesson/mypage">マイページ</a></p>   
+        </div>
+    </header>
+	<article>
+		<h2>申し込み手続き</h2>
+		<ul class="flow_2">
+			<li>お支払い方法選択</li>
+			<li>申し込み内容確認</li>
+			<li>申し込み完了</li>
+		</ul>
+		<ul class="apply">
+			<li th:each="lesson:${list}">
+				<img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+				<div class="apply_p">
+					<p
+						th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
+					</p>
+					<h3 text="lesson.lessonName"></h3>
+					<p id="apply_price1" th:text="${lesson.lessonFee +'円(税込)'}"></p>
+				</div>
+			</li>
+		</ul>
+		<div class="pay_2">
+			<p id="method">お支払い方法</p>
+			<p id="selection" text="payMethod"></p>
+		</div>
+
+
+		<div class="apply-btn" th:if="${!payFlg}">
+			<button class="apply_2_back" onclick="history.back();" type="button">&lsaquo;&lsaquo;&nbsp;&nbsp;戻る</button>
+			<button class="apply_2_decide" onclick="location.href='/lesson/complete'">申し込み内容確定</button>
+		</div>
+
+		<div class="apply-btn" th:if="${payFlg}">
+			<button class="apply_2_back" onclick="history.back();" type="button">&lsaquo;&lsaquo;&nbsp;&nbsp;戻る</button>
+			<form action="/lesson/pay" method="POST">
+				<script th:inline="javascript" src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+					data-key="pk_test_51K0KmoGyEksY9WnlGR386CRIGUtqosOClvEtLO1D8T4L5YpwCVu6k7nlciAt4CS7Ydf4INYoTx7n0Yx5Igo33XUj00PGNqaTUV"
+					th:data-amount="${amount}" data-currency="jpy">
+				</script>
+		</div>
+		<!--<th:block th:if="${!payFlg}">
+			<button class="apply_2_back" onclick="history.back();" type="button">&lsaquo;&lsaquo;&nbsp;&nbsp;戻る</button>
+			<button class="apply_2_decide" onclick="location.href='/lesson/complete'">申し込み内容確定</button>
+		</th:block>-->
+		<!--<th:block th:if="${payFlg}">
+			<form action="/lesson/pay" method="POST">
+				<script th:inline="javascript" src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+					data-key="pk_test_51K0KmoGyEksY9WnlGR386CRIGUtqosOClvEtLO1D8T4L5YpwCVu6k7nlciAt4CS7Ydf4INYoTx7n0Yx5Igo33XUj00PGNqaTUV"
+					th:data-amount="${amount}" data-currency="jpy">
+					</script>
+			</form>
+		</th:block>-->
+	</article>
+	<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
+</body>
+
+</html>

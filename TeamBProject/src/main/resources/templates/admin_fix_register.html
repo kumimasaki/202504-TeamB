@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テンプレート</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+   <header>
+       <div>
+            <h1></h1>
+            <p>ID:suzuki@-ac.jp</p>   
+       </div>
+   </header>
+   <article>
+       <div class="add_2">
+           <p>講座の追加が完了しました。</p>
+           <button onclick="location.href='/admin/lesson/register'">講座追加を続ける</button>
+           <button onclick="location.href='/admin/lesson/all'">管理TOPへ戻る</button>
+       </div>
+   </article>
+   <footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
+</body>
+</html>

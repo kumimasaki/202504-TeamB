@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>テンプレート</title>
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header>
+		<div>
+			<h1></h1>
+			<p>ID:suzuki@-ac.jp</p>
+		</div>
+	</header>
+	<article>
+		<h2>登録講座画像の変更</h2>
+		<div class="change">
+			<form action="/admin/lesson/image/edit/update" method="post" enctype="multipart/form-data">
+				<img th:src="@{/lesson-image/{items}(items=${lessonList.imageName})}">
+				　　　　　　<table class="change_table">
+					<tr>
+						<th>講座画像</th>
+						<td>
+							<input type="file" name="imageName">
+						</td>
+					</tr>
+				</table>
+				<div class="change-button">
+					<button id="return_btn" type="button" onclick="history.back();">戻る</button>
+					<button id="change_btn">変更</button>
+				</div>
+				<input type="hidden" name="startDate" value="lessonList.startDate">
+				<input type="hidden" name="startTime" value="lessonList.startTime">
+				<input type="hidden" name="finishTime" value="lessonList.finishTime">
+				<input type="hidden" name="lessonName" value="lessonList.lessonName">
+				<input type="hidden" name="lessonDetail" value="lessonList.lessonDetail">
+				<input type="hidden" name="lessonFee" value="lessonList.lessonFee">
+				<input type="hidden" name="lessonId" value="lessonList.lessonId">
+			</form>　　　
+		</div>
+	</article>
+	<footer><small>Copyright &copy; Akros Web & Business Design Academy All rights reserved.</small></footer>
+</body>
+
+</html>

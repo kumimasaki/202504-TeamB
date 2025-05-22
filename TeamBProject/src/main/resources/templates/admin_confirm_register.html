@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テンプレート</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+   <header>
+       <div>
+            <h1><img src="" alt=""></h1> 
+       </div>
+   </header>
+   <article>
+       <h2>登録内容確認</h2>
+       <form action="/admin/register" method="post" >
+       <div class="register_2">
+　　　　　　<table class="register_2_table">
+                <tr>
+                    <th>氏名</th>
+                    <td>
+                        <input type="text" name="adminName" value="adminName" readonly="readonly">
+                    </td>
+                </tr>
+                <tr>
+                    <th>メールアドレス</th>
+                    <td>
+                        <input type="text" name="adminEmail" value="adminEmail" readonly="readonly">
+                    </td>
+                </tr>
+                <tr>
+                    <th>パスワード</th>
+                    <td>
+                        <input type="text" name="adminPassword" value="adminPassword" readonly="readonly">
+                    </td>
+                </tr>
+            </table>
+　　　　</div>
+       <button id="register_2_back" onclick="history.back();" type="button">&lsaquo;&lsaquo;&nbsp;&nbsp;&nbsp;戻って変更する</button>
+       <button class="register_2_btn">新規登録&nbsp;&nbsp;&nbsp;&rsaquo;&rsaquo;</button>   
+       </form>
+   </article>
+   <footer><small>Copyright &copy;  Academy All rights reserved.</small></footer>
+</body>
+</html>

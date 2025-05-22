@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>テンプレート</title>
+	<!-- <link rel="stylesheet" th:href="@{/css/reset.css}">-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header>
+		<div th:if="${loginFlg}">
+			<h1><img src="/img/logo.png"></h1>
+			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+			<p id="user_register_6" style="color: white;" text="userName"></p>
+		</div>
+		<div th:if="${!loginFlg}">
+			<h1><img src="/img/logo.png"></h1>
+			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+		</div>
+	</header>
+	<article>
+		<h2>申し込み手続き</h2>
+		<ul class="flow">
+			<li>お支払い方法選択</li>
+			<li>申し込み内容確認</li>
+			<li>申し込み完了</li>
+		</ul>
+		<ul class="apply">
+			<li th:each="lesson:${list}">
+				<img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+				<div class="apply_p">
+					<p
+						th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
+					</p>
+					<h3 text="lesson.lessonName"></h3>
+					<p id="apply_price1" th:text="${lesson.lessonFee +'円(税込)'}"></p>
+				</div>
+			</li>
+		</ul>
+		<form action="/lesson/confirm" method="post">
+			<div class="pay">
+				<p id="pay_p">お支払い方法</p>
+				<div class="pay_li">
+					<ul>
+						<li><input type="radio" name="payment" value="0">当日現金支払い（無料講座の場合は、こちらを選択する。）</li>
+						<li><input type="radio" name="payment" value="1">事前銀行振込</li>
+						<li><input type="radio" name="payment" value="2">クレジットカード決済</li>
+					</ul>
+					<p>※お申込み後、登録メールアドレスへお支払い先を連絡いたします。</p>
+				</div>
+			</div>
+			<button class="apply_btn">申し込み内容確認</button>
+		</form>
+	</article>
+	<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
+</body>
+
+</html>

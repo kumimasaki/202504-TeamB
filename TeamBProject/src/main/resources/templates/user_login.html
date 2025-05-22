@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テンプレート</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div>
+            <h1><img src="/img/logo.png"></h1>
+            <p id="user_login">ID:suzuki@ac.jp</p>
+        </div>
+    </header>
+    <article>
+        <h2>ログイン</h2>
+        <form action="/user/login" method="post">
+            <table class="user_login_table">
+                <tr>
+                    <th id="user_userid">メールアドレス</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="studentEmail">
+                    </td>
+                </tr>
+                <tr>
+                    <th id="user_password">パスワード</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="studentPassword">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button>ログイン</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th id="user_help">※パスワードを忘れた方は<a href="/user/password/reset">こちら</a></th>
+                </tr>
+            </table>
+            <button type="button" class="user_login_btn" onclick="location.href='/user/register'">新規登録はこちら&nbsp;&nbsp;&nbsp;&rsaquo;&rsaquo;</button>
+        </form>
+    </article>
+    <footer><small>Copyright &copy;Academy All rights reserved.</small></footer>
+</body>
+
+</html>

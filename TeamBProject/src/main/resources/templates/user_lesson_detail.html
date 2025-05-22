@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テンプレート</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="@{/css/style.css}">
+</head>
+
+<body>
+  <header>
+        <div th:if="${loginFlg}">
+             <h1><img src="/img/logo.png"></h1>
+             <p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+             <p id="user_register_6" style="color: white;" text="userName"></p>   
+        </div>
+         <div th:if="${!loginFlg}">
+             <h1><img src="/img/logo.png"></h1>
+             <p id="mypage"><a href="/lesson/mypage">マイページ</a></p>   
+        </div>
+    </header>
+    <article>
+        <h2 text="lesson.lessonName">講座名</h2>
+        <div class="lesson_details">
+            <img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+            <table class="lesson_table">
+                <tr>
+                    <th>開催日</th>
+                    <td>
+                        <input type="text" readonly="readonly" th:value="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'">
+                    </td>
+                </tr>
+                <tr>
+                    <th>開催時間</th>
+                    <td>
+                        <input type="text" readonly="readonly" th:value="${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>講座内容</th>
+                    <td>
+                        <textarea name="講座内容" cols="30" rows="5" readonly="readonly" text="lesson.lessonDetail"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>受講料</th>
+                    <td>
+                        <input type="text" readonly="readonly" th:value ="lesson.lessonFee">
+                    </td>
+            </table>
+            <div class="change-button">
+                <button id="return_btn" onclick="history.back();" type="button">戻る</button>
+                <form action="/lesson/cart/all" method="post">
+	                <input type="hidden" value="lesson.lessonId" name="lessonId">
+	                <button id="change_btn">カートに入れる</button>
+                </form>
+            </div>
+            　　　　
+        </div>
+    </article>
+    <footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
+</body>
+
+</html>
