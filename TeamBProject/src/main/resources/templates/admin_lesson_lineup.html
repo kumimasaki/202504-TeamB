@@ -36,7 +36,7 @@
                <td text="lesson.lessonId"></td>
                <td text="lesson.lessonName"></td>
                <td text="lesson.lessonFee"></td>
-               <td><button th:attr="onClick='location.href=\''+'/lesson/edit/'+${lesson.lessonId}+'\''">変更</button></td>
+               <td><button th:attr="onClick='location.href=\''+'/admin/lesson/edit/'+${lesson.lessonId}+'\''">変更</button></td>
            </tr>
        </table>
        <button class="logout" onclick="location.href='/admin/logout'">ログアウト</button>
