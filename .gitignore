@@ -1,0 +1,31 @@
+# コンパイルされたファイル
+*.class
+
+# ログファイル
+*.log
+*.txt
+
+# 一時ファイルやバックアップ
+*.tmp
+*.bak
+*.swp
+
+# OSごとの不要ファイル
+.DS_Store
+Thumbs.db
+
+# IDE関連（Eclipse/STS/IntelliJ）
+/.idea/
+/*.iml
+/.project
+/.classpath
+/.settings/
+
+# Maven
+/target/
+
+# アップロードされた画像（例：静的ファイル）
+/src/main/resources/static/ec-image/
+
+# プロパティファイル（機密情報がある場合）
+*.properties
