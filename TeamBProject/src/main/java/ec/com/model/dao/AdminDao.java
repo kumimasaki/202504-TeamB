@@ -7,7 +7,7 @@ import ec.com.model.entity.Admin;
 @Repository
 public interface AdminDao extends JpaRepository<Admin, Long>{
 	Admin save(Admin admin);
-	Admin findByAccountId(Long adminId);
+	Admin findByAdminId(Long adminId);
 	Admin findByAdminEmail(String adminEmail);
 	Admin findByAdminEmailAndAdminPassword(String adminEmail, String adminPassword);
 }
