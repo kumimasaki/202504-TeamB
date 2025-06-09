@@ -1,14 +1,13 @@
 package ec.com.model.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Users {
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userId;
@@ -55,10 +54,10 @@ public class Users {
 		this.registerDate = registerDate;
 	}
 	
-	public Users() {
+	public User() {
 	}
 	
-	public Users(Long userId, String userName, String userEmail, String userPassword, Integer deleteFlg,
+	public User(Long userId, String userName, String userEmail, String userPassword, Integer deleteFlg,
 			Timestamp registerDate) {
 		this.userId = userId;
 		this.userName = userName;
