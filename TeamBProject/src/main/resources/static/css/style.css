@@ -647,7 +647,7 @@ table, tr, th, td {
     margin: 30px auto;
 }
 
-/* user_register */
+/* user_register - 修正版 */
 #user_register {
     display: none;
 }
@@ -679,11 +679,17 @@ table, tr, th, td {
     padding-top: 30px;
 }
 
-.register_table td input[type="text"] {
+/* 修正：支持所有input类型 */
+.register_table td input {
     width: 390px;
+    height: 40px;
     background-color: #fff;
     box-shadow: 2px 2px 3px 0px gray inset;
     padding-left: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
 .register_btn {
@@ -695,6 +701,22 @@ table, tr, th, td {
     background-color: #40CD82;
     border-radius: 25px;
     margin: 30px auto;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+#register_2_back {
+    display: block;
+    font-size: 18px;
+    color: #222222;
+    border-bottom: #222222 solid 1px;
+    margin: 25px 0 50px;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
 }
 
 /* user_register_2 */
@@ -734,14 +756,6 @@ table, tr, th, td {
     background-color: #fff;
     box-shadow: 2px 2px 3px 0px gray inset;
     padding-left: 1rem;
-}
-
-#register_2_back {
-    display: block;
-    font-size: 18px;
-    color: #222222;
-    border-bottom: #222222 solid 1px;
-    margin: 25px 0 50px;
 }
 
 .register_2_btn {
@@ -1321,6 +1335,4 @@ table, tr, th, td {
 /*user_detail*/
 #mypage {
     color:#fff;
-
 }
-
