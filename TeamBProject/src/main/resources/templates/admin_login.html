@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -21,7 +21,10 @@
     </header>
     <article>
         <h2 id="login_h">講座管理システム</h2>
-        <form action="/admin/login" method="post">
+		<p th:if="${error}" style="color:red; text-align: center; margin-top: 10px;">
+	   [[${error}]]
+		</p>
+        <form th:action="@{/admin/login}" method="post">
             <table class="login_table">
                 <tr>
                     <th id="login">ログイン</th>
@@ -31,7 +34,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="adminEmail">
+                        <input type="text" name="adminEmail" required>
                     </td>
                 </tr>
                 <tr>
@@ -39,7 +42,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="adminPassword">
+						<input type="password" name="adminPassword" required>
                     </td>
                 </tr>
                 <tr>
