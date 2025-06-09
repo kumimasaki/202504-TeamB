@@ -1336,3 +1336,14 @@ table, tr, th, td {
 #mypage {
     color:#fff;
 }
+
+.login_table td input[type="password"] {
+    width: 370px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    box-shadow: 2px 2px 3px 0px gray inset;
+    vertical-align: baseline;
+    margin: 10px 15px;
+    padding-left: 1rem;
+}
