@@ -17,14 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.model.dao.LessonDao;
 import ec.com.model.entity.Lesson;
+import ec.com.services.LessonService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AdminLessonRegisterController {
 
 	@Autowired
-	private LessonDao lessonDao;
-
+	private LessonService lessonService;
+	
 	@GetMapping("/admin/lesson/register")
 	public String showRegisterForm() {
 		return "admin_register_lesson.html";
@@ -69,7 +70,7 @@ public class AdminLessonRegisterController {
 		lesson.setAdminId(adminId);
 
 		// DB 保存
-		lessonDao.save(lesson);
+		lessonService.registerLesson(lesson);
 		
 		// 一覧画面へリダイレクト
 		return "redirect:/admin/lesson/all";
