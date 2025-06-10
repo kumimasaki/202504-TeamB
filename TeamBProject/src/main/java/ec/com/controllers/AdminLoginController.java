@@ -34,17 +34,17 @@ public class AdminLoginController {
 
 		if (admin == null) {
 			return "redirect:/admin/login?error=true";
+		} else {
+			session.setAttribute("AdminLogin", admin);
+			adminService.loginSuccess(session, admin);
+			return "redirect:/admin/lesson/all";
 		}
-
-		adminService.loginSuccess(session, admin);
-		return "redirect:/admin/register";
 	}
 
 	// ログアウト処理
 	@GetMapping("/admin/logout")
 	public String logout() {
 		adminService.logout(session);
-		return "redirect:/admin/login";
+		return "redirect:/admin/lesson/all";
 	}
 }
-
