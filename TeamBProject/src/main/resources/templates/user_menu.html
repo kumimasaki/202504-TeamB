@@ -2,62 +2,62 @@
 <html lang="ja">
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>テンプレート</title>
-<link rel="stylesheet" th:href="@{/css/reset.css}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テンプレート</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
-<header>
-<div th:if="${loginFlg}">
-<h1><img src="/img/logo.png"></h1>
-<p id="mypage"><a href="#" onclick="alert('マイページ機能は準備中です')">マイページ</a></p>
-<p style="color: white;"><a href="#" onclick="alert('カート機能は準備中です')">カート一覧</a></p>
-<!-- 修正：ユーザー名を正しく表示 -->
-<p id="user_register_6" style="color: white;" th:text="${userName}"></p>
-<p style="color: white;"><a href="#" onclick="alert('ログアウト機能は準備中です')">ログアウト</a></p>
-</div>
-<div th:if="${!loginFlg}">
-<h1><img src="/img/logo.png"></h1>
-<p id="mypage"><a href="#" onclick="alert('マイページ機能は準備中です')">マイページ</a></p>
-<p id="mypage"><a th:href="@{/user/login}">ログイン</a></p>
-<!-- 修正：不要な属性を削除 -->
-<p style="color: white;"></p>
-</div>
-</header>
-<article>
-<h2>開催講座一覧</h2>
-<!-- 修正：まだ実装していない機能なので一時的に無効化 -->
-<button class="menu_btn" onclick="alert('申し込み機能は準備中です')">申し込み予定講座</button>
-<ul class="menu">
-<!-- 修正：詳細リンクを一時的に無効化 -->
-<li th:each="lesson:${lessonList}">
-<a href="#" onclick="alert('詳細機能は準備中です')">
-<img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
-<p
-th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
-</p>
-<h3 th:text="${lesson.lessonName}"></h3>
-<p id="description" th:text="${lesson.lessonDetail}">
-</p>
-</a>
+    <header>
+        <div th:if="${loginFlg}">
+            <h1><img th:src="@{/img/logo.png}"></h1>
+            <p id="mypage"><a href="#" onclick="alert('マイページ機能は準備中です')">マイページ</a></p>
+            <p style="color: white;"><a href="#" onclick="alert('カート機能は準備中です')">カート一覧</a></p>
+            <!-- 修正：ユーザー名を正しく表示 -->
+            <p id="user_register_6" style="color: white;" th:text="${userName}"></p>
+            <p style="color: white;"><a href="#" onclick="alert('ログアウト機能は準備中です')">ログアウト</a></p>
+        </div>
+        <div th:if="${!loginFlg}">
+            <h1><img src="/img/logo.png"></h1>
+            <p id="mypage"><a href="#" onclick="alert('マイページ機能は準備中です')">マイページ</a></p>
+            <p id="mypage"><a th:href="@{/user/login}">ログイン</a></p>
+            <!-- 修正：不要な属性を削除 -->
+            <p style="color: white;"></p>
+        </div>
+    </header>
+    <article>
+        <h2>開催講座一覧</h2>
+        <!-- 修正：まだ実装していない機能なので一時的に無効化 -->
+        <button class="menu_btn" onclick="alert('申し込み機能は準備中です')">申し込み予定講座</button>
+        <ul class="menu">
+            <!-- 修正：詳細リンクを一時的に無効化 -->
+            <li th:each="lesson:${lessonList}">
+                <a th:href="@{/lesson/detail/{lessonId}(lessonId=${lesson.lessonId})}">
+                    <img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+                    <p
+                        th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
+                    </p>
+                    <h3 th:text="${lesson.lessonName}"></h3>
+                    <p id="description" th:text="${lesson.lessonDetail}">
+                    </p>
+                </a>
 
-<!-- 修正：カート機能を一時的に無効化 -->
-<div class="cart">
-<p id="price" th:text="${lesson.lessonFee}+'円（税込み）'"></p>
-<button onclick="alert('カート機能は準備中です')">カートに追加</button>
-</div>
+                <!-- 修正：カート機能を一時的に無効化 -->
+                <div class="cart">
+                    <p id="price" th:text="${lesson.lessonFee}+'円（税込み）'"></p>
+                    <button onclick="alert('カート機能は準備中です')">カートに追加</button>
+                </div>
 
-</li>
-</ul>
-</article>
-<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
+            </li>
+        </ul>
+    </article>
+    <footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
 </body>
 
 </html>

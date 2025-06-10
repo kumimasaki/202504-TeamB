@@ -40,7 +40,7 @@ public class UserLoginController {
 		} else {
 			// ログイン情報を渡す
 			session.setAttribute("loginUserInfo", user);
-			return "user_menu.html";
+			return "redirect:/lesson/menu";
 		}
 	}
 }
