@@ -348,6 +348,7 @@ table, tr, th, td {
 .lesson_details img {
     display: block;
     margin: 0 auto;
+	height: 300px;
     padding-top: 30px;
     margin-bottom: 25px;
 }
@@ -751,8 +752,7 @@ table, tr, th, td {
     padding-top: 30px;
 }
 
-.register_2_table td input[type="text"],
-.register_2_table td input[type="password"] {
+.register_2_table td input[type="text"] {
     width: 390px;
     background-color: #fff;
     box-shadow: 2px 2px 3px 0px gray inset;
@@ -953,6 +953,8 @@ table, tr, th, td {
     padding-left: 47px;
 }
 .menu li a img {
+	object-fit: cover;
+	height: 300px;
 	width: 100%;
 }
 .menu li h3 {
