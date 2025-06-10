@@ -751,7 +751,8 @@ table, tr, th, td {
     padding-top: 30px;
 }
 
-.register_2_table td input[type="text"] {
+.register_2_table td input[type="text"],
+.register_2_table td input[type="password"] {
     width: 390px;
     background-color: #fff;
     box-shadow: 2px 2px 3px 0px gray inset;

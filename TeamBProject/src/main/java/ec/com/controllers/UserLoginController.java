@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ec.com.model.dao.UserDao;
 import ec.com.model.entity.User;
+import ec.com.services.UserService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -19,7 +20,7 @@ public class UserLoginController {
 	private HttpSession session;
 
 	@Autowired
-	private UserDao userDao;
+	private UserService userService;
 
 	// ログイン画面の表示
 	@GetMapping("/user/login")
@@ -29,11 +30,11 @@ public class UserLoginController {
 
 	// ログイン処理
 	@PostMapping("/user/login/process")
-	public String userLoginProcess(@RequestParam String userEmail, @RequestParam String userPassword,
-			Model model) {
-		// メールとパスワードが一致しなければ(null),ログイン画面へ
-		User user = userDao.findByUserEmailAndUserPassword(userEmail, userPassword);
+	public String userLoginProcess(@RequestParam String userEmail, @RequestParam String userPassword, Model model) {
+
+		User user = userService.loginUser(userEmail, userPassword);
 		if (user == null) {
+			// メールとパスワードが一致しなければ(null),ログイン画面へ
 			model.addAttribute("loginError", "メールアドレスまたはパスワードが違います");
 			return "user_login.html";
 			// 一致すればログイン成功、商品一覧画面へ
@@ -43,4 +44,5 @@ public class UserLoginController {
 			return "user_menu.html";
 		}
 	}
+
 }
