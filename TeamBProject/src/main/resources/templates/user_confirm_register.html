@@ -21,25 +21,25 @@
 	</header>
 	<article>
 		<h2>登録内容確認</h2>
-		<form action="/user/register" method="post">
+		<form th:action="@{/user/register/process}" method="post">
 			<div class="register_2">
 				<table class="register_2_table">
 					<tr>
 						<th>氏名</th>
 						<td>
-							<input type="text" name="studentName" value="studentName" readonly="readonly">
+							<input type="text" name="userName" th:value="${userName}" readonly="readonly">
 						</td>
 					</tr>
 					<tr>
 						<th>メールアドレス</th>
 						<td>
-							<input type="text" name="studentEmail" value="studentEmail" readonly="readonly">
+							<input type="text" name="userEmail" th:value="${userEmail}" readonly="readonly">
 						</td>
 					</tr>
 					<tr>
 						<th>パスワード</th>
 						<td>
-							<input type="text" name="studentPassword" value="studentPassword" readonly="readonly">
+							<input type="password" name="userPassword" th:value="${userPassword}" readonly="readonly">
 						</td>
 					</tr>
 				</table>
