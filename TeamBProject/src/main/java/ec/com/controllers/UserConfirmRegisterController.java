@@ -40,7 +40,6 @@ public class UserConfirmRegisterController {
 	@PostMapping("/user/register/process")
 	public String userRegisterProcess(@RequestParam String userName, @RequestParam String userEmail,
 			@RequestParam String userPassword) {
-
 		// ユーザーサービスのcreateUserメソッドを呼び出して登録処理を実行
 		// createUserがtrueを返す場合：登録成功、user_login.htmlに遷移
 		// createUserがfalseを返す場合：登録失敗（メール重複等）、user_register.htmlに留まる

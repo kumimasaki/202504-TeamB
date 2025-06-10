@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ec.com.model.dao.UserDao;
 import ec.com.model.entity.User;
 import ec.com.services.UserService;
 import jakarta.servlet.http.HttpSession;
