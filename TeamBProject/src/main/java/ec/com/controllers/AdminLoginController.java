@@ -17,20 +17,18 @@ public class AdminLoginController {
 	@Autowired
 	private HttpSession session;
 
-	// 管理者ログイン画面を表示
 	@GetMapping("/admin/login")
 	public String showLoginForm(@RequestParam(name = "error", required = false) String error, Model model) {
 		if (error != null) {
 			model.addAttribute("error", "メールアドレスまたはパスワードが間違っています。");
 		}
-		return "admin_login.html";
+		return "admin_login";  
 	}
 
-	// ログイン処理
 	@PostMapping("/admin/login")
-	public String loginProcess(@RequestParam String adminEmail, @RequestParam String password) {
+	public String loginProcess(@RequestParam String email, @RequestParam String password) {
 
-		Admin admin = adminService.loginCheck(adminEmail, password);
+		Admin admin = adminService.loginCheck(email, password);
 
 		if (admin == null) {
 			return "redirect:/admin/login?error=true";
@@ -41,10 +39,9 @@ public class AdminLoginController {
 		}
 	}
 
-	// ログアウト処理
 	@GetMapping("/admin/logout")
 	public String logout() {
 		adminService.logout(session);
-		return "redirect:/admin/lesson/all";
+		return "redirect:/admin/login";
 	}
 }

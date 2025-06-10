@@ -21,7 +21,7 @@
     </header>
     <article>
         <h2 id="login_h">講座管理システム</h2>
-        <form action="/admin/login" method="post">
+        <form th:action="@{/admin/login}" method="post">
             <table class="login_table">
                 <tr>
                     <th id="login">ログイン</th>
@@ -31,7 +31,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="adminEmail">
+                        <input type="text" name="email" required>
                     </td>
                 </tr>
                 <tr>
@@ -39,12 +39,12 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="adminPassword">
+                        <input type="password" name="password" required>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button>ログイン</button>
+                        <button type="submit">ログイン</button>
                     </td>
                 </tr>
             </table>
