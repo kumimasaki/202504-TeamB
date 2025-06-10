@@ -26,15 +26,16 @@ public class AdminService {
 	}
 
 	// 📝 新規登録処理
-	public boolean createAdmin(String adminName, String adminEmail, String password) {
+	public boolean createAdmin(String adminName, String adminEmail, String adminPassword) {
 		if (adminDao.findByAdminEmail(adminEmail) == null) {
 			Admin newAdmin = new Admin();
 			newAdmin.setAdminName(adminName);
 			newAdmin.setAdminEmail(adminEmail);
-			newAdmin.setAdminPassword(password);
+			newAdmin.setAdminPassword(adminPassword);
 			adminDao.save(newAdmin);
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 }

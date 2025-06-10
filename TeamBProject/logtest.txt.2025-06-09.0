@@ -1,0 +1,93 @@
+2025-06-09T17:35:11.779+09:00  INFO 59131 --- [TeamBProject] [main] ec.com.TeamBProjectApplication           : Starting TeamBProjectApplication using Java 21.0.6 with PID 59131 (/Users/liruofei/Desktop/TeamB/202504-TeamB/TeamBProject/target/classes started by liruofei in /Users/liruofei/Desktop/TeamB/202504-TeamB/TeamBProject)
+2025-06-09T17:35:11.779+09:00  INFO 59131 --- [TeamBProject] [main] ec.com.TeamBProjectApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-06-09T17:35:12.039+09:00  INFO 59131 --- [TeamBProject] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-09T17:35:12.068+09:00  INFO 59131 --- [TeamBProject] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 5 JPA repository interfaces.
+2025-06-09T17:35:12.238+09:00  INFO 59131 --- [TeamBProject] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-09T17:35:12.244+09:00  INFO 59131 --- [TeamBProject] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-09T17:35:12.244+09:00  INFO 59131 --- [TeamBProject] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-06-09T17:35:12.261+09:00  INFO 59131 --- [TeamBProject] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-09T17:35:12.261+09:00  INFO 59131 --- [TeamBProject] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 467 ms
+2025-06-09T17:35:12.317+09:00  INFO 59131 --- [TeamBProject] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-09T17:35:12.340+09:00  INFO 59131 --- [TeamBProject] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-06-09T17:35:12.357+09:00  INFO 59131 --- [TeamBProject] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-09T17:35:12.462+09:00  INFO 59131 --- [TeamBProject] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-09T17:35:12.474+09:00  INFO 59131 --- [TeamBProject] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-09T17:35:12.542+09:00  INFO 59131 --- [TeamBProject] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6ce9771c
+2025-06-09T17:35:12.543+09:00  INFO 59131 --- [TeamBProject] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-09T17:35:12.560+09:00  WARN 59131 --- [TeamBProject] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-09T17:35:12.567+09:00  INFO 59131 --- [TeamBProject] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.13
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-09T17:35:12.877+09:00  INFO 59131 --- [TeamBProject] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-09T17:35:12.899+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists admin alter column admin_email set data type varchar(255)
+2025-06-09T17:35:12.908+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists admin alter column admin_name set data type varchar(255)
+2025-06-09T17:35:12.911+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists admin alter column admin_password set data type varchar(255)
+2025-06-09T17:35:12.914+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists lesson alter column image_name set data type varchar(255)
+2025-06-09T17:35:12.917+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists lesson alter column lesson_detail set data type varchar(255)
+2025-06-09T17:35:12.925+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists lesson alter column lesson_name set data type varchar(255)
+2025-06-09T17:35:12.933+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists users alter column user_email set data type varchar(255)
+2025-06-09T17:35:12.935+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists users alter column user_name set data type varchar(255)
+2025-06-09T17:35:12.940+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : alter table if exists users alter column user_password set data type varchar(255)
+2025-06-09T17:35:12.946+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : create sequence admin_seq start with 1 increment by 50
+2025-06-09T17:35:12.948+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : create sequence lesson_seq start with 1 increment by 50
+2025-06-09T17:35:12.949+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : create sequence transaction_history_seq start with 1 increment by 50
+2025-06-09T17:35:12.950+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : create sequence transaction_item_seq start with 1 increment by 50
+2025-06-09T17:35:12.951+09:00 DEBUG 59131 --- [TeamBProject] [main] org.hibernate.SQL                        : create sequence users_seq start with 1 increment by 50
+2025-06-09T17:35:12.953+09:00  INFO 59131 --- [TeamBProject] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-09T17:35:13.087+09:00  WARN 59131 --- [TeamBProject] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-09T17:35:13.241+09:00  INFO 59131 --- [TeamBProject] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-09T17:35:13.245+09:00  INFO 59131 --- [TeamBProject] [main] ec.com.TeamBProjectApplication           : Started TeamBProjectApplication in 1.594 seconds (process running for 1.852)
+2025-06-09T17:35:33.174+09:00  INFO 59131 --- [TeamBProject] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-09T17:35:33.176+09:00  INFO 59131 --- [TeamBProject] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-09T17:35:33.180+09:00  INFO 59131 --- [TeamBProject] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2025-06-09T17:36:02.451+09:00  WARN 59131 --- [TeamBProject] [http-nio-8080-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'password' for method parameter type String is not present]
+2025-06-09T17:38:20.251+09:00  INFO 59131 --- [TeamBProject] [RMI TCP Connection(5)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-06-09T17:38:20.266+09:00  INFO 59131 --- [TeamBProject] [RMI TCP Connection(5)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-09T17:38:20.270+09:00  INFO 59131 --- [TeamBProject] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-09T17:38:20.277+09:00  INFO 59131 --- [TeamBProject] [RMI TCP Connection(5)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-09T17:38:20.281+09:00  INFO 59131 --- [TeamBProject] [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-09T17:38:20.284+09:00  INFO 59131 --- [TeamBProject] [RMI TCP Connection(5)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-06-09T17:49:02.591+09:00  INFO 59654 --- [TeamBProject] [main] ec.com.TeamBProjectApplication           : Starting TeamBProjectApplication using Java 21.0.6 with PID 59654 (/Users/liruofei/Desktop/TeamB/202504-TeamB/TeamBProject/target/classes started by liruofei in /Users/liruofei/Desktop/TeamB/202504-TeamB/TeamBProject)
+2025-06-09T17:49:02.591+09:00  INFO 59654 --- [TeamBProject] [main] ec.com.TeamBProjectApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-06-09T17:49:02.803+09:00  INFO 59654 --- [TeamBProject] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-09T17:49:02.824+09:00  INFO 59654 --- [TeamBProject] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 5 JPA repository interfaces.
+2025-06-09T17:49:02.979+09:00  INFO 59654 --- [TeamBProject] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-09T17:49:02.985+09:00  INFO 59654 --- [TeamBProject] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-09T17:49:02.985+09:00  INFO 59654 --- [TeamBProject] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-06-09T17:49:03.001+09:00  INFO 59654 --- [TeamBProject] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-09T17:49:03.001+09:00  INFO 59654 --- [TeamBProject] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 393 ms
+2025-06-09T17:49:03.056+09:00  INFO 59654 --- [TeamBProject] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-09T17:49:03.078+09:00  INFO 59654 --- [TeamBProject] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-06-09T17:49:03.090+09:00  INFO 59654 --- [TeamBProject] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-09T17:49:03.189+09:00  INFO 59654 --- [TeamBProject] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-09T17:49:03.199+09:00  INFO 59654 --- [TeamBProject] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-09T17:49:03.264+09:00  INFO 59654 --- [TeamBProject] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3313463c
+2025-06-09T17:49:03.265+09:00  INFO 59654 --- [TeamBProject] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-09T17:49:03.279+09:00  WARN 59654 --- [TeamBProject] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-09T17:49:03.286+09:00  INFO 59654 --- [TeamBProject] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.13
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-09T17:49:03.582+09:00  INFO 59654 --- [TeamBProject] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-09T17:49:03.633+09:00  INFO 59654 --- [TeamBProject] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-09T17:49:03.757+09:00  WARN 59654 --- [TeamBProject] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-09T17:49:03.914+09:00  INFO 59654 --- [TeamBProject] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-09T17:49:03.918+09:00  INFO 59654 --- [TeamBProject] [main] ec.com.TeamBProjectApplication           : Started TeamBProjectApplication in 1.46 seconds (process running for 1.769)
+2025-06-09T17:49:14.788+09:00  INFO 59654 --- [TeamBProject] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-09T17:49:14.788+09:00  INFO 59654 --- [TeamBProject] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-09T17:49:14.790+09:00  INFO 59654 --- [TeamBProject] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-06-09T17:51:14.145+09:00  INFO 59654 --- [TeamBProject] [RMI TCP Connection(4)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2025-06-09T17:51:14.150+09:00  INFO 59654 --- [TeamBProject] [RMI TCP Connection(4)-127.0.0.1] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-09T17:51:14.154+09:00  INFO 59654 --- [TeamBProject] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-09T17:51:14.159+09:00  INFO 59654 --- [TeamBProject] [RMI TCP Connection(4)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-09T17:51:14.163+09:00  INFO 59654 --- [TeamBProject] [RMI TCP Connection(4)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-09T17:51:14.170+09:00  INFO 59654 --- [TeamBProject] [RMI TCP Connection(4)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
