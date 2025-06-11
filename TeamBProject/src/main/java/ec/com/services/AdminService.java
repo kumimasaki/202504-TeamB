@@ -3,6 +3,9 @@ package ec.com.services;
 import ec.com.model.dao.AdminDao;
 import ec.com.model.entity.Admin;
 import jakarta.servlet.http.HttpSession;
+
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,10 @@ public class AdminService {
 			newAdmin.setAdminName(adminName);
 			newAdmin.setAdminEmail(adminEmail);
 			newAdmin.setAdminPassword(adminPassword);
+			// 初期値＝＝０
+			newAdmin.setDeleteFlg(0);
+			// 現在時間
+			newAdmin.setRegisterDate(new Timestamp(System.currentTimeMillis()));
 			adminDao.save(newAdmin);
 			return true;
 		} else {
