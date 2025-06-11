@@ -22,13 +22,18 @@
 	</header>
 	<article>
 		<h2>登録講座内容の変更</h2>
-		<div class="change">
-			<img th:if="${lesson.imageName != null}" th:src="@{'/images/' + ${lesson.imageName}}" alt="講座画像" />
-			<div class="change-button">
-				<button th:attr="onClick='location.href=\''+'/admin/lesson/image/edit/'+${lesson.lessonId}+'\''">
-				  画像を変更
-				</button>
-			</div>
+		<div class="change center-area">
+			<div class="image-button-wrapper">
+					<img th:if="${lesson.imageName != null}" 
+					     th:src="@{'/lesson-image/' + ${lesson.imageName}}" 
+					     alt="講座画像" width="300">
+
+					<div class="change-button">
+						<button th:attr="onClick='location.href=\''+'/admin/lesson/image/edit/'+${lesson.lessonId}+'\''">
+						  画像を変更
+						</button>
+					</div>
+				</div>
 			<form th:action="@{/admin/lesson/edit/update}" th:object="${lesson}" method="post">
 				<table class="change_table">
 					<tr>

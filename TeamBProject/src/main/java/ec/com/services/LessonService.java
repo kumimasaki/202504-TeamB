@@ -3,36 +3,60 @@ package ec.com.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import ec.com.model.dao.LessonDao;
 import ec.com.model.entity.Lesson;
-import jakarta.transaction.Transactional;
 
 @Service
 public class LessonService {
 
-    @Autowired
-    private LessonDao lessonDao;
+	@Autowired
+	private LessonDao lessonDao;
 
-    // すべての講座を取得する
-    public List<Lesson> findAll() {
-        return lessonDao.findAll();
-    }
+	/**
+	 * すべての講座を取得する
+	 * 
+	 * @return 講座リスト
+	 */
+	public List<Lesson> findAll() {
+		return lessonDao.findAll();
+	}
 
-    // 新しい講座を登録する
-    public void registerLesson(Lesson lesson) {
-        lessonDao.save(lesson);
-    }
+	/**
+	 * 新しい講座を登録する
+	 * 
+	 * @param lesson 登録する講座
+	 */
+	public void registerLesson(Lesson lesson) {
+		lessonDao.save(lesson);
+	}
 
-    // IDで講座を検索
-    public Lesson findById(Long lessonId) {
-        return lessonDao.findById(lessonId).orElse(null);
-    }
+	/**
+	 * IDに対応する講座を1件取得
+	 * 
+	 * @param lessonId 講座ID
+	 * @return 該当する講座（存在しない場合はnull）
+	 */
+	public Lesson findById(Long lessonId) {
+		return lessonDao.findById(lessonId).orElse(null);
+	}
 
-    // 管理者IDに紐づく講座をすべて取得
-    public List<Lesson> selectAllLessonList(Long adminId) {
-        return lessonDao.findByAdminId(adminId);
-    }
-    public void updateLesson(Lesson lesson) {
-        lessonDao.save(lesson);  
-    }
+	/**
+	 * 管理者IDに紐づく講座をすべて取得
+	 * 
+	 * @param adminId 管理者ID
+	 * @return 管理者の講座一覧
+	 */
+	public List<Lesson> selectAllLessonList(Long adminId) {
+		return lessonDao.findByAdminId(adminId);
+	}
+
+	/**
+	 * 講座情報を更新（画像情報も含む）
+	 * 
+	 * @param lesson 更新内容が入った講座エンティティ
+	 */
+	public void updateLesson(Lesson lesson) {
+		lessonDao.save(lesson);
+	}
 }

@@ -1356,3 +1356,40 @@ table, tr, th, td {
 	color: red;
 	text-align: center;
 }
+
+.change_table input[type="date"],
+.change_table input[type="time"],
+.change_table input[type="text"],
+.change_table textarea {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  font-size: 1rem;
+  border: none;
+  background-color: #fff;
+  box-shadow: 0 3px 5px #999;
+}
+
+
+.change_table textarea {
+  height: auto;
+  min-height: 100px;
+}
+
+.center-box {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.image-box {
+	margin-bottom: 1em;
+}
+
+.button-box {
+	margin-top: 1em;
+	display: flex;
+	gap: 1em;
+	justify-content: center;
+}
