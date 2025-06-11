@@ -1351,7 +1351,7 @@ table, tr, th, td {
     padding-left: 1rem;
 }
 
-#messageBox {
+.messageBox {
 	margin-top:10px;
 	color: red;
 	text-align: center;
