@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ec.com.model.dao.LessonDao;
 import ec.com.model.entity.Lesson;
+import jakarta.transaction.Transactional;
 
 @Service
 public class LessonService {
@@ -34,5 +35,4 @@ public class LessonService {
     public void updateLesson(Lesson lesson) {
         lessonDao.save(lesson);  
     }
-
 }
