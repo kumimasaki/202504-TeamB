@@ -63,7 +63,11 @@ public class UserLessonController {
 		Lesson lesson = lessonDao.findByLessonId(lessonId);
 		model.addAttribute("lesson", lesson);
 		Boolean loginFlg = (Boolean) session.getAttribute("loginFlg");
-		loginFlg = true; /* テスト */
+		if (loginFlg==null||!loginFlg) {
+			loginFlg = false;
+		}else {
+			loginFlg = true;
+		}
 		model.addAttribute("loginFlg", loginFlg);
 		return "user_lesson_detail.html";
 	}

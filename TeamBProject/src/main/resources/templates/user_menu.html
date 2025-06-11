@@ -52,7 +52,7 @@
                 <!-- 修正：カート機能を一時的に無効化 -->
                 <div class="cart">
                     <input type="hidden" th:value="${lesson.lessonId}" name="lessonId">
-                    <p id="price" th:text="${lesson.lessonFee}+'円（税込み）'"></p>
+					<p id="price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'"></p>
                     <button id="change_btn" th:onclick="|addToCart([[${lesson.lessonId}]])|">カートに追加</button>
                 </div>
                 <div class="messageBox" th:id="'messageBox-' + ${lesson.lessonId}"></div>

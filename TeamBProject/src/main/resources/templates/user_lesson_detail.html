@@ -51,7 +51,7 @@
                 <tr>
                     <th>受講料</th>
                     <td>
-                        <input type="text" readonly="readonly" th:value ="${lesson.lessonFee}">
+                        <input type="text" readonly="readonly" th:value="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')}">
                     </td>
             </table>
             <div class="change-button">

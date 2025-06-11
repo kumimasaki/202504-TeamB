@@ -30,7 +30,6 @@ public class UserLoginController {
 	// ログイン処理
 	@PostMapping("/user/login/process")
 	public String userLoginProcess(@RequestParam String userEmail, @RequestParam String userPassword, Model model) {
-
 		User user = userService.loginUser(userEmail, userPassword);
 		if (user == null) {
 			// メールとパスワードが一致しなければ(null),ログイン画面へ

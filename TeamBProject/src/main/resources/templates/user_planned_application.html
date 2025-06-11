@@ -28,7 +28,7 @@
            <button class="con_btn" onclick="location.href='/lesson/menu'">メニュー一覧</button>
        <ul class="con">
            <li th:each="lesson:${list}">
-               <img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+               <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
                <div class="con_p">
                     <p th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}"></p>
                     <h3 th:text="${lesson.lessonName}"></h3>
