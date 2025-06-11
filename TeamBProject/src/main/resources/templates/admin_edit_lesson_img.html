@@ -10,7 +10,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
 	<article>
 		<h2>登録講座画像の変更</h2>
 		<div class="change">
-			<form action="/admin/lesson/image/edit/update" method="post" enctype="multipart/form-data">
+			<form th:action="@{/admin/lesson/image/edit/update}" method="post" enctype="multipart/form-data">
 				<img th:src="@{/lesson-image/{items}(items=${lessonList.imageName})}">
 				　　　　　　<table class="change_table">
 					<tr>
@@ -37,13 +37,13 @@
 					<button id="return_btn" type="button" onclick="history.back();">戻る</button>
 					<button id="change_btn">変更</button>
 				</div>
-				<input type="hidden" name="startDate" value="lessonList.startDate">
-				<input type="hidden" name="startTime" value="lessonList.startTime">
-				<input type="hidden" name="finishTime" value="lessonList.finishTime">
-				<input type="hidden" name="lessonName" value="lessonList.lessonName">
-				<input type="hidden" name="lessonDetail" value="lessonList.lessonDetail">
-				<input type="hidden" name="lessonFee" value="lessonList.lessonFee">
-				<input type="hidden" name="lessonId" value="lessonList.lessonId">
+				<input type="hidden" name="startDate" th:value="@{lessonList.startDate}">
+				<input type="hidden" name="startTime" th:value="@{lessonList.startTime}">
+				<input type="hidden" name="finishTime" th:value="@{lessonList.finishTime}">
+				<input type="hidden" name="lessonName" th:value="@{lessonList.lessonName}">
+				<input type="hidden" name="lessonDetail" th:value="@{lessonList.lessonDetail}">
+				<input type="hidden" name="lessonFee" th:value="@{lessonList.lessonFee}">
+				<input type="hidden" name="lessonId" th:value="@{lessonList.lessonId}">
 			</form>　　　
 		</div>
 	</article>
