@@ -103,6 +103,10 @@ public class UserLessonController {
 	@PostMapping("/lesson/cart/all")
 	@ResponseBody
 	public String AddCart(@RequestParam("lessonId") Long lessonId, HttpSession session) {
+		User user = (User)session.getAttribute("loginUserInfo");
+		if (user==null) {
+			return "refuse";
+		}
 		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
 		if (list == null) {
 			list = new ArrayList<Lesson>();

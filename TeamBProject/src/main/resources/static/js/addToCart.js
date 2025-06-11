@@ -8,6 +8,10 @@ function addToCart(lessonId) {
     })
         .then(response => response.text())
         .then(message => {
+            if (message === "refuse") {
+                window.location.href = "/user/login";
+                return;
+            }
             const messageBox = document.getElementById('messageBox-' + lessonId);
             if (messageBox) {
                 messageBox.innerText = message;
