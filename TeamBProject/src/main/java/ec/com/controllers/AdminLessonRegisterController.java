@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import ec.com.model.dao.LessonDao;
+import ec.com.model.entity.Admin;
 import ec.com.model.entity.Lesson;
 import ec.com.services.LessonService;
 import jakarta.servlet.http.HttpSession;
@@ -26,8 +27,15 @@ public class AdminLessonRegisterController {
 	@Autowired
 	private LessonService lessonService;
 	
+	@Autowired
+    private HttpSession session;
+	
 	@GetMapping("/admin/lesson/register")
-	public String showRegisterForm() {
+	public String showRegisterForm(HttpSession session) {
+	    Admin admin = (Admin) session.getAttribute("AdminLogin");
+	    if (admin == null) {
+	        return "redirect:/admin/login";
+	    }
 		return "admin_register_lesson.html";
 	}
 
@@ -55,7 +63,11 @@ public class AdminLessonRegisterController {
 		imageFile.transferTo(saveFile);
 
 		// adminId をセッションから取得
-		Long adminId = (Long) session.getAttribute("adminId");
+		 Admin admin = (Admin) session.getAttribute("AdminLogin");
+		    if (admin == null) {
+		        return "redirect:/admin/login";
+		    }
+		    Long adminId = admin.getAdminId(); 
 
 		// Lesson エンティティにセット
 		Lesson lesson = new Lesson();
