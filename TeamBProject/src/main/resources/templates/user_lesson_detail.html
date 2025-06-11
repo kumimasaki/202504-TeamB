@@ -56,15 +56,12 @@
             </table>
             <div class="change-button">
                 <button id="return_btn" onclick="history.back();" type="button">戻る</button>
-                <form th:action="@{/lesson/cart/all}" method="post">
-	                <input type="hidden" th:value="${lesson.lessonId}" name="lessonId">
-	                <button id="change_btn">カートに入れる</button>
-                </form>
+                <button id="change_btn" th:onclick="|addToCart([[${lesson.lessonId}]])|">カートに追加</button>
             </div>
-            　　　　
         </div>
+		<div id="messageBox"></div>
     </article>
     <footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
 </body>
-
+<script th:src="@{/js/addToCart.js}"></script>
 </html>

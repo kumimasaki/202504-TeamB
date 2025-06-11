@@ -1350,3 +1350,9 @@ table, tr, th, td {
     margin: 10px 15px;
     padding-left: 1rem;
 }
+
+#messageBox {
+	margin-top:10px;
+	color: red;
+	text-align: center;
+}
