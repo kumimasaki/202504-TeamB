@@ -31,4 +31,8 @@ public class LessonService {
     public List<Lesson> selectAllLessonList(Long adminId) {
         return lessonDao.findByAdminId(adminId);
     }
+    public void updateLesson(Lesson lesson) {
+        lessonDao.save(lesson);  
+    }
+
 }
