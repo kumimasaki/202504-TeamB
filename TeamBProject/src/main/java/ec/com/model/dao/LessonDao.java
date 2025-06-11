@@ -16,8 +16,8 @@ public interface LessonDao extends JpaRepository<Lesson, Long>{
     // 管理者IDに紐づく講座をすべて取得
     List<Lesson> findByAdminId(Long adminId);
     
-    // 【新規追加】現在時刻以降の講座のみ取得（時分まで精密チェック）
-    // PostgreSQL用：開始日時（日付+時刻）が現在時刻以降の講座を抽出
+    //【新規追加】現在時刻以降の講座のみ取得（時分まで精密チェック）
+    //開始日時（日付+時刻）が現在時刻以降の講座を抽出
     @Query("SELECT l FROM Lesson l WHERE " +
            "CAST(CONCAT(l.startDate, ' ', l.startTime) AS timestamp) >= :currentDateTime " +
            "ORDER BY l.startDate, l.startTime")

@@ -1,6 +1,6 @@
 package ec.com.controllers;
 
-import java.time.LocalDateTime; // 【新増】精密な時刻チェック用
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,7 @@ public class UserLessonController {
 	private LessonDao lessonDao;
 
 	/**
-	 * 講座一覧画面表示メソッド（メニュー画面） 【修正】現在時刻以降の講座のみ表示する（時分まで精密チェック） URL: GET /lesson/menu
-	 * 機能: 現在時刻以降の講座を取得し、講座一覧画面を表示する ログイン後にユーザーが購入可能な講座一覧を表示
-	 * 
-	 * @param model Spring MVCのModelオブジェクト
-	 * @return String 遷移先ページのファイル名
+	 * 講座一覧画面表示メソッド（メニュー画面） 現在時刻以降の講座のみ表示する（時分まで精密チェック）
 	 */
 	@GetMapping("/lesson/menu")
 	public String getLessonMenuPage(Model model) {
@@ -51,7 +47,7 @@ public class UserLessonController {
 			model.addAttribute("loginFlg", false);
 		}
 
-		// 【修正】現在時刻以降の講座のみ取得（時分まで精密チェック）
+		//現在時刻以降の講座のみ取得
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		List<Lesson> lessonList = lessonDao.findUpcomingLessons(currentDateTime);
 		model.addAttribute("lessonList", lessonList);
@@ -61,14 +57,6 @@ public class UserLessonController {
 
 	/**
 	 * 講座詳細画面表示メソッド
-	 *
-	 * URL: GET /lesson/detail/{lessonId} 機能: 指定された講座IDに基づき、講座の詳細情報を取得して詳細画面に表示する
-	 * ログインフラグを判定し、画面に必要な情報をモデルに追加
-	 *
-	 * @param lessonId 表示対象の講座ID（パスパラメータ）
-	 * @param session  HTTPセッション（ログイン情報などを取得）
-	 * @param model    Spring MVCのModelオブジェクト（画面へデータを渡す）
-	 * @return String 遷移先ページのファイル名（user_lesson_detail.html）
 	 */
 	@GetMapping("/lesson/detail/{lessonId}")
 	public String getMethodName(@PathVariable("lessonId") Long lessonId, HttpSession session, Model model) {
@@ -81,24 +69,16 @@ public class UserLessonController {
 	}
 
 	/**
-	 * 【新規追加】ログアウト機能 URL: GET /lesson/menu/logout
+	 * ログアウト機能
 	 */
 	@GetMapping("/lesson/menu/logout")
 	public String logout() {
-		// セッションを無効化
 		session.invalidate();
-
-		// ログイン画面にリダイレクト
 		return "redirect:/user/login";
 	}
 
 	/**
-	 * 【カート追加処理】 URL: POST /lesson/cart/all 機能：レッスンをセッション内のカートリストに追加する。 -
-	 * すでに追加されている場合はメッセージで通知。 - 追加成功時もメッセージで通知。
-	 * 
-	 * @param lessonId 追加対象のレッスンID
-	 * @param session  HTTPセッション
-	 * @return 処理結果のメッセージ（文字列）
+	 * カート追加処理
 	 */
 	@PostMapping("/lesson/cart/all")
 	@ResponseBody
@@ -123,7 +103,7 @@ public class UserLessonController {
 	}
 
 	/**
-	 * 一覧画面の表示 セッションからカートの内容を取得、表示
+	 * カート一覧画面の表示
 	 */
 	@GetMapping("/lesson/show/cart")
 	public String getLessonShowCart(HttpSession session, Model model) {
@@ -146,5 +126,4 @@ public class UserLessonController {
 		model.addAttribute("list", list);
 		return "user_planned_application.html";
 	}
-
 }
