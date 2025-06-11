@@ -1,6 +1,6 @@
 package ec.com.controllers;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime; // 【新増】精密な時刻チェック用
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,13 @@ public class UserLessonController {
 	 */
 	@Autowired
 	private HttpSession session;
-    //講座DAOの依存性注入
+	// 講座DAOの依存性注入
 	@Autowired
 	private LessonDao lessonDao;
 
 	/**
-	 * 講座一覧画面表示メソッド（メニュー画面） 当日以降の講座のみ表示する URL: GET /lesson/menu 機能:
-	 * 全ての講座を取得し、講座一覧画面を表示する ログイン後にユーザーが購入可能な講座一覧を表示
+	 * 講座一覧画面表示メソッド（メニュー画面） 【修正】現在時刻以降の講座のみ表示する（時分まで精密チェック） URL: GET /lesson/menu
+	 * 機能: 現在時刻以降の講座を取得し、講座一覧画面を表示する ログイン後にユーザーが購入可能な講座一覧を表示
 	 * 
 	 * @param model Spring MVCのModelオブジェクト
 	 * @return String 遷移先ページのファイル名
@@ -51,9 +51,9 @@ public class UserLessonController {
 			model.addAttribute("loginFlg", false);
 		}
 
-		// 【修正】当日以降の講座のみ取得
-		LocalDate today = LocalDate.now();
-		List<Lesson> lessonList = lessonDao.findByStartDateGreaterThanEqual(today);
+		// 【修正】現在時刻以降の講座のみ取得（時分まで精密チェック）
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		List<Lesson> lessonList = lessonDao.findUpcomingLessons(currentDateTime);
 		model.addAttribute("lessonList", lessonList);
 
 		return "user_menu.html";
@@ -125,30 +125,30 @@ public class UserLessonController {
 		session.setAttribute("list", list);
 		return "✅ レッスンをカートに追加しました！";
 	}
-	/** 
- 	一覧画面の表示
-	セッションからカートの内容を取得、表示
-	*/
+
+	/**
+	 * 一覧画面の表示 セッションからカートの内容を取得、表示
+	 */
 	@GetMapping("/lesson/show/cart")
 	public String getLessonShowCart(HttpSession session, Model model) {
-	    // ログインチェック
-	    User loginUser = (User) session.getAttribute("loginUserInfo");
-	    // 未ログインならログイン画面へ
-	    if (loginUser == null) {
-	        return "/user/login.html"; 
-	    }
-	    // ログイン済みの場合
-	    Boolean loginFlg = (Boolean) session.getAttribute("loginFlg");
-	    if (loginFlg == null) {
-	        loginFlg = true;
-	    }
-	    List<Lesson> list = (List<Lesson>) session.getAttribute("list");
-	    if (list == null) {
-	        list = new ArrayList<>();
-	    }
-	    model.addAttribute("loginFlg", loginFlg);
-	    model.addAttribute("list", list);
-	    return "user_planned_application.html";
+		// ログインチェック
+		User loginUser = (User) session.getAttribute("loginUserInfo");
+		// 未ログインならログイン画面へ
+		if (loginUser == null) {
+			return "/user/login.html";
+		}
+		// ログイン済みの場合
+		Boolean loginFlg = (Boolean) session.getAttribute("loginFlg");
+		if (loginFlg == null) {
+			loginFlg = true;
+		}
+		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
+		if (list == null) {
+			list = new ArrayList<>();
+		}
+		model.addAttribute("loginFlg", loginFlg);
+		model.addAttribute("list", list);
+		return "user_planned_application.html";
 	}
 
 }
