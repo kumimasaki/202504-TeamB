@@ -10,7 +10,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -23,58 +23,52 @@
 	<article>
 		<h2>登録講座内容の変更</h2>
 		<div class="change">
-			<img th:src="@{/lesson-image/{items}(items=${lessonList.imageName})}">
+			<img th:if="${lesson.imageName != null}" th:src="@{'/images/' + ${lesson.imageName}}" alt="講座画像" />
 			<div class="change-button">
-				<button
-					th:attr="onClick='location.href=\''+'/admin/lesson/image/edit/'+${lessonList.lessonId}+'\''">画像を変更</button>
+				<button th:attr="onClick='location.href=\''+'/admin/lesson/image/edit/'+${lesson.lessonId}+'\''">
+				  画像を変更
+				</button>
 			</div>
-			<form action="/admin/lesson/edit/update" method="post">
-				　　　　　　<table class="change_table">
+			<form th:action="@{/admin/lesson/edit/update}" th:object="${lesson}" method="post">
+				<table class="change_table">
 					<tr>
 						<th>開始日</th>
-						<td>
-							<input type="date" name="startDate" value="lessonList.startDate">
-						</td>
+						<td><input type="date" th:field="*{startDate}" /></td>
 					</tr>
 					<tr>
 						<th>受講開始時間</th>
-						<td>
-							<input type="time" name="startTime" value="lessonList.startTime">
-						</td>
+						<td><input type="time" th:field="*{startTime}" /></td>
 					</tr>
 					<tr>
 						<th>受講終了時間</th>
-						<td>
-							<input type="time" name="finishTime" value="lessonList.finishTime">
-						</td>
+						<td><input type="time" th:field="*{finishTime}" /></td>
 					</tr>
 					<tr>
 						<th>講座名</th>
-						<td>
-							<input type="text" name="lessonName" value="lessonList.lessonName">
-						</td>
+						<td><input type="text" th:field="*{lessonName}" /></td>
 					</tr>
 					<tr>
 						<th>講座内容</th>
-						<td>
-							<textarea cols="30" rows="5" name="lessonDetail"
-								text="lessonList.lessonDetail"></textarea>
-						</td>
+						<td><textarea th:field="*{lessonDetail}" cols="30" rows="5"></textarea></td>
 					</tr>
 					<tr>
 						<th>受講料</th>
-						<td>
-							<input type="text" name="lessonFee" value="lessonList.lessonFee">
-						</td>
+						<td><input type="text" th:field="*{lessonFee}" /></td>
 					</tr>
 				</table>
-				<input type="hidden" name="lessonId" value="lessonList.lessonId">
-				<input type="hidden" name="imageName" value="lessonList.imageName">
+
+				<!-- 隠しフィールド -->
+				<input type="hidden" th:field="*{lessonId}" />
+				<input type="hidden" th:field="*{imageName}" />
+				<input type="hidden" th:field="*{registerDate}" />
+				<input type="hidden" th:field="*{adminId}" />
+
 				<div class="change-button">
-					<button id="return_btn" type="button" onclick="history.back();">戻る</button>
-					<button id="change_btn">変更</button>
+					<button type="button" onclick="history.back();">戻る</button>
+					<button type="submit">変更</button>
 				</div>
 			</form>
+
 			　　　　
 		</div>
 	</article>
