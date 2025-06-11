@@ -121,4 +121,30 @@ public class UserLessonController {
 		session.setAttribute("list", list);
 		return "✅ レッスンをカートに追加しました！";
 	}
+	/** 
+ 	一覧画面の表示
+	セッションからカートの内容を取得、表示
+	*/
+	@GetMapping("/lesson/show/cart")
+	public String getLessonShowCart(HttpSession session, Model model) {
+	    // ログインチェック
+	    User loginUser = (User) session.getAttribute("loginUserInfo");
+	    // 未ログインならログイン画面へ
+	    if (loginUser == null) {
+	        return "/user/login.html"; 
+	    }
+	    // ログイン済みの場合
+	    Boolean loginFlg = (Boolean) session.getAttribute("loginFlg");
+	    if (loginFlg == null) {
+	        loginFlg = true;
+	    }
+	    List<Lesson> list = (List<Lesson>) session.getAttribute("list");
+	    if (list == null) {
+	        list = new ArrayList<>();
+	    }
+	    model.addAttribute("loginFlg", loginFlg);
+	    model.addAttribute("list", list);
+	    return "user_planned_application.html";
+	}
+
 }
