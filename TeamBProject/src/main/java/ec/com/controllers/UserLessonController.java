@@ -182,5 +182,10 @@ public class UserLessonController {
 		model.addAttribute("loginFlg", loginFlg);
 		model.addAttribute("list", list);
 		return "user_planned_application.html";
+	}//カート商品削除機能
+	@PostMapping("/lesson/cart/delete/{lessonId}")
+	public String lessonCartDelete(@PathVariable HttpSession session, Model model){
+		return "redilect:/lesson/show/cart";
 	}
+	
 }
