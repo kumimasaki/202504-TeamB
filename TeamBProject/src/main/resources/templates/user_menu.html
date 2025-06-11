@@ -40,7 +40,7 @@
             <!-- 修正：詳細リンクを一時的に無効化 -->
             <li th:each="lesson:${lessonList}">
                 <a th:href="@{/lesson/detail/{lessonId}(lessonId=${lesson.lessonId})}">
-                    <img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+                    <img th:src="@{/img/{items}(items=${lesson.imageName})}">
                     <p
                         th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
                     </p>
