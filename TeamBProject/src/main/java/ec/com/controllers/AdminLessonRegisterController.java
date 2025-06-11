@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import ec.com.model.dao.LessonDao;
 import ec.com.model.entity.Admin;
 import ec.com.model.entity.Lesson;
 import ec.com.services.LessonService;

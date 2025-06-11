@@ -26,6 +26,20 @@ public class AdminRegisterController {
 		return "admin_register.html";
 	}
 
+	/**
+	 * ユーザー登録処理メソッド
+	 * 
+	 * URL: POST /admin/confirm 機能: 登録フォームから送信されたデータを確認する
+	 * 
+	 * @param adminName     管理者名（HTMLフォームから送信）
+	 * @param adminEmail    管理者メールアドレス（HTMLフォームから送信）
+	 * @param password パスワード（HTMLフォームから送信）
+	 * @param assword パスワード（HTMLフォームから送信）
+	 * @return String 遷移先ページのファイル名 
+	 * 失敗時：admin_register.html（登録画面に留まる）
+	 * 成功時：admin_confirm_register.html（ログイン画面に遷移）
+	 */
+
 	// 登録確認 @PostMapping("/admin/confirm")
 	@PostMapping("admin/confirm")
 	public String adminRegisterConfirm(@RequestParam String adminName, @RequestParam String adminEmail,
@@ -59,4 +73,3 @@ public class AdminRegisterController {
 	}
 
 }
-
