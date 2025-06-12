@@ -1,8 +1,6 @@
 package ec.com.model.dao;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -39,16 +37,9 @@ public interface LessonDao extends JpaRepository<Lesson, Long> {
 			+ "ORDER BY l.startDate, l.startTime")
 	List<Lesson> findUpcomingLessons(@Param("currentDateTime") LocalDateTime currentDateTime);
 
-	// キーワードで講座名を部分一致検索し、
-	// さらに「開始日 > 指定日」または「開始日 = 指定日 かつ 開始時刻 >= 指定時刻」の条件に一致する講座を取得
-	@Query("SELECT l FROM Lesson l WHERE l.lessonName LIKE %:keyword% AND (l.startDate > :date OR (l.startDate = :date AND l.startTime >= :time))")
-	List<Lesson> findByLessonNameContainingAndDateTimeCondition(
-			@Param("keyword") String keyword,
-			@Param("date") LocalDate date,
-			@Param("time") LocalTime time);
-
 	// DELETE FROM lesson WHERE lesson_id = ?
 	// 削除使用
 	// ここではデータを丸ごと処理する必要あり
 	void deleteById(Long lessonId);
+
 }
