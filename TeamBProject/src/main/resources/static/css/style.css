@@ -1117,6 +1117,9 @@ table, tr, th, td {
     width: 720px;
     margin: 50px auto;
 }
+.apply img{
+	width: 300px;
+}
 
 .apply_p p {
     font-size: 18px;
