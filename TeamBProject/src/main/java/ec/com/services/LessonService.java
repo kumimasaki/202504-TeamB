@@ -59,4 +59,7 @@ public class LessonService {
 	public void updateLesson(Lesson lesson) {
 		lessonDao.save(lesson);
 	}
+	public void insertLesson(Lesson lesson) {
+	    lessonDao.save(lesson);  
+	}
 }

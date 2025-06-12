@@ -17,67 +17,80 @@
 	<header>
 		<div>
 			<h1><img src="" alt=""></h1>
-			<p>ID:suzukiac.jp</p>
+			<p>ID:suzuki@ac.jp</p>
 		</div>
 	</header>
+
 	<article>
 		<h2>新規講座追加</h2>
 
 		<div class="add">
-			<form action="/admin/lesson/register/create" method="post" enctype="multipart/form-data">
+			<form action="/admin/lesson/register/create" method="post" enctype="multipart/form-data"
+				th:object="${lesson}">
 				<table class="add_table">
 					<tr>
 						<th>開始日</th>
-						<td>
-							<input type="date" name="startDate">
-						</td>
+						<td><input type="date" name="startDate" /></td>
 					</tr>
 					<tr>
 						<th>受講開始時間</th>
-						<td>
-							<input type="time" name="startTime">
-						</td>
+						<td><input type="time" name="startTime" /></td>
 					</tr>
 					<tr>
 						<th>受講終了時間</th>
-						<td>
-							<input type="time" name="finishTime">
-						</td>
+						<td><input type="time" name="finishTime" /></td>
 					</tr>
 					<tr>
 						<th>講座名</th>
-						<td>
-							<input type="text" name="lessonName">
-						</td>
+						<td><input type="text" name="lessonName" required/></td>
 					</tr>
 					<tr>
 						<th>講座画像</th>
 						<td>
-							<input type="file" name="imageName">
+							<input type="file" name="imageName" onchange="previewImage(event)" required/>
+							<!-- 画像プレビュー -->
+							<div style="margin-top: 10px;">
+								<img id="preview" src="" alt="画像プレビュー" style="max-width: 300px; display: none;" />
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<th>講座内容</th>
-						<td>
-							<textarea cols="30" rows="5" name="lessonDetail"></textarea>
-						</td>
+						<td><textarea name="lessonDetail" cols="30" rows="5" required></textarea></td>
 					</tr>
 					<tr>
 						<th>受講料</th>
-						<td>
-							<input type="text" name="lessonFee">
-						</td>
+						<td><input type="text" name="lessonFee" required/></td>
 					</tr>
 				</table>
+
 				<div class="change-button">
 					<button id="return_btn" type="button" onclick="history.back();">戻る</button>
-					<button id="add_btn" type="submit">追加</button> 
+					<button id="add_btn" type="submit">追加</button>
 				</div>
 			</form>
-			　　　　
 		</div>
 	</article>
-	<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
+
+	<footer>
+		<small>Copyright &copy; Academy All rights reserved.</small>
+	</footer>
+
+	<!-- JavaScriptで画像プレビュー表示 -->
+	<script>
+		function previewImage(event) {
+			const file = event.target.files[0];
+			const reader = new FileReader();
+			reader.onload = function () {
+				const preview = document.getElementById('preview');
+				preview.src = reader.result;
+				preview.style.display = 'block';
+			};
+			if (file) {
+				reader.readAsDataURL(file);
+			}
+		}
+	</script>
 </body>
 
 </html>
