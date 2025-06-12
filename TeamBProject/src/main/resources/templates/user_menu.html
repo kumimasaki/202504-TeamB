@@ -35,7 +35,7 @@
     <article>
         <h2>開催講座一覧</h2>
         <!-- 修正：まだ実装していない機能なので一時的に無効化 -->
-        <button class="menu_btn" onclick="alert('申し込み機能は準備中です')">申し込み予定講座</button>
+        <button class="menu_btn" onclick="location.href='/lesson/show/cart'">申し込み予定講座</button>
         <ul class="menu">
             <!-- 修正：詳細リンクを一時的に無効化 -->
             <li th:each="lesson:${lessonList}">
