@@ -98,10 +98,9 @@ public class Lesson {
 	// --- Constructors ---
 	public Lesson() {}
 
-	public Lesson(Long lessonId, LocalDate startDate, LocalTime startTime, LocalTime finishTime,
+	public Lesson(LocalDate startDate, LocalTime startTime, LocalTime finishTime,
 	              String lessonName, String lessonDetail, Integer lessonFee, String imageName,
 	              Timestamp registerDate, Long adminId) {
-		this.lessonId = lessonId;
 		this.startDate = startDate;
 		this.startTime = startTime;
 		this.finishTime = finishTime;

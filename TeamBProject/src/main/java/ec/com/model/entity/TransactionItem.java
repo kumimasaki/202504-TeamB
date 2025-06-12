@@ -37,8 +37,7 @@ public class TransactionItem {
 	public TransactionItem() {
 	}
 	
-	public TransactionItem(Long id, Long lessonId, Long transactionId) {
-		Id = id;
+	public TransactionItem(Long lessonId, Long transactionId) {
 		this.lessonId = lessonId;
 		this.transactionId = transactionId;
 	}
