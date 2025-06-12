@@ -10,7 +10,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -24,8 +24,8 @@
 		<h2>講座一覧</h2>
 		<form action="/admin/lesson/delete/remove" method="post">
 			<div class="delete_btn">
-				<button>削除する</button>
-				<div class="number">講座番号<input type="text" name="lessonId"></div>
+				<button type="submit">削除する</button>
+				<div class="number">講座番号<input type="text" name="lessonId" required></div>
 			</div>
 		</form>
 		<table class="delete_table">
@@ -36,10 +36,10 @@
 				<th>価格</th>
 			</tr>
 			<tr th:each="lesson:${lessonList}">
-				<td text="lesson.lessonId"></td>
-				<td text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}"></td>
-				<td text="lesson.lessonName"></td>
-				<td text="lesson.lessonFee"></td>
+				<td th:text="${lesson.lessonId}"></td>
+				<td th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}"></td>
+				<td th:text="${lesson.lessonName}"></td>
+				<td th:text="${lesson.lessonFee}"></td>
 			</tr>
 		</table>
 		<div class="change-button">
