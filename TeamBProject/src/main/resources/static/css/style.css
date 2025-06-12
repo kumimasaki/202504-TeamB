@@ -1016,19 +1016,31 @@ table, tr, th, td {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    height: 150px;
     width: 100%;
-    margin: 50px auto;
+    margin: 45px auto;
+}
+.con li img{
+	width: 150px;
+	height: 150px;
+    object-fit: contain;
+}
+.con_p {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .con_p p {
     font-size: 18px;
+    margin-top: 15px;
     margin-bottom: 15px;
 }
 
 .con_p h3 {
     font-size: 20px;
     margin-top: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 #con_price {
