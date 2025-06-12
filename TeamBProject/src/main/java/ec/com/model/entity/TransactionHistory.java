@@ -42,8 +42,7 @@ public class TransactionHistory {
 	
 	public TransactionHistory() {
 	}
-	public TransactionHistory(Long transactionId, Long userId, Integer amount, Timestamp transactionDate) {
-		this.transactionId = transactionId;
+	public TransactionHistory(Long userId, Integer amount, Timestamp transactionDate) {
 		this.userId = userId;
 		this.amount = amount;
 		this.transactionDate = transactionDate;

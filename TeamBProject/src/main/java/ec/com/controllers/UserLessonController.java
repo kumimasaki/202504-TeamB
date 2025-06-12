@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ec.com.model.dao.LessonDao;
+import ec.com.model.dao.TransactionHistoryDao;
+import ec.com.model.dao.TransactionItemDao;
 import ec.com.model.entity.Lesson;
+import ec.com.model.entity.TransactionHistory;
 import ec.com.model.entity.User;
 import jakarta.servlet.http.HttpSession;
 
@@ -38,6 +41,12 @@ public class UserLessonController {
 	 */
 	@Autowired
 	private LessonDao lessonDao;
+	
+	@Autowired
+	private TransactionHistoryDao transactionHistoryDao;
+	
+	@Autowired
+	private TransactionItemDao transactionItemDao;
 
 	/**
 	 * 講座一覧画面表示メソッド（メニュー画面）
@@ -268,6 +277,7 @@ public class UserLessonController {
 		session.removeAttribute("list");
 		model.addAttribute("loginFlg", true);
 		System.out.println("stripeEmail: " + stripeEmail);
+		
 		
 		return "user_apply_complete.html";
 	}

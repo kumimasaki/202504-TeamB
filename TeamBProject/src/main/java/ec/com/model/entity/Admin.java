@@ -82,9 +82,8 @@ public class Admin {
 	}
 
 
-	public Admin(Long adminId, String adminName, String adminEmail, String adminPassword, Integer deleteFlg,
+	public Admin(String adminName, String adminEmail, String adminPassword, Integer deleteFlg,
 			Timestamp registerDate) {
-		this.adminId = adminId;
 		this.adminName = adminName;
 		this.adminEmail = adminEmail;
 		this.adminPassword = adminPassword;
