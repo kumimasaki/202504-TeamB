@@ -1,6 +1,7 @@
 package ec.com.controllers;
 
 import java.io.Console;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import ec.com.model.dao.TransactionHistoryDao;
 import ec.com.model.dao.TransactionItemDao;
 import ec.com.model.entity.Lesson;
 import ec.com.model.entity.TransactionHistory;
+import ec.com.model.entity.TransactionItem;
 import ec.com.model.entity.User;
 import jakarta.servlet.http.HttpSession;
 
@@ -260,6 +262,7 @@ public class UserLessonController {
 		for (Lesson lesson : list) {
 			amount += lesson.getLessonFee();
 		}
+		session.setAttribute("amount", amount);
 		model.addAttribute("amount", amount);
 		
 		return "user_confirm_apply_detail.html";
@@ -274,11 +277,20 @@ public class UserLessonController {
 		if (user == null) {
 			return "redirect:/user/login";
 		}
-		session.removeAttribute("list");
+		
 		model.addAttribute("loginFlg", true);
 		System.out.println("stripeEmail: " + stripeEmail);
 		
+		int amount = (int)session.getAttribute("amount");
+		TransactionHistory transactionHistory = new TransactionHistory(user.getUserId(), amount, new Timestamp(System.currentTimeMillis()));
+		transactionHistory = transactionHistoryDao.save(transactionHistory);
 		
+		List<Lesson> list = (List<Lesson>)session.getAttribute("list");
+		for (Lesson lesson : list) {
+			transactionItemDao.save(new TransactionItem(lesson.getLessonId(), transactionHistory.getTransactionId()));
+		}
+		
+		session.removeAttribute("list");
 		return "user_apply_complete.html";
 	}
 }
