@@ -118,7 +118,7 @@ public class UserLessonController {
 	@GetMapping("/lesson/menu/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/user/login";
+		return "redirect:/lesson/menu";
 	}
 
 	/**
