@@ -3,6 +3,9 @@ package ec.com.model.entity;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import org.springframework.format.annotation.DateTimeFormat; 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,16 +16,24 @@ public class Lesson {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long lessonId;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd") 
 	private LocalDate startDate;
+
+	@DateTimeFormat(pattern = "HH:mm") 
 	private LocalTime startTime;
+
+	@DateTimeFormat(pattern = "HH:mm") 
 	private LocalTime finishTime;
+
 	private String lessonName;
 	private String lessonDetail;
 	private Integer lessonFee;
 	private String imageName;
 	private Timestamp registerDate;
 	private Long adminId;
-	
+
+	// --- Getter & Setter ---
 	public Long getLessonId() {
 		return lessonId;
 	}
@@ -83,12 +94,13 @@ public class Lesson {
 	public void setAdminId(Long adminId) {
 		this.adminId = adminId;
 	}
-	
-	public Lesson() {
-	}
-	
-	public Lesson(Long lessonId, LocalDate startDate, LocalTime startTime, LocalTime finishTime, String lessonName,
-			String lessonDetail, Integer lessonFee, String imageName, Timestamp registerDate, Long adminId) {
+
+	// --- Constructors ---
+	public Lesson() {}
+
+	public Lesson(Long lessonId, LocalDate startDate, LocalTime startTime, LocalTime finishTime,
+	              String lessonName, String lessonDetail, Integer lessonFee, String imageName,
+	              Timestamp registerDate, Long adminId) {
 		this.lessonId = lessonId;
 		this.startDate = startDate;
 		this.startTime = startTime;

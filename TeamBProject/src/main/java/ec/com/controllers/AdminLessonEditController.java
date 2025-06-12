@@ -25,12 +25,17 @@ public class AdminLessonEditController {
 	// 編集画面表示
 	@GetMapping("/admin/lesson/edit/{lessonId}")
 	public String showEditForm(@PathVariable Long lessonId, Model model) {
-		Lesson lesson = lessonService.findById(lessonId);
-		if (lesson == null) {
-			return "redirect:/admin/lesson/all";
-		}
-		model.addAttribute("lesson", lesson);
-		return "admin_edit_lesson";
+	    Lesson lesson = lessonService.findById(lessonId);
+
+	    if (lesson == null) {
+	        return "redirect:/admin/lesson/all";
+	    }
+	    System.out.println(">> 編集画面 lessonId = " + lesson.getLessonId());
+	    System.out.println(">> startDate = " + lesson.getStartDate());
+
+	    model.addAttribute("lesson", lesson);
+	    return "admin_edit_lesson";
+
 	}
 
 	// 編集内容保存
