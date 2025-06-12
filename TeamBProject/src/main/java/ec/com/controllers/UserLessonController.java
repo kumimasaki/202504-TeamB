@@ -1,5 +1,6 @@
 package ec.com.controllers;
 
+import java.io.Console;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -244,9 +245,30 @@ public class UserLessonController {
 		}
 		model.addAttribute("payMethod", payMethod);
 		model.addAttribute("loginFlg", true);
-		model.addAttribute("payFlg", false);
-		model.addAttribute("amount", 0);
+		model.addAttribute("payFlg", true);
+		
+		int amount = 0;
+		for (Lesson lesson : list) {
+			amount += lesson.getLessonFee();
+		}
+		model.addAttribute("amount", amount);
 		
 		return "user_confirm_apply_detail.html";
+	}
+	
+	
+	@PostMapping("/lesson/pay")
+	public String applyComplete(@RequestParam("stripeEmail") String stripeEmail,
+								HttpSession session,
+								Model model) {
+		User user = (User) session.getAttribute("loginUserInfo");
+		if (user == null) {
+			return "redirect:/user/login";
+		}
+		session.removeAttribute("list");
+		model.addAttribute("loginFlg", true);
+		System.out.println("stripeEmail: " + stripeEmail);
+		
+		return "user_apply_complete.html";
 	}
 }
