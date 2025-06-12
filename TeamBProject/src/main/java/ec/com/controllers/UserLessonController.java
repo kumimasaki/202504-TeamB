@@ -195,4 +195,58 @@ public class UserLessonController {
 		return "redirect:/lesson/show/cart";
 	}
 	
+	@GetMapping("/lesson/request")
+	public String applySelectPayment(HttpSession session,
+									 Model model) {
+		User user = (User) session.getAttribute("loginUserInfo");
+		if (user == null) {
+			return "redirect:/user/login";
+		}
+		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
+		if (list == null||list.size()==0) {
+			return "redirect:/lesson/menu";
+		}else {
+			model.addAttribute("list", list);
+		}
+		model.addAttribute("loginFlg", true);
+		model.addAttribute("payFlg", false);
+		
+		return "user_apply_select_payment.html";
+	}
+	
+	
+	@PostMapping("/lesson/confirm")
+	public String confirmApplyDetail(@RequestParam("payment") Integer payment,
+								     HttpSession session,
+								     Model model) {
+		User user = (User) session.getAttribute("loginUserInfo");
+		if (user == null) {
+			return "redirect:/user/login";
+		}
+		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
+		if (list == null||list.size()==0) {
+			return "redirect:/lesson/menu";
+		}else {
+			model.addAttribute("list", list);
+		}
+		
+		String payMethod = "";
+		switch (payment) {
+		case 0:
+			payMethod = "当日現金支払い（無料講座の場合は、こちらを選択する。）";
+			break;
+		case 1:
+			payMethod = "事前銀行振込";
+			break;
+		case 2:
+			payMethod = "クレジットカード決済";
+			break;
+		}
+		model.addAttribute("payMethod", payMethod);
+		model.addAttribute("loginFlg", true);
+		model.addAttribute("payFlg", false);
+		model.addAttribute("amount", 0);
+		
+		return "user_confirm_apply_detail.html";
+	}
 }

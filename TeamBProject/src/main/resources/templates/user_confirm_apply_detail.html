@@ -46,9 +46,8 @@
 		</ul>
 		<div class="pay_2">
 			<p id="method">お支払い方法</p>
-			<p id="selection" text="payMethod"></p>
+			<p id="selection" th:text="${payMethod}"></p>
 		</div>
-
 
 		<div class="apply-btn" th:if="${!payFlg}">
 			<button class="apply_2_back" onclick="history.back();" type="button">&lsaquo;&lsaquo;&nbsp;&nbsp;戻る</button>
