@@ -32,7 +32,7 @@
                <div class="con_p">
                     <p th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}"></p>
                     <h3 th:text="${lesson.lessonName}"></h3>
-                    <p id="con_price" th:text="${lesson.lessonFee +'円(税込)'}">&nbsp;&nbsp;&nbsp;&nbsp;<a href="">講座詳細</a></p>    
+                    <p id="con_price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'">&nbsp;&nbsp;&nbsp;&nbsp;<a href="">講座詳細</a></p>    
                 </div>  
                 <button th:attr="onClick='location.href=\''+'/lesson/cart/delete/'+${lesson.lessonId}+'\''">削除</button>  
            </li>
