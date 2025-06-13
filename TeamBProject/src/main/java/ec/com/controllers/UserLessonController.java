@@ -370,7 +370,7 @@ public class UserLessonController {
 	 * 
 	 * @return String 遷移先画面のテンプレートファイル名 ログイン済み: mypage.html 未ログイン: /user/login.html
 	 */
-
+  
 	@GetMapping("/lesson/mypage")
 	public String getMYpage(HttpSession session, Model model) {
 		// ログインチェック
@@ -392,27 +392,24 @@ public class UserLessonController {
 	}
 
 	// 購入履歴削除機能
-	// @PostMapping("/lesson/history/delete")
-	// public String lessonHistoryDelete(@PathVariable Long lessonId, HttpSession
-	// session, Model model) {
-	// // ログインチェック
-	// User loginUser = (User) session.getAttribute("loginUserInfo");
-	// // 未ログインならログイン画面へ
-	// if (loginUser == null) {
-	// return "user_login.html";
-	// }
-	// // ログイン済みの場合
-	// model.addAttribute("loginName", loginUser.getUserName());
-	// model.addAttribute("loginFlg", true);
-	// // sessionから
-	// /**
-	// * 削除機能作成中
-	// *
-	// *
-	// *
-	// */
-	// return "redirect:/lesson/mypage";
-	// }
+	@PostMapping("/lesson/history/delete")
+	public String lessonHistoryDelete(@RequestParam Long transactionId, HttpSession session, Model model) {
+		// ログインチェック
+		User loginUser = (User) session.getAttribute("loginUserInfo");
+		// 未ログインならログイン画面へ
+		if (loginUser == null) {
+			return "user_login.html";
+		}
+		// ログイン済みの場合
+		model.addAttribute("loginName", loginUser.getUserName());
+		model.addAttribute("loginFlg", true);
+		//購入履歴(transaction_history,transaction_item)を削除する
+		 lessonService.deleteTransactionHistory(transactionId);
+		return "redirect:/lesson/mypage";
+	}
+}
+	
+
 	@PostMapping("/lesson/like/all")
 	@ResponseBody
 	public String AddLike(@RequestParam("lessonId") Long lessonId,
@@ -433,3 +430,4 @@ public class UserLessonController {
 		}
 	}
 }
+
