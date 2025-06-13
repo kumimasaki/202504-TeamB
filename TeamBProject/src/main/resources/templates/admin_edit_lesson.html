@@ -24,16 +24,16 @@
 		<h2>登録講座内容の変更</h2>
 		<div class="change center-area">
 			<div class="image-button-wrapper">
-					<img th:if="${lesson.imageName != null}" 
-					     th:src="@{'/lesson-image/' + ${lesson.imageName}}" 
-					     alt="講座画像" width="300">
+				<img th:if="${lesson.imageName != null}" th:src="@{'/lesson-image/' + ${lesson.imageName}}" alt="講座画像"
+					width="300">
 
-					<div class="change-button">
-						<button th:attr="onClick='location.href=\''+'/admin/lesson/image/edit/'+${lesson.lessonId}+'\''">
-						  画像を変更
-						</button>
-					</div>
+
+				<div class="change-button">
+					<button th:attr="onClick='location.href=\''+'/admin/lesson/image/edit/'+${lesson.lessonId}+'\''">
+						画像を変更
+					</button>
 				</div>
+			</div>
 			<form th:action="@{/admin/lesson/edit/update}" th:object="${lesson}" method="post">
 				<table class="change_table">
 					<tr>
@@ -50,15 +50,15 @@
 					</tr>
 					<tr>
 						<th>講座名</th>
-						<td><input type="text" th:field="*{lessonName}" /></td>
+						<td><input type="text" th:field="*{lessonName}" required /></td>
 					</tr>
 					<tr>
 						<th>講座内容</th>
-						<td><textarea th:field="*{lessonDetail}" cols="30" rows="5"></textarea></td>
+						<td><textarea th:field="*{lessonDetail}" cols="30" rows="5" required></textarea></td>
 					</tr>
 					<tr>
 						<th>受講料</th>
-						<td><input type="text" th:field="*{lessonFee}" /></td>
+						<td><input type="text" th:field="*{lessonFee}" required /></td>
 					</tr>
 				</table>
 

@@ -68,9 +68,67 @@ public class LessonService {
 	public void updateLesson(Lesson lesson) {
 		lessonDao.save(lesson);
 	}
-	
+
+
+	public void insertLesson(Lesson lesson) {
+		lessonDao.save(lesson);
+	}
+
 	/**
-	 * 指定されたユーザーIDに紐づく購入済み講座情報を取得する。
+
+	
+
+	 * 講座IDに基づいて講座を削除する
+	 * 
+	 * @param lessonId 削除対象の講座ID
+	 * @return 削除成功ならtrue、失敗（null）の場合はfalse
+	 */
+	public boolean deletByLesson(Long lessonId) {
+		if (lessonId == null) {
+			return false;
+		} else {
+			lessonDao.deleteById(lessonId);
+			return true;
+		}
+
+	}
+    /**
+     * 講座名による部分一致検索（管理者IDも指定）
+     *
+     * @param adminId 管理者ID
+     * @param keyword 講座名キーワード
+     * @return 検索結果の講座リスト
+     */
+    public List<Lesson> searchLessonByKeyword(Long adminId, String keyword) {
+        return lessonDao.searchByKeyword(adminId, keyword);
+    }
+
+    /**
+     * 指定されたユーザーIDに紐づく購入講座（Lesson）を取得する
+     *
+     * @param userId ユーザーのID
+     * @return 購入済みの講座のリスト
+     */
+    public List<LessonWithTransactionDto> getLessonPurchases(Long userId) {
+        List<Object[]> result = transactionHistoryDao.findLessonAndTransactionByUserId(userId);
+        List<LessonWithTransactionDto> list = new ArrayList<>();
+        for (Object[] row : result) {
+            LessonWithTransactionDto dto = new LessonWithTransactionDto();
+            dto.setLessonId(((Number) row[0]).longValue());
+            dto.setLessonName((String) row[1]);
+            dto.setLessonDetail((String) row[2]);
+            dto.setImageName((String) row[3]);
+            dto.setStartDate(((Date) row[4]).toLocalDate());
+            dto.setStartTime(((Time) row[5]).toLocalTime());
+            dto.setFinishTime(((Time) row[6]).toLocalTime());
+            dto.setLessonFee((Integer) row[7]);
+            dto.setTransactionDate(((Timestamp) row[8]).toLocalDateTime().toLocalDate());
+            dto.setTransactionId(((Number) row[9]).longValue());
+            list.add(dto);
+        }
+        return list;
+    }
+  * 指定されたユーザーIDに紐づく購入済み講座情報を取得する。
 	 * 講座情報と購入日時などを含むDTO（LessonWithTransactionDto）のリストを返す。
 	 *
 	 * @param userId ユーザーのID
@@ -105,6 +163,6 @@ public class LessonService {
 		
 		
 	}
-	 */
-	
+
+  
 }

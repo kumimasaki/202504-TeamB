@@ -2,7 +2,9 @@ package ec.com.controllers;
 
 import java.io.Console;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +118,7 @@ public class UserLessonController {
 	@GetMapping("/lesson/menu/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/user/login";
+		return "redirect:/lesson/menu";
 	}
 
 	/**
@@ -171,7 +173,9 @@ public class UserLessonController {
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
 		if (loginUser == null) {
-			return "user_login.html";
+
+
+			return "redirect:/user/login";
 		}
 		// ログイン済みの場合
 		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
@@ -193,6 +197,13 @@ public class UserLessonController {
 		}
 		return "redirect:/lesson/show/cart";
 	}
+
+	
+	/**
+	 * 支払い方法選択画面を表示するメソッド（GET）
+	 * ログインユーザーかどうかを確認し、未ログインならログイン画面にリダイレクト。
+	 * セッション内の講座リストが存在しない場合はメニュー画面に戻る。
+	 */
 
 	@GetMapping("/lesson/request")
 	public String applySelectPayment(HttpSession session, Model model) {
@@ -251,6 +262,13 @@ public class UserLessonController {
 		return "user_confirm_apply_detail.html";
 	}
 
+	
+	/**
+	 * 支払い方法を選択し、確認画面へ遷移するメソッド（POST）
+	 * 選択された支払い方法に応じて説明を表示。
+	 * また、講座の合計金額を計算し、セッションに保存。
+	 */
+
 	@PostMapping("/lesson/pay")
 	public String applyComplete(@RequestParam("stripeEmail") String stripeEmail, HttpSession session, Model model) {
 		User user = (User) session.getAttribute("loginUserInfo");
@@ -276,7 +294,38 @@ public class UserLessonController {
 	}
 
 	/**
-	 * マイページ画面表示メソッド DBに保存されている購入済み講座内容を取得し表示 ログイン必須機能：未ログインの場合はログイン画面にリダイレクト
+
+	 * 支払い処理完了後の処理メソッド（POST）
+	 * Stripe支払い情報を受け取り、取引履歴とアイテムをDBに保存。
+	 * カート情報をセッションから削除し、完了画面を表示。
+	 */
+	@GetMapping("/lesson/menu/search")
+	public String getMenuSearch(@RequestParam("keyword") String keyword,
+								Model model) {
+		// ログイン状態をチェック
+		User loginUser = (User) session.getAttribute("loginUserInfo");
+
+		if (loginUser != null) {
+			// ログイン済みの場合
+			model.addAttribute("loginFlg", true);
+			model.addAttribute("userName", loginUser.getUserName());
+		} else {
+			// 未ログインの場合
+			model.addAttribute("loginFlg", false);
+		}
+
+		// 現在時刻以降の講座のみ取得
+		LocalDate localDate = LocalDate.now();
+		LocalTime localTime = LocalTime.now();
+		List<Lesson> lessonList = lessonDao.findByLessonNameContainingAndDateTimeCondition(keyword, localDate, localTime);
+		model.addAttribute("lessonList", lessonList);
+
+		return "user_menu.html";
+  
+  * マイページ画面表示メソッド
+	 * DBに保存されている購入済み講座内容を取得し表示
+	 * ログイン必須機能：未ログインの場合はログイン画面にリダイレクト
+
 	 * 
 	 * URL: GET /lesson/mypage
 	 * 
