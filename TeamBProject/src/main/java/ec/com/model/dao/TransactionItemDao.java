@@ -14,5 +14,11 @@ public interface TransactionItemDao extends JpaRepository<TransactionItem, Long>
 	List<TransactionItem> findAll();
 	List<TransactionItem> findByTransactionId(Long transactionId);
 	TransactionItem findByLessonId(Long lessonId);
-	
+
+	List<TransactionItem> findByTransactionId(Long transactionId);
+	  @Modifying
+	    @Query(
+	    	"DELETE FROM TransactionItem ti "
+	    	+ "WHERE ti.transactionId = :transactionId")
+	    void deleteByTransactionId(@Param("transactionId") Long transactionId);
 }

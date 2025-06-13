@@ -142,15 +142,12 @@ public class UserLessonController {
 	 * 
 	 * @param lessonId 追加対象の講座ID（リクエストパラメータから取得）
 	 * @param session  HTTPセッション（ログイン情報・カート情報の保存・取得用）
-	 *                 <<<<<<< Updated upstream
 	 * @return String 処理結果のメッセージ 成功: "✅ レッスンをカートに追加しました！" 重複: "⚠️
 	 *         このレッスンはすでにカートに追加されています。" 未ログイン: "refuse"
-	 *         =======
 	 * @return String 処理結果のメッセージ
 	 *         成功: "✅ レッスンをカートに追加しました！"
 	 *         重複: "⚠️ このレッスンはすでにカートに追加されています。"
 	 *         未ログイン: "refuse"
-	 *         >>>>>>> Stashed changes
 	 */
 	@PostMapping("/lesson/cart/all")
 	@ResponseBody
@@ -159,6 +156,17 @@ public class UserLessonController {
 		if (user == null) {
 			return "refuse";
 		}
+		
+		List<TransactionHistory> transactionHistories = transactionHistoryDao.findByUserId(user.getUserId());
+		for (TransactionHistory transactionHistory : transactionHistories) {
+			List<TransactionItem> transactionItems = transactionItemDao.findByTransactionId(transactionHistory.getTransactionId());
+			for (TransactionItem transactionItem : transactionItems) {
+				if(transactionItem.getLessonId()==lessonId) {
+					return "⚠️ このレッスンはすでに購入されました。";
+				}
+			}
+		}
+		
 		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
 		if (list == null) {
 			list = new ArrayList<Lesson>();
@@ -185,14 +193,11 @@ public class UserLessonController {
 	 * 
 	 * @param session HTTPセッション（ログイン情報・カート情報取得用）
 	 * @param model   Spring MVCのModelオブジェクト（画面へのデータ受け渡し用）
-	 *                <<<<<<< Updated upstream
 	 * @return String 遷移先画面のテンプレートファイル名 ログイン済み: user_planned_application.html 未ログイン:
 	 *         /user/login.html
-	 *         =======
 	 * @return String 遷移先画面のテンプレートファイル名
 	 *         ログイン済み: user_planned_application.html
 	 *         未ログイン: /user/login.html
-	 *         >>>>>>> Stashed changes
 	 */
 	@GetMapping("/lesson/show/cart")
 	public String getLessonShowCart(HttpSession session, Model model) {
@@ -200,7 +205,6 @@ public class UserLessonController {
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
 		if (loginUser == null) {
-
 			return "redirect:/user/login";
 		}
 		// ログイン済みの場合

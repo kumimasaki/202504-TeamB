@@ -80,7 +80,7 @@
 			<tr th:each="lesson:${lessonList}">
 				<td th:text="${lesson.lessonId}"></td>
 				<td th:text="${lesson.lessonName}"></td>
-				<td th:text="${lesson.lessonFee}"></td>
+				<td th:text="${#numbers.formatInteger(lesson.lessonFee, 1, 'COMMA')}"></td>
 				<td>
 					<button
 						th:attr="onClick='location.href=\''+'/admin/lesson/edit/'+${lesson.lessonId}+'\''">変更</button>

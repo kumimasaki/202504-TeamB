@@ -40,7 +40,7 @@
                         th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
                     </p>
                     <h3 text="lesson.lessonName"></h3>
-                    <p id="apply_price1" th:text="${lesson.lessonFee +'円(税込)'}"></p>
+                    <p id="apply_price1" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA') + '円(税込)'}"></p>
                 </div>
             </li>
         </ul>
