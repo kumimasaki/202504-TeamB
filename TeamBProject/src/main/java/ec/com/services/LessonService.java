@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import ec.com.model.dao.LessonDao;
 import ec.com.model.dao.TransactionHistoryDao;
+import ec.com.model.dao.TransactionItemDao;
 import ec.com.model.dto.LessonWithTransactionDto;
 import ec.com.model.entity.Lesson;
+import jakarta.transaction.Transactional;
 
 @Service
 public class LessonService {
@@ -68,17 +70,18 @@ public class LessonService {
 	}
 	
 	/**
-	 * 指定されたユーザーIDに紐づく購入講座（Lesson）を取得する
+	 * 指定されたユーザーIDに紐づく購入済み講座情報を取得する。
+	 * 講座情報と購入日時などを含むDTO（LessonWithTransactionDto）のリストを返す。
 	 *
 	 * @param userId ユーザーのID
-	 * @return 購入済みの講座のリスト
+	 * @return 購入済み講座のリスト
 	 */
 	public List<LessonWithTransactionDto> getLessonPurchases(Long userId) {
 		 List<Object[]> result = transactionHistoryDao.findLessonAndTransactionByUserId(userId);
 		    List<LessonWithTransactionDto> list = new ArrayList<>();
 		    for (Object[] row : result) {
 		        LessonWithTransactionDto dto = new LessonWithTransactionDto();
-		        dto.setLessonId(((Number) row[0]).longValue());
+		        dto.setLessonId(((Long) row[0]).longValue());
 		        dto.setLessonName((String) row[1]);
 		        dto.setLessonDetail((String) row[2]);
 		        dto.setImageName((String) row[3]);
@@ -92,4 +95,16 @@ public class LessonService {
 		    }
 		return list;
 	}
+	
+	// 購入履歴の削除
+	/** 作成中
+	 * @Transactional
+		public void deleteTransactionById(Long transactionId) {
+		TransactionItemDao.deleteByTransactionId(transactionId);
+		transactionHistoryDao.deleteById(transactionId);
+		
+		
+	}
+	 */
+	
 }

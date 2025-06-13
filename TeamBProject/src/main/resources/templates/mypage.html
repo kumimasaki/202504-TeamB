@@ -41,10 +41,11 @@
 				</a>
 				<p id="price" th:text="${lesson.lessonFee}+'円（税込み）'"></p>
 				<p th:text="'購入日：' + ${#temporals.format(lesson.transactionDate, 'yyyy/MM/dd')}"></p>
+				<!-- 修正：まだ実装していない機能なので一時的に無効化 
 				<form action="/lesson/history/delete" method="post">
 					<input type="hidden" name="transactionId" th:value="${lesson.transactionId}">
 					<button style="color: black;">削除</button>
-				</form>
+				</form>-->
 			</li>
 		</ul>
 	</article>
