@@ -31,10 +31,19 @@
             <p style="color: white;"></p>
         </div>
     </header>
+    <div style="position: absolute; left: 10%; top:100px;">
+        <form th:action="@{/lesson/menu/search}" method="get">
+            <input
+                style="background-color: rgb(241, 240, 240);height: 40px;border: 2px black solid;border-radius: 5%;font-size: 15px;"
+                name="keyword" type="text" required>
+            <button
+                style="color: black !important;background-color: rgb(35, 109, 173);padding: 10px 20px;border: 1px black solid;border-radius: 5%;">検索</button>
+        </form>
+    </div>
     <article>
         <h2>開催講座一覧</h2>
         <!-- 修正：まだ実装していない機能なので一時的に無効化 -->
-        <button class="menu_btn" onclick="alert('申し込み機能は準備中です')">申し込み予定講座</button>
+        <button class="menu_btn" onclick="location.href='/lesson/show/cart'">申し込み予定講座</button>
         <ul class="menu">
             <!-- 修正：詳細リンクを一時的に無効化 -->
             <li th:each="lesson:${lessonList}">
@@ -51,7 +60,7 @@
 
                 <div class="cart">
                     <input type="hidden" th:value="${lesson.lessonId}" name="lessonId">
-					<p id="price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'"></p>
+                    <p id="price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'"></p>
                     <button id="change_btn" th:onclick="|addToCart([[${lesson.lessonId}]])|">カートに追加</button>
                 </div>
                 <div class="messageBox" th:id="'messageBox-' + ${lesson.lessonId}"></div>

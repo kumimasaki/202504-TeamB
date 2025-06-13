@@ -66,8 +66,29 @@ public class LessonService {
 	public void updateLesson(Lesson lesson) {
 		lessonDao.save(lesson);
 	}
-	
+
+
+	public void insertLesson(Lesson lesson) {
+		lessonDao.save(lesson);
+	}
+
 	/**
+	 * 講座IDに基づいて講座を削除する
+	 * 
+	 * @param lessonId 削除対象の講座ID
+	 * @return 削除成功ならtrue、失敗（null）の場合はfalse
+	 */
+	public boolean deletByLesson(Long lessonId) {
+		if (lessonId == null) {
+			return false;
+		} else {
+			lessonDao.deleteById(lessonId);
+			return true;
+		}
+
+	}
+
+  	/**
 	 * 指定されたユーザーIDに紐づく購入講座（Lesson）を取得する
 	 *
 	 * @param userId ユーザーのID

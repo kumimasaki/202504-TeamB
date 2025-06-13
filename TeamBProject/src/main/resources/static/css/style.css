@@ -1006,10 +1006,14 @@ table, tr, th, td {
     width: 200px;
     height: 50px;
     line-height: 50px;
-    border-radius: 10px;
+    border-radius: 25px;
     margin-bottom: 20px;
     background-color: #40CD82;
     margin-left: 662px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .con li {
@@ -1283,10 +1287,20 @@ table, tr, th, td {
 .stripe-button-el{
     margin-left: 30px;
 }
+
+/* カートページのボタンエリアのスタイル調整 */
 .apply-btn{
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px; /* ボタン間の間隔 */
+    margin: 30px auto;
+}
+
+/* ボタンが横並びの時のマージン調整 */
+.apply-btn > .con_btn,
+.apply-btn > .apply_btn {
+    margin: 0; /* 元のマージンをリセット */
 }
 
 /* apply_3 */

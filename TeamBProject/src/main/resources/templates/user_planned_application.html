@@ -37,7 +37,11 @@
                 <button th:attr="onClick='location.href=\''+'/lesson/cart/delete/'+${lesson.lessonId}+'\''">削除</button>  
            </li>
        </ul>
-       <button class="apply_btn" onclick="location.href='/lesson/request'">購入</button>
+       <!-- 按钮容器 -->
+       <div class="apply-btn">
+           <button class="con_btn" onclick="location.href='/lesson/menu'">メニューに戻る</button>
+           <button class="apply_btn" onclick="location.href='/lesson/request'">購入</button>
+       </div>
    </article>
    <footer><small>Copyright &copy;  Academy All rights reserved.</small></footer>
 </body>

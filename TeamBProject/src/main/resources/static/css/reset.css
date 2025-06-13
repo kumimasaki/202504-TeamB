@@ -223,8 +223,8 @@ iframe {
  */
 
 button,
-input,
 optgroup,
+input,
 select,
 textarea {
   -webkit-appearance: none;
@@ -486,4 +486,8 @@ template {
 
 [hidden] {
   display: none;
+}
+
+textarea{
+	resize: none;
 }
