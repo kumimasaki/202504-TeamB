@@ -56,6 +56,7 @@
             </table>
             <div class="change-button">
                 <button id="return_btn" onclick="history.back();" type="button">戻る</button>
+				<button th:if="${loginFlg}" id="like_btn" th:class="${liked} ? liked : not-liked" th:text="${liked} ? '❤️ お気に入り済み' : 'お気に入り'" th:onclick="|addToLike(${lesson.lessonId}, ${userId})|" type="button"></button>
                 <button id="change_btn" th:onclick="|addToCart([[${lesson.lessonId}]])|">カートに追加</button>
             </div>
         </div>

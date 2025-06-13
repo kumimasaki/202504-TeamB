@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ec.com.model.dao.LessonDao;
+import ec.com.model.dao.LikeDao;
 import ec.com.model.dao.TransactionHistoryDao;
 import ec.com.model.dao.TransactionItemDao;
 import ec.com.model.dto.LessonWithTransactionDto;
 import ec.com.model.entity.Lesson;
+import ec.com.model.entity.Like;
 import ec.com.model.entity.TransactionHistory;
 import ec.com.model.entity.TransactionItem;
 import ec.com.model.entity.User;
@@ -54,6 +56,9 @@ public class UserLessonController {
 	@Autowired
 	private LessonService lessonService;
 
+	@Autowired
+	private LikeDao likeDao;
+
 	/**
 	 * 講座一覧画面表示メソッド（メニュー画面） 現在時刻以降の講座のみを取得し、時分まで精密チェックを行う
 	 * 
@@ -63,6 +68,7 @@ public class UserLessonController {
 	 * @return String 遷移先画面のテンプレートファイル名 (user_menu.html)
 	 */
 	@GetMapping("/lesson/menu")
+
 	public String getLessonMenuPage(Model model) {
 		// ログイン状態をチェック
 		User loginUser = (User) session.getAttribute("loginUserInfo");
@@ -98,13 +104,21 @@ public class UserLessonController {
 	public String getMethodName(@PathVariable("lessonId") Long lessonId, HttpSession session, Model model) {
 		Lesson lesson = lessonDao.findByLessonId(lessonId);
 		model.addAttribute("lesson", lesson);
-		Boolean loginFlg = (Boolean) session.getAttribute("loginFlg");
-		if (loginFlg == null || !loginFlg) {
-			loginFlg = false;
+
+		User user = (User) session.getAttribute("loginUserInfo");
+		if (user != null) {
+			model.addAttribute("userId", user.getUserId());
+			model.addAttribute("loginFlg", true);
+			Like like = likeDao.findByLessonIdAndUserId(lessonId, user.getUserId());
+			if (like == null) {
+				model.addAttribute("liked", false);
+			} else {
+				model.addAttribute("liked", true);
+			}
 		} else {
-			loginFlg = true;
+			model.addAttribute("loginFlg", false);
 		}
-		model.addAttribute("loginFlg", loginFlg);
+
 		return "user_lesson_detail.html";
 	}
 
@@ -128,8 +142,15 @@ public class UserLessonController {
 	 * 
 	 * @param lessonId 追加対象の講座ID（リクエストパラメータから取得）
 	 * @param session  HTTPセッション（ログイン情報・カート情報の保存・取得用）
+	 *                 <<<<<<< Updated upstream
 	 * @return String 処理結果のメッセージ 成功: "✅ レッスンをカートに追加しました！" 重複: "⚠️
 	 *         このレッスンはすでにカートに追加されています。" 未ログイン: "refuse"
+	 *         =======
+	 * @return String 処理結果のメッセージ
+	 *         成功: "✅ レッスンをカートに追加しました！"
+	 *         重複: "⚠️ このレッスンはすでにカートに追加されています。"
+	 *         未ログイン: "refuse"
+	 *         >>>>>>> Stashed changes
 	 */
 	@PostMapping("/lesson/cart/all")
 	@ResponseBody
@@ -164,8 +185,14 @@ public class UserLessonController {
 	 * 
 	 * @param session HTTPセッション（ログイン情報・カート情報取得用）
 	 * @param model   Spring MVCのModelオブジェクト（画面へのデータ受け渡し用）
+	 *                <<<<<<< Updated upstream
 	 * @return String 遷移先画面のテンプレートファイル名 ログイン済み: user_planned_application.html 未ログイン:
 	 *         /user/login.html
+	 *         =======
+	 * @return String 遷移先画面のテンプレートファイル名
+	 *         ログイン済み: user_planned_application.html
+	 *         未ログイン: /user/login.html
+	 *         >>>>>>> Stashed changes
 	 */
 	@GetMapping("/lesson/show/cart")
 	public String getLessonShowCart(HttpSession session, Model model) {
@@ -173,7 +200,6 @@ public class UserLessonController {
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
 		if (loginUser == null) {
-
 
 			return "redirect:/user/login";
 		}
@@ -198,7 +224,6 @@ public class UserLessonController {
 		return "redirect:/lesson/show/cart";
 	}
 
-	
 	/**
 	 * 支払い方法選択画面を表示するメソッド（GET）
 	 * ログインユーザーかどうかを確認し、未ログインならログイン画面にリダイレクト。
@@ -206,7 +231,9 @@ public class UserLessonController {
 	 */
 
 	@GetMapping("/lesson/request")
-	public String applySelectPayment(HttpSession session, Model model) {
+
+	public String applySelectPayment(HttpSession session,
+			Model model) {
 		User user = (User) session.getAttribute("loginUserInfo");
 		if (user == null) {
 			return "redirect:/user/login";
@@ -224,7 +251,9 @@ public class UserLessonController {
 	}
 
 	@PostMapping("/lesson/confirm")
-	public String confirmApplyDetail(@RequestParam("payment") Integer payment, HttpSession session, Model model) {
+	public String confirmApplyDetail(@RequestParam("payment") Integer payment,
+			HttpSession session,
+			Model model) {
 		User user = (User) session.getAttribute("loginUserInfo");
 		if (user == null) {
 			return "redirect:/user/login";
@@ -238,15 +267,15 @@ public class UserLessonController {
 
 		String payMethod = "";
 		switch (payment) {
-		case 0:
-			payMethod = "当日現金支払い（無料講座の場合は、こちらを選択する。）";
-			break;
-		case 1:
-			payMethod = "事前銀行振込";
-			break;
-		case 2:
-			payMethod = "クレジットカード決済";
-			break;
+			case 0:
+				payMethod = "当日現金支払い（無料講座の場合は、こちらを選択する。）";
+				break;
+			case 1:
+				payMethod = "事前銀行振込";
+				break;
+			case 2:
+				payMethod = "クレジットカード決済";
+				break;
 		}
 		model.addAttribute("payMethod", payMethod);
 		model.addAttribute("loginFlg", true);
@@ -262,7 +291,6 @@ public class UserLessonController {
 		return "user_confirm_apply_detail.html";
 	}
 
-	
 	/**
 	 * 支払い方法を選択し、確認画面へ遷移するメソッド（POST）
 	 * 選択された支払い方法に応じて説明を表示。
@@ -270,7 +298,9 @@ public class UserLessonController {
 	 */
 
 	@PostMapping("/lesson/pay")
-	public String applyComplete(@RequestParam("stripeEmail") String stripeEmail, HttpSession session, Model model) {
+	public String applyComplete(@RequestParam("stripeEmail") String stripeEmail,
+			HttpSession session,
+			Model model) {
 		User user = (User) session.getAttribute("loginUserInfo");
 		if (user == null) {
 			return "redirect:/user/login";
@@ -294,14 +324,14 @@ public class UserLessonController {
 	}
 
 	/**
-
+	 * 
 	 * 支払い処理完了後の処理メソッド（POST）
 	 * Stripe支払い情報を受け取り、取引履歴とアイテムをDBに保存。
 	 * カート情報をセッションから削除し、完了画面を表示。
 	 */
 	@GetMapping("/lesson/menu/search")
 	public String getMenuSearch(@RequestParam("keyword") String keyword,
-								Model model) {
+			Model model) {
 		// ログイン状態をチェック
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 
@@ -317,24 +347,30 @@ public class UserLessonController {
 		// 現在時刻以降の講座のみ取得
 		LocalDate localDate = LocalDate.now();
 		LocalTime localTime = LocalTime.now();
-		List<Lesson> lessonList = lessonDao.findByLessonNameContainingAndDateTimeCondition(keyword, localDate, localTime);
+		List<Lesson> lessonList = lessonDao.findByLessonNameContainingAndDateTimeCondition(keyword, localDate,
+				localTime);
 		model.addAttribute("lessonList", lessonList);
 
 		return "user_menu.html";
-}
-   /** マイページ画面表示メソッド
+	}
+
+	/*
+	 * マイページ画面表示メソッド
 	 * DBに保存されている購入済み講座内容を取得し表示
 	 * ログイン必須機能：未ログインの場合はログイン画面にリダイレクト
-
+	 * 
 	 * 
 	 * URL: GET /lesson/mypage
 	 * 
 	 * セッションからuserIdを取得して紐づいた購入履歴を表示
 	 * 
 	 * @param session HTTPセッション（ログイン情報・カート情報取得用）
-	 * @param model   Spring MVCのModelオブジェクト（画面へのデータ受け渡し用）
+	 * 
+	 * @param model Spring MVCのModelオブジェクト（画面へのデータ受け渡し用）
+	 * 
 	 * @return String 遷移先画面のテンプレートファイル名 ログイン済み: mypage.html 未ログイン: /user/login.html
 	 */
+  
 	@GetMapping("/lesson/mypage")
 	public String getMYpage(HttpSession session, Model model) {
 		// ログインチェック
@@ -345,6 +381,7 @@ public class UserLessonController {
 		}
 		// ログイン済みの場合
 		model.addAttribute("loginName", loginUser.getUserName());
+		model.addAttribute("loginUserInfo", loginUser);
 		model.addAttribute("loginFlg", true);
 		// userIdをセッションから取得する
 		Long userId = loginUser.getUserId();
@@ -372,3 +409,25 @@ public class UserLessonController {
 	}
 }
 	
+
+	@PostMapping("/lesson/like/all")
+	@ResponseBody
+	public String AddLike(@RequestParam("lessonId") Long lessonId,
+			@RequestParam("userId") Long userId,
+			HttpSession session) {
+		User user = (User) session.getAttribute("loginUserInfo");
+		if (user == null) {
+			return "refuse";
+		}
+
+		Like like = likeDao.findByLessonIdAndUserId(lessonId, userId);
+		if (like == null) {
+			likeDao.save(new Like(lessonId, userId));
+			return "liked";
+		} else {
+			likeDao.deleteByLessonIdAndUserId(lessonId, userId);
+			return "not-liked";
+		}
+	}
+}
+

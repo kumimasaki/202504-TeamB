@@ -25,7 +25,6 @@
     </header>
    <article>
        <h2>申し込み予定講座</h2>
-           <button class="con_btn" onclick="location.href='/lesson/menu'">メニュー一覧</button>
        <ul class="con">
            <li th:each="lesson:${list}">
                <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
