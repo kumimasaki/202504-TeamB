@@ -321,8 +321,8 @@ public class UserLessonController {
 		model.addAttribute("lessonList", lessonList);
 
 		return "user_menu.html";
-  
-  * マイページ画面表示メソッド
+}
+   /** マイページ画面表示メソッド
 	 * DBに保存されている購入済み講座内容を取得し表示
 	 * ログイン必須機能：未ログインの場合はログイン画面にリダイレクト
 
