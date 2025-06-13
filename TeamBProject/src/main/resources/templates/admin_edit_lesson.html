@@ -51,15 +51,15 @@
 					</tr>
 					<tr>
 						<th>講座名</th>
-						<td><input type="text" th:field="*{lessonName}" /></td>
+						<td><input type="text" th:field="*{lessonName}" required/></td>
 					</tr>
 					<tr>
 						<th>講座内容</th>
-						<td><textarea th:field="*{lessonDetail}" cols="30" rows="5"></textarea></td>
+						<td><textarea th:field="*{lessonDetail}" cols="30" rows="5" required></textarea></td>
 					</tr>
 					<tr>
 						<th>受講料</th>
-						<td><input type="text" th:field="*{lessonFee}" /></td>
+						<td><input type="text" th:field="*{lessonFee}" required/></td>
 					</tr>
 				</table>
 

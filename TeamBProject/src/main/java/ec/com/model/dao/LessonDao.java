@@ -51,4 +51,10 @@ public interface LessonDao extends JpaRepository<Lesson, Long> {
 	// 削除使用
 	// ここではデータを丸ごと処理する必要あり
 	void deleteById(Long lessonId);
+	
+	// 講座名 or 講座番号 に keyword が含まれていて、かつ adminId 一致
+	@Query("SELECT l FROM Lesson l WHERE l.adminId = :adminId AND (CAST(l.lessonId AS string) LIKE %:keyword% OR l.lessonName LIKE %:keyword%)")
+	List<Lesson> searchByKeyword(@Param("adminId") Long adminId, @Param("keyword") String keyword);
+
+
 }
