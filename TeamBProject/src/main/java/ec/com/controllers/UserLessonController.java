@@ -407,8 +407,6 @@ public class UserLessonController {
 		 lessonService.deleteTransactionHistory(transactionId);
 		return "redirect:/lesson/mypage";
 	}
-}
-	
 
 	@PostMapping("/lesson/like/all")
 	@ResponseBody
