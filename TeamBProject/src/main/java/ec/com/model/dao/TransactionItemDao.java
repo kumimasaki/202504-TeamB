@@ -10,4 +10,5 @@ public interface TransactionItemDao extends JpaRepository<TransactionItem, Long>
 	TransactionItem save(TransactionItem transactionItem);
 	List<TransactionItem> findAll();
 	TransactionItem findByLessonId(Long lessonId);
+	List<TransactionItem> findByTransactionId(Long transactionId);
 }
