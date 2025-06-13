@@ -10,14 +10,17 @@ import ec.com.model.entity.Lesson;
 import ec.com.model.entity.TransactionHistory;
 
 @Repository
-public interface TransactionHistoryDao extends JpaRepository<TransactionHistory, Long>{
+public interface TransactionHistoryDao extends JpaRepository<TransactionHistory, Long> {
 	TransactionHistory save(TransactionHistory transactionHistory);
+
 	List<TransactionHistory> findAll();
+
 	List<TransactionHistory> findByUserId(Long UserId);
+
 	TransactionHistoryDao findByTransactionId(Long transactionId);
-	
+
 	@Query(value = """
-			SELECT 
+			SELECT
 			  l.lesson_id,
 			  l.lesson_name,
 			  l.lesson_detail,
@@ -33,5 +36,5 @@ public interface TransactionHistoryDao extends JpaRepository<TransactionHistory,
 			JOIN lesson l ON l.lesson_id = ti.lesson_id
 			WHERE th.user_id = :userId
 			""", nativeQuery = true)
-			List<Object[]> findLessonAndTransactionByUserId(@Param("userId") Long userId);
+	List<Object[]> findLessonAndTransactionByUserId(@Param("userId") Long userId);
 }
