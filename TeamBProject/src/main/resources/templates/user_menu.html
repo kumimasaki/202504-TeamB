@@ -17,7 +17,7 @@
     <header>
         <div th:if="${loginFlg}">
             <h1><img th:src="@{/img/logo.png}"></h1>
-            <p id="mypage"><a href="#" onclick="alert('マイページ機能は準備中です')">マイページ</a></p>
+            <p id="mypage"><a th:href="@{/lesson/mypage}">マイページ</a></p>
             <p style="color: white;"><a th:href="@{/lesson/show/cart}">カート一覧</a></p>
             <!-- 修正：ユーザー名を正しく表示 -->
             <p id="user_register_6" style="color: white;" th:text="${userName}"></p>
@@ -26,7 +26,6 @@
         </div>
         <div th:if="${!loginFlg}">
             <h1><img src="/img/logo.png"></h1>
-            <p id="mypage"><a href="#" onclick="alert('マイページ機能は準備中です')">マイページ</a></p>
             <p id="mypage"><a th:href="@{/user/login}">ログイン</a></p>
             <!-- 修正：不要な属性を削除 -->
             <p style="color: white;"></p>
@@ -58,7 +57,7 @@
                     </p>
                 </a>
 
-                <!-- 修正：カート機能を一時的に無効化 -->
+
                 <div class="cart">
                     <input type="hidden" th:value="${lesson.lessonId}" name="lessonId">
                     <p id="price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'"></p>
