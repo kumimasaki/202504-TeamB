@@ -103,32 +103,7 @@ public class LessonService {
         return lessonDao.searchByKeyword(adminId, keyword);
     }
 
-    /**
-     * 指定されたユーザーIDに紐づく購入講座（Lesson）を取得する
-     *
-     * @param userId ユーザーのID
-     * @return 購入済みの講座のリスト
-     */
-    public List<LessonWithTransactionDto> getLessonPurchases(Long userId) {
-        List<Object[]> result = transactionHistoryDao.findLessonAndTransactionByUserId(userId);
-        List<LessonWithTransactionDto> list = new ArrayList<>();
-        for (Object[] row : result) {
-            LessonWithTransactionDto dto = new LessonWithTransactionDto();
-            dto.setLessonId(((Number) row[0]).longValue());
-            dto.setLessonName((String) row[1]);
-            dto.setLessonDetail((String) row[2]);
-            dto.setImageName((String) row[3]);
-            dto.setStartDate(((Date) row[4]).toLocalDate());
-            dto.setStartTime(((Time) row[5]).toLocalTime());
-            dto.setFinishTime(((Time) row[6]).toLocalTime());
-            dto.setLessonFee((Integer) row[7]);
-            dto.setTransactionDate(((Timestamp) row[8]).toLocalDateTime().toLocalDate());
-            dto.setTransactionId(((Number) row[9]).longValue());
-            list.add(dto);
-        }
-        return list;
-    }
-  * 指定されたユーザーIDに紐づく購入済み講座情報を取得する。
+  /** 指定されたユーザーIDに紐づく購入済み講座情報を取得する。
 	 * 講座情報と購入日時などを含むDTO（LessonWithTransactionDto）のリストを返す。
 	 *
 	 * @param userId ユーザーのID
@@ -161,8 +136,6 @@ public class LessonService {
 		TransactionItemDao.deleteByTransactionId(transactionId);
 		transactionHistoryDao.deleteById(transactionId);
 		
-		
 	}
-
-  
+	**/
 }
