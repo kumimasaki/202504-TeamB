@@ -47,7 +47,7 @@ article h2 {
     font-size: 22px;
     height: 42px;
     line-height: 42px;
-    border-bottom: #222222 solid 1px;
+    border-bottom:2px solid #ff6b35;
     text-align: center;
     font-weight: 400;
 }
@@ -609,6 +609,8 @@ table, tr, th, td {
     width: 400px;
     background-color: #D6EEE1;
     margin: 0 auto 28px;
+	border-radius: 30px; 
+	padding: 20px;
 }
 
 .user_login_table td input[type="text"] {
@@ -635,7 +637,7 @@ table, tr, th, td {
     margin: 25px 125px;
     height: 44px;
     line-height: 44px;
-    background-color: #40CD82;
+    background: linear-gradient(to right, #2e7d32, #81c784);
     border-radius: 22px;
 }
 
@@ -657,7 +659,7 @@ table, tr, th, td {
     height: 64px;
     line-height: 64px;
     font-size: 20px;
-    background-color: #40CD82;
+    background: linear-gradient(to right, #4682b4, #5f9ea0, #4682b4);
     border-radius: 32px;
     margin: 30px auto;
 }
@@ -671,6 +673,7 @@ table, tr, th, td {
     width: 100%;
     background-color: #D6EEE1;
     padding-bottom: 30px;
+	border-radius: 30px;
 }
 
 .register_table {
@@ -713,7 +716,7 @@ table, tr, th, td {
     height: 50px;
     line-height: 50px;
     font-size: 20px;
-    background-color: #40CD82;
+    background: linear-gradient(to right, #2e7d32, #81c784);
     border-radius: 25px;
     margin: 30px auto;
     border: none;
