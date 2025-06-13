@@ -13,6 +13,7 @@ import ec.com.model.dao.TransactionHistoryDao;
 import ec.com.model.dao.TransactionItemDao;
 import ec.com.model.dto.LessonWithTransactionDto;
 import ec.com.model.entity.Lesson;
+import ec.com.model.entity.TransactionItem;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -126,6 +127,7 @@ public class LessonService {
 		        dto.setLessonFee((Integer) row[7]);
 		        dto.setTransactionDate(((Timestamp) row[8]).toLocalDateTime().toLocalDate());
 		        dto.setTransactionId(((Number) row[9]).longValue());
+		        dto.setId(((Long) row[10]).longValue());
 		        list.add(dto);
 		    }
 		return list;
@@ -133,8 +135,7 @@ public class LessonService {
 	
 	// 購入履歴の削除
 	@Transactional
-		public void deleteTransactionHistory(Long transactionId) {
-		transactionItemDao.deleteByTransactionId(transactionId);
-		transactionHistoryDao.deleteById(transactionId);	
+		public void deleteLessonHistory(Long id) {
+		transactionItemDao.deleteById(id);
 	}
 }

@@ -12,10 +12,7 @@ import ec.com.model.entity.TransactionItem;
 public interface TransactionItemDao extends JpaRepository<TransactionItem, Long>{
 	TransactionItem save(TransactionItem transactionItem);
 	List<TransactionItem> findAll();
+	List<TransactionItem> findByTransactionId(Long transactionId);
 	TransactionItem findByLessonId(Long lessonId);
-	  @Modifying
-	    @Query(
-	    	"DELETE FROM TransactionItem ti "
-	    	+ "WHERE ti.transactionId = :transactionId")
-	    void deleteByTransactionId(@Param("transactionId") Long transactionId);
+	
 }

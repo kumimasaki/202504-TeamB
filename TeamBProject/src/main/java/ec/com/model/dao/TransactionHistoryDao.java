@@ -30,7 +30,8 @@ public interface TransactionHistoryDao extends JpaRepository<TransactionHistory,
 			  l.finish_time,
 			  l.lesson_fee,
 			  th.transaction_date,
-			  th.transaction_id
+			  th.transaction_id,
+			  ti.id
 			FROM transaction_history th
 			JOIN transaction_item ti ON th.transaction_id = ti.transaction_id
 			JOIN lesson l ON l.lesson_id = ti.lesson_id

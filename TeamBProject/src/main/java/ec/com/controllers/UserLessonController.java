@@ -208,6 +208,7 @@ public class UserLessonController {
 		if (list == null) {
 			list = new ArrayList<>();
 		}
+		model.addAttribute("userName",loginUser.getUserName());
 		model.addAttribute("loginFlg", true);
 		model.addAttribute("list", list);
 		return "user_planned_application.html";
@@ -380,7 +381,7 @@ public class UserLessonController {
 			return "user_login.html";
 		}
 		// ログイン済みの場合
-		model.addAttribute("loginName", loginUser.getUserName());
+		model.addAttribute("userName", loginUser.getUserName());
 		model.addAttribute("loginUserInfo", loginUser);
 		model.addAttribute("loginFlg", true);
 		// userIdをセッションから取得する
@@ -393,7 +394,7 @@ public class UserLessonController {
 
 	// 購入履歴削除機能
 	@PostMapping("/lesson/history/delete")
-	public String lessonHistoryDelete(@RequestParam Long transactionId, HttpSession session, Model model) {
+	public String lessonHistoryDelete(@RequestParam Long id, HttpSession session, Model model) {
 		// ログインチェック
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
@@ -403,8 +404,8 @@ public class UserLessonController {
 		// ログイン済みの場合
 		model.addAttribute("loginName", loginUser.getUserName());
 		model.addAttribute("loginFlg", true);
-		//購入履歴(transaction_history,transaction_item)を削除する
-		 lessonService.deleteTransactionHistory(transactionId);
+		//購入履歴を削除する
+		 lessonService.deleteLessonHistory(id);
 		return "redirect:/lesson/mypage";
 	}
 
