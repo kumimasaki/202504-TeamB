@@ -79,5 +79,15 @@ public class LessonService {
 		}
 
 	}
-
+	/**
+	 * 講座名による部分一致検索（管理者IDも指定）
+	 *
+	 * @param adminId 管理者ID
+	 * @param keyword 講座名キーワード
+	 * @return 検索結果の講座リスト
+	 */
+	public List<Lesson> searchLessonByKeyword(Long adminId, String keyword) {
+		return lessonDao.searchByKeyword(adminId, keyword);
+	
+	}
 }
