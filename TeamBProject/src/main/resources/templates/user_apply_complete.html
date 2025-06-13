@@ -33,10 +33,39 @@
 			<li>申し込み完了</li>
 		</ul>
 		<div class="apply_3">
-			　　 <p>申し込みが完了いたしました。<br>申し込み内容についてはメールをご覧ください。</p>
+			<p>申し込みが完了いたしました。<br>申し込み内容についてはメールをご覧ください。</p>
+		</div>
+		
+		<!-- 追加：返回菜单按钮 -->
+		<div style="text-align: center; margin-top: 30px;">
+			<button class="menu_return_btn" onclick="location.href='/lesson/menu'">
+				メニューに戻る
+			</button>
 		</div>
 	</article>
 	<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
+
+	<style>
+		/* 追加的按钮样式 */
+		.menu_return_btn {
+			display: inline-block;
+			width: 340px;
+			height: 50px;
+			font-size: 20px;
+			line-height: 50px;
+			border-radius: 25px;
+			background-color: #40CD82;
+			color: #fff;
+			border: none;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+		}
+		
+		.menu_return_btn:hover {
+			opacity: 0.8;
+		}
+	</style>
 </body>
 
 </html>

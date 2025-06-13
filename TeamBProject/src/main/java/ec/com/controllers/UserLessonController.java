@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ec.com.model.dao.LessonDao;
 import ec.com.model.dao.TransactionHistoryDao;
 import ec.com.model.dao.TransactionItemDao;
+import ec.com.model.dto.LessonWithTransactionDto;
 import ec.com.model.entity.Lesson;
 import ec.com.model.entity.TransactionHistory;
 import ec.com.model.entity.TransactionItem;
 import ec.com.model.entity.User;
+import ec.com.services.LessonService;
 import jakarta.servlet.http.HttpSession;
 
 /**
@@ -51,7 +53,10 @@ public class UserLessonController {
 	
 	@Autowired
 	private TransactionItemDao transactionItemDao;
-
+	
+	@Autowired
+	private LessonService lessonService;
+	
 	/**
 	 * 講座一覧画面表示メソッド（メニュー画面）
 	 * 現在時刻以降の講座のみを取得し、時分まで精密チェックを行う
@@ -182,18 +187,16 @@ public class UserLessonController {
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
 		if (loginUser == null) {
+
+
 			return "redirect:/user/login";
 		}
 		// ログイン済みの場合
-		Boolean loginFlg = (Boolean) session.getAttribute("loginFlg");
-		if (loginFlg == null) {
-			loginFlg = true;
-		}
 		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
 		if (list == null) {
 			list = new ArrayList<>();
 		}
-		model.addAttribute("loginFlg", loginFlg);
+		model.addAttribute("loginFlg", true);
 		model.addAttribute("list", list);
 		return "user_planned_application.html";
 	}
@@ -306,6 +309,7 @@ public class UserLessonController {
 	}
 	
 	/**
+
 	 * 支払い処理完了後の処理メソッド（POST）
 	 * Stripe支払い情報を受け取り、取引履歴とアイテムをDBに保存。
 	 * カート情報をセッションから削除し、完了画面を表示。
@@ -332,5 +336,36 @@ public class UserLessonController {
 		model.addAttribute("lessonList", lessonList);
 
 		return "user_menu.html";
+  
+  * マイページ画面表示メソッド
+	 * DBに保存されている購入済み講座内容を取得し表示
+	 * ログイン必須機能：未ログインの場合はログイン画面にリダイレクト
+	 * 
+	 * URL: GET /lesson/mypage
+	 * 
+	 * セッションからuserIdを取得して紐づいた購入履歴を表示
+	 * @param session HTTPセッション（ログイン情報・カート情報取得用）
+	 * @param model Spring MVCのModelオブジェクト（画面へのデータ受け渡し用）
+	 * @return String 遷移先画面のテンプレートファイル名
+	 *               ログイン済み: mypage.html
+	 *               未ログイン: /user/login.html
+	 */
+	@GetMapping("/lesson/mypage")
+	public String getMYpage(HttpSession session, Model model) {
+		// ログインチェック
+		User loginUser = (User) session.getAttribute("loginUserInfo");
+		// 未ログインならログイン画面へ
+		if (loginUser == null) {
+			return "user_login.html";
+		}
+		// ログイン済みの場合
+		model.addAttribute("loginUserInfo",loginUser);
+		model.addAttribute("loginFlg", true);
+		//userIdをセッションから取得する
+		Long userId = loginUser.getUserId();
+		//紐づいた購入講座情報を検索して情報を渡す
+		List<LessonWithTransactionDto>listSub = lessonService.getLessonPurchases(userId);
+		model.addAttribute("listSub", listSub);
+		return "mypage.html";
 	}
 }
