@@ -22,6 +22,8 @@ public class LessonService {
 	private LessonDao lessonDao;
 	@Autowired
 	private TransactionHistoryDao transactionHistoryDao;
+	@Autowired
+    private TransactionItemDao transactionItemDao;
 	/**
 	 * すべての講座を取得する
 	 * 
@@ -130,12 +132,9 @@ public class LessonService {
 	}
 	
 	// 購入履歴の削除
-	/** 作成中
-	 * @Transactional
-		public void deleteTransactionById(Long transactionId) {
-		TransactionItemDao.deleteByTransactionId(transactionId);
-		transactionHistoryDao.deleteById(transactionId);
-		
+	@Transactional
+		public void deleteTransactionHistory(Long transactionId) {
+		transactionItemDao.deleteByTransactionId(transactionId);
+		transactionHistoryDao.deleteById(transactionId);	
 	}
-	**/
 }
