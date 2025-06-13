@@ -12,7 +12,9 @@ import ec.com.model.entity.TransactionItem;
 public interface TransactionItemDao extends JpaRepository<TransactionItem, Long>{
 	TransactionItem save(TransactionItem transactionItem);
 	List<TransactionItem> findAll();
+	List<TransactionItem> findByTransactionId(Long transactionId);
 	TransactionItem findByLessonId(Long lessonId);
+
 	List<TransactionItem> findByTransactionId(Long transactionId);
 	  @Modifying
 	    @Query(
