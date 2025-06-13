@@ -182,7 +182,7 @@ public class UserLessonController {
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
 		if (loginUser == null) {
-			return "/user/login.html";
+			return "redirect:/user/login";
 		}
 		// ログイン済みの場合
 		Boolean loginFlg = (Boolean) session.getAttribute("loginFlg");
