@@ -17,6 +17,7 @@ public class LessonWithTransactionDto {
 	private Integer lessonFee;
 	private LocalDate transactionDate;
 	private Long transactionId;
+	private Long id;
 
 	public Long getLessonId() {
 		return lessonId;
@@ -98,4 +99,13 @@ public class LessonWithTransactionDto {
 	public void setTransactionId(Long transactionId) {
 		this.transactionId = transactionId;
 	}
+	
+	public Long getId() {
+	    return id;
+	}
+
+	public void setId(Long id) {
+	    this.id = id;
+	}
+
 }

@@ -176,7 +176,7 @@ public class UserLessonController {
 			return "✅ レッスンをカートに追加しました！";
 		}
 		for (Lesson lesson : list) {
-			if (lesson.getLessonId() == lessonId) {
+			if (lesson.getLessonId().equals(lessonId)) {
 				return "⚠️ このレッスンはすでにカートに追加されています。";
 			}
 		}
@@ -397,7 +397,7 @@ public class UserLessonController {
 
 	// 購入履歴削除機能
 	@PostMapping("/lesson/history/delete")
-	public String lessonHistoryDelete(@RequestParam Long transactionId, HttpSession session, Model model) {
+	public String lessonHistoryDelete(@RequestParam Long id, HttpSession session, Model model) {
 		// ログインチェック
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
@@ -407,8 +407,8 @@ public class UserLessonController {
 		// ログイン済みの場合
 		model.addAttribute("loginName", loginUser.getUserName());
 		model.addAttribute("loginFlg", true);
-		//購入履歴(transaction_history,transaction_item)を削除する
-		 lessonService.deleteTransactionHistory(transactionId);
+		//購入履歴(transaction_item)を削除する
+		 lessonService.deleteTransactionItemAndHistory(id);
 		return "redirect:/lesson/mypage";
 	}
 
