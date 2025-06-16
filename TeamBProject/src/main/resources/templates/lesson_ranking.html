@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>テンプレート</title>
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header>
+		<div th:if="${loginFlg}">
+			<h1><img src="/img/logo.png"></h1>
+			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+			<p id="user_register_6" style="color: white;" th:text="${userName}"></p>
+		</div>
+		<div th:if="${!loginFlg}">
+			<h1><img src="/img/logo.png"></h1>
+			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+		</div>
+	</header>
+
+	<main>
+		<article>
+
+			<section class="ranking">
+				<h2>人気レッスンランキング</h2>
+				<ul class="ranking">
+					<button class="menu_btn" onclick="location.href='/lesson/menu'">メニュー一覧へ</button>
+					<li th:each="entry, stat : ${rankingList}">
+						<div class="ranking-item">
+							<div class="ranking-position">
+								<span th:text="${stat.index + 1} + '位'">1位</span>
+							</div>
+							<div class="lesson-image">
+								<a th:href="@{/lesson/detail/{lessonId}(lessonId=${entry.lesson.lessonId})}">
+									<img th:src="@{/lesson-image/{items}(items=${entry.lesson.imageName})}"
+										alt="レッスン画像">
+								</a>
+							</div>
+							<div class="lesson-info">
+								<p
+									th:text="${#temporals.format(entry.lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(entry.lesson.startDate)}+')'+${#temporals.format(entry.lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(entry.lesson.finishTime, 'HH:mm')}">
+									レッスンの説明</p>
+								<h3 th:text="${entry.lesson.lessonName}"></h3>
+								<p id="price" th:text="${entry.lesson.lessonFee}+'円（税込み）'"></p>
+								<p>お気に入り数: <span th:text="${entry.likeCount}">0</span></p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</section>
+		</article>
+	</main>
+</body>
+
+</html>
