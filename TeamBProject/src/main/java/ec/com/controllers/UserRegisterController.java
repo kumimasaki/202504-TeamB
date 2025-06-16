@@ -64,16 +64,16 @@ public class UserRegisterController {
 			
 		}
 	
-	// 登録内容の確認処理
-		@GetMapping("/user/check")
-		@ResponseBody
-		public boolean checkEmail(@RequestParam String email) {
-			User user = userDao.findByUserEmail(email);
-			
-			if(user==null) {
-				return true;
-			}else {
-				return false;
-			}
+	// ユーザー存在するかをチェックする
+	@GetMapping("/user/check")
+	@ResponseBody
+	public boolean checkEmail(@RequestParam String email) {
+		User user = userDao.findByUserEmail(email);
+		
+		if(user==null) {
+			return true;
+		}else {
+			return false;
 		}
+	}
 }

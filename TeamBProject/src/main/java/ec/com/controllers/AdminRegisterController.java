@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import ec.com.model.dao.AdminDao;
 import ec.com.model.entity.Admin;
+import ec.com.model.entity.User;
 import ec.com.services.AdminService;
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +22,9 @@ public class AdminRegisterController {
 
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private AdminDao adminDao;
 
 	// 登録画面表示 @GetMapping("/admin/register")
 	@GetMapping("/admin/register")
@@ -71,5 +77,17 @@ public class AdminRegisterController {
 			return "redirect:/admin/register";
 		}
 	}
-
+	
+	// 管理者存在するかをチェックする
+	@GetMapping("/admin/check")
+	@ResponseBody
+	public boolean checkAdminEmail(@RequestParam String email) {
+		Admin admin = adminDao.findByAdminEmail(email);
+		
+		if(admin==null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 }

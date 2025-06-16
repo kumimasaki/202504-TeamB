@@ -21,7 +21,7 @@
 	</header>
 	<article>
 		<h2>登録内容確認</h2>
-		<form th:action="@{/admin/register/process}" method="post">
+		<form th:action="@{/admin/register/process}" method="post" onclick="return checkAdminExistsAndSubmit()">
 			<div class="register_2">
 				　　　　　　<table class="register_2_table">
 					<tr>
@@ -51,5 +51,25 @@
 	</article>
 	<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
 </body>
+<script>
+function checkAdminExistsAndSubmit() {
+    const email = document.querySelector('input[name="adminEmail"]').value;
 
+    fetch(`/admin/check?email=${email}`)
+		.then(response => response.text())
+	    .then(message => {
+            if (message == "true") {
+				alert("管理者登録は成功しました。");
+				return true;
+            } else {
+				alert("⚠️ このメールアドレスはすでに登録されています。");
+				return false;
+            }
+        })
+        .catch(error => {
+            console.error("エラー:", error);
+            alert("確認中にエラーが発生しました。");
+        });
+}
+</script>
 </html>

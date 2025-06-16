@@ -21,7 +21,7 @@
 	</header>
 	<article>
 		<h2>新規会員登録</h2>
-		<form th:action="@{/admin/confirm}" method="post">
+		<form th:action="@{/admin/confirm}" method="post" onsubmit="return checkPasswordMatch()">
 			<div class="register">
 				<table class="register_table">
 					<tr>
@@ -33,19 +33,19 @@
 					<tr>
 						<th>メールアドレス</th>
 						<td>
-							<input type="text" name="adminEmail" required>
+							<input type="email" name="adminEmail" required>
 						</td>
 					</tr>
 					<tr>
 						<th>パスワード</th>
 						<td>
-							<input type="password" name="password" required>
+							<input id="password1" type="password" name="password" required>
 						</td>
 					</tr>
 					<tr>
 						<th>パスワード(確認用)</th>
 						<td>
-							<input type="password" name="adminPassword" required>
+							<input id="confirmPassword" type="password" name="adminPassword" required>
 						</td>
 					</tr>
 				</table>
@@ -55,5 +55,5 @@
 	</article>
 	<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
 </body>
-
+<script src="../js/checkPasswordMatch.js"></script>
 </html>
