@@ -19,4 +19,16 @@ public interface TransactionItemDao extends JpaRepository<TransactionItem, Long>
 	    	"DELETE FROM TransactionItem ti "
 	    	+ "WHERE ti.transactionId = :transactionId")
 	    void deleteByTransactionId(@Param("transactionId") Long transactionId);
+	  
+	  //購入履歴削除
+	  @Modifying
+	    @Query(
+	    	"DELETE FROM TransactionItem ti "
+	    	+ "WHERE ti.id = :id")
+	    void deleteById(@Param("id") Long id);
+	  
+	  //同じtransactionIdを持つitemがあるか判定
+	  boolean existsByTransactionId(Long transactionId);
+	  
+
 }
