@@ -1439,3 +1439,10 @@ table, tr, th, td {
 	gap: 1em;
 	justify-content: center;
 }
+
+.like button {
+    width: 150px !important;
+    height: 26px !important;
+    line-height: 26px !important;
+    border-radius: 13px !important;
+}

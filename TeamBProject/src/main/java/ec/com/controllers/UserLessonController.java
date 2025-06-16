@@ -19,6 +19,7 @@ import ec.com.model.dao.LessonDao;
 import ec.com.model.dao.LikeDao;
 import ec.com.model.dao.TransactionHistoryDao;
 import ec.com.model.dao.TransactionItemDao;
+import ec.com.model.dto.LessonLikeDto;
 import ec.com.model.dto.LessonWithTransactionDto;
 import ec.com.model.entity.Lesson;
 import ec.com.model.entity.Like;
@@ -214,6 +215,15 @@ public class UserLessonController {
 		}
 		model.addAttribute("loginFlg", true);
 		model.addAttribute("list", list);
+		
+		List<Like> likes = likeDao.findByUserId(loginUser.getUserId());
+		List<LessonLikeDto> likeList = new ArrayList<LessonLikeDto>();
+		for (Like like : likes) {
+			Lesson lesson = lessonDao.findByLessonId(like.getLessonId());
+			likeList.add(new LessonLikeDto(lesson));
+		}
+		model.addAttribute("likeList", likeList);
+		
 		return "user_planned_application.html";
 	}
 
@@ -415,21 +425,39 @@ public class UserLessonController {
 	@PostMapping("/lesson/like/all")
 	@ResponseBody
 	public String AddLike(@RequestParam("lessonId") Long lessonId,
-			@RequestParam("userId") Long userId,
-			HttpSession session) {
+						  HttpSession session) {
 		User user = (User) session.getAttribute("loginUserInfo");
 		if (user == null) {
 			return "refuse";
 		}
 
-		Like like = likeDao.findByLessonIdAndUserId(lessonId, userId);
+		Like like = likeDao.findByLessonIdAndUserId(lessonId, user.getUserId());
 		if (like == null) {
-			likeDao.save(new Like(lessonId, userId));
+			likeDao.save(new Like(lessonId, user.getUserId()));
 			return "liked";
 		} else {
-			likeDao.deleteByLessonIdAndUserId(lessonId, userId);
+			likeDao.deleteByLessonIdAndUserId(lessonId, user.getUserId());
 			return "not-liked";
 		}
+	}
+	
+	
+	@GetMapping("/lesson/cart")
+	@ResponseBody
+	public List<Lesson> getLessonCart(HttpSession session, Model model) {
+		// ログインチェック
+		User loginUser = (User) session.getAttribute("loginUserInfo");
+		// 未ログインならログイン画面へ
+		if (loginUser == null) {
+			return new ArrayList<Lesson>();
+		}
+		// ログイン済みの場合
+		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
+		if (list == null) {
+			list = new ArrayList<Lesson>();
+		}
+		
+		return list;
 	}
 }
 

@@ -19,11 +19,15 @@ function addToCart(lessonId) {
             if (document.getElementById('messageBox')) {
                 document.getElementById('messageBox').innerText = message;
             }
-
+			// error
             // 3秒後に自動消去
             setTimeout(() => {
-                messageBox.innerText = '';
-                document.getElementById('messageBox').innerText = '';
+				if (messageBox) {
+                	messageBox.innerText = '';
+					}
+				if (document.getElementById('messageBox')) {
+                	document.getElementById('messageBox').innerText = '';
+					}
             }, 3000);
         })
         .catch(error => {
@@ -31,13 +35,13 @@ function addToCart(lessonId) {
         });
 }
 
-function addToLike(lessonId, userId) {
+function addToLike(lessonId) {
     fetch('/lesson/like/all', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({ lessonId: lessonId, userId: userId })
+        body: new URLSearchParams({ lessonId: lessonId })
     })
         .then(response => response.text())
         .then(message => {
