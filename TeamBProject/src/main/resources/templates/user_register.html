@@ -22,7 +22,7 @@
     </header>
     <article>
         <h2>新規会員登録</h2>
-        <form th:action="@{/user/confirm/process}" method="post">
+        <form th:action="@{/user/confirm/process}" method="post" onsubmit="return checkPasswordMatch()">
             <div class="register">
                 <table class="register_table">
                     <tr>
@@ -55,13 +55,25 @@
                     </tr>
                 </table>
             </div>
-            <a href="/user/login">
+            <a href="/user/login" class="display: inline-block;">
                 <button id="register_2_back" onclick="history.back();"
                     type="button">&lsaquo;&lsaquo;&nbsp;&nbsp;&nbsp;ログイン画面に戻る</button>
+            </a>
                 <button class="register_btn" type="submit">確認画面へ</button>
         </form>
     </article>
     <footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
 </body>
+<script>
+    function checkPasswordMatch() {
+        const password = document.querySelector('input[name="userPassword"]').value;
+        const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
 
+        if (password !== confirmPassword) {
+            alert("パスワードが一致しません。");
+            return false; // フォーム送信を中止
+        }
+        return true;
+    }
+</script>
 </html>

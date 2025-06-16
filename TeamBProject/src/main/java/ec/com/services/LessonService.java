@@ -3,6 +3,8 @@ package ec.com.services;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,7 @@ import ec.com.model.dto.LessonWithTransactionDto;
 import ec.com.model.entity.Lesson;
 import ec.com.model.entity.TransactionItem;
 import jakarta.transaction.Transactional;
+import ec.com.model.dto.LessonStatsWithInfoDto;
 
 @Service
 public class LessonService {
@@ -140,6 +143,42 @@ public class LessonService {
 		}
 		return list;
 	}
+	
+	public List<LessonWithTransactionDto> getLessonPurchases(Long userId, Integer buyTime) {
+		List<Object[]> resultList = null;
+		
+		if (buyTime == 1) { // 今日
+		    LocalDateTime today = LocalDate.now().atStartOfDay();
+		    resultList = transactionHistoryDao.findByUserIdAndFromDate(userId, Timestamp.valueOf(today));
+		} else if (buyTime == 2) { // 1ヶ月
+		    LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+		    resultList = transactionHistoryDao.findByUserIdAndFromDate(userId, Timestamp.valueOf(oneMonthAgo));
+		} else if (buyTime == 3) { // 1年
+		    LocalDateTime oneYearAgo = LocalDateTime.now().minusYears(1);
+		    resultList = transactionHistoryDao.findByUserIdAndFromDate(userId, Timestamp.valueOf(oneYearAgo));
+		} else {
+		    resultList = transactionHistoryDao.findLessonAndTransactionByUserId(userId);
+		}
+		
+		    List<LessonWithTransactionDto> list = new ArrayList<>();
+		    for (Object[] row : resultList) {
+		        LessonWithTransactionDto dto = new LessonWithTransactionDto();
+		        dto.setLessonId(((Long) row[0]).longValue());
+		        dto.setLessonName((String) row[1]);
+		        dto.setLessonDetail((String) row[2]);
+		        dto.setImageName((String) row[3]);
+		        dto.setStartDate(((Date) row[4]).toLocalDate());
+		        dto.setStartTime(((Time) row[5]).toLocalTime());
+		        dto.setFinishTime(((Time) row[6]).toLocalTime());
+		        dto.setLessonFee((Integer) row[7]);
+		        dto.setTransactionDate(((Timestamp) row[8]).toLocalDateTime().toLocalDate());
+		        dto.setTransactionId(((Number) row[9]).longValue());
+		        dto.setId(((Number) row[10]).longValue());
+		        list.add(dto);
+		    }
+		return list;
+	}
+	
 
 	/**
 	 * 購入履歴の削除を行う。 選択されたitemをDBから削除処理 その後、transactionHistoryを削除する。
@@ -191,5 +230,43 @@ public class LessonService {
 	        rankingList.add(map);
 	    }
 	    return rankingList;
+	}
+	
+	public List<LessonStatsWithInfoDto> getLessonStatsList(Long adminId) {
+	    // 統計データ（講座ID, 申込数, 売上）
+	    List<Object[]> results = transactionHistoryDao.countApplicationsAndSalesPerLesson();
+	    // 講座情報（講座ID, 名前, 料金...）
+	    List<Lesson> lessons = lessonDao.findByAdminId(adminId);
+
+	    List<LessonStatsWithInfoDto> statsList = new ArrayList<>();
+
+	    for (Lesson lesson : lessons) {
+	        LessonStatsWithInfoDto dto = new LessonStatsWithInfoDto();
+	        dto.setLessonId(lesson.getLessonId());
+	        dto.setLessonName(lesson.getLessonName());
+	        dto.setLessonFee(lesson.getLessonFee());
+
+	        // 初期値（該当する統計がない場合）
+	        dto.setApplyCount(0);
+	        dto.setTotalSales(0);
+
+	     // 統計結果と照合
+	        for (Object[] row : results) {
+	            // row[0] 是 lessonId
+	            if (row[0] != null && lesson.getLessonId().equals(Long.parseLong(row[0].toString()))) {
+	                // row[3] 是申込人数（apply_count），先取出来
+	                int applyCount = row[3] != null ? Integer.parseInt(row[3].toString()) : 0;
+
+	                dto.setApplyCount(applyCount);
+	                dto.setTotalSales(lesson.getLessonFee() * applyCount); // 直接用 fee * 人数
+	                break;
+	            }
+	        }
+	       
+
+	        statsList.add(dto);
+	    }
+
+	    return statsList;
 	}
 }

@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ec.com.model.dao.LessonDao;
-import ec.com.model.dao.LikeDao;
-import ec.com.model.dao.TransactionHistoryDao;
-import ec.com.model.dao.TransactionItemDao;
+
+import ec.com.model.dao.*;
+import ec.com.model.dto.CommentDto;
 import ec.com.model.dto.LessonLikeDto;
 import ec.com.model.dto.LessonWithTransactionDto;
+import ec.com.model.entity.Comment;
 import ec.com.model.entity.Lesson;
 import ec.com.model.entity.Like;
 import ec.com.model.entity.TransactionHistory;
@@ -37,6 +37,8 @@ import jakarta.servlet.http.HttpSession;
  */
 @Controller
 public class UserLessonController {
+
+    private final UserDao userDao;
 
 	/**
 	 * HTTPセッション管理オブジェクト ユーザーのログイン状態やカート情報を管理
@@ -61,6 +63,13 @@ public class UserLessonController {
 
 	@Autowired
 	private LikeDao likeDao;
+	
+	@Autowired
+	private CommentDao commentDao;
+
+    UserLessonController(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
 	/**
 	 * 講座一覧画面表示メソッド（メニュー画面） 現在時刻以降の講座のみを取得し、時分まで精密チェックを行う
@@ -121,6 +130,15 @@ public class UserLessonController {
 		} else {
 			model.addAttribute("loginFlg", false);
 		}
+		
+		List<Comment> comments = commentDao.findByLessonId(lessonId);
+		ArrayList<CommentDto> commentList = new ArrayList<CommentDto>();
+		for (Comment comment : comments) {
+			Long userId = comment.getUserId();
+			String userName = userDao.findByUserId(userId).getUserName();
+			commentList.add(new CommentDto(userName, comment.getContext(), comment.getRegisterDate()));
+		}
+		model.addAttribute("commentList", commentList);
 
 		return "user_lesson_detail.html";
 	}
@@ -266,6 +284,23 @@ public class UserLessonController {
 		return "user_apply_select_payment.html";
 	}
 
+	/**
+	 * 講座申込内容確認画面の表示処理。
+	 * 選択された支払方法とセッション内のカート情報をもとに、確認画面に必要な情報をModelに設定する。
+	 * 
+	 * リクエスト情報
+	 * HTTPメソッド: POST  
+	 * URL: /lesson/confirm
+	 * 
+	 * @param payment 支払方法（0: 現金、1: 銀行振込、2: クレジットカード）
+	 * @param session HTTPセッション（ログイン情報とカート情報の取得用）
+	 * @param model Viewに渡すデータ格納用のModelオブジェクト
+	 * @return user_confirm_apply_detail.html（申込内容確認画面）  
+	 *         - 未ログイン：ログイン画面へリダイレクト  
+	 *         - カートが空：講座メニュー画面へリダイレクト  
+	 *         - それ以外：確認画面を表示
+	 */
+
 	@PostMapping("/lesson/confirm")
 	public String confirmApplyDetail(@RequestParam("payment") Integer payment,
 			HttpSession session,
@@ -324,16 +359,29 @@ public class UserLessonController {
 
 		model.addAttribute("loginFlg", true);
 		System.out.println("stripeEmail: " + stripeEmail);
+		
 
 		int amount = (int) session.getAttribute("amount");
-		TransactionHistory transactionHistory = new TransactionHistory(user.getUserId(), amount,
-				new Timestamp(System.currentTimeMillis()));
-		transactionHistory = transactionHistoryDao.save(transactionHistory);
-
 		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
+
 		for (Lesson lesson : list) {
-			transactionItemDao.save(new TransactionItem(lesson.getLessonId(), transactionHistory.getTransactionId()));
+			// 保存transaction_history
+		    TransactionHistory transactionHistory = new TransactionHistory(
+		        user.getUserId(),
+		        lesson.getLessonId(),
+		        amount,
+		        new Timestamp(System.currentTimeMillis())
+		    );
+		    transactionHistory = transactionHistoryDao.save(transactionHistory);
+		 // transaction_item に1件ずつ保存（講座ID + 取引ID + 単価）
+		    TransactionItem item = new TransactionItem(
+		        lesson.getLessonId(),
+		        transactionHistory.getTransactionId(),
+		        lesson.getLessonFee()
+		    );
+		    transactionItemDao.save(item);
 		}
+
 
 		session.removeAttribute("list");
 		return "user_apply_complete.html";
@@ -388,7 +436,9 @@ public class UserLessonController {
 	 */
   
 	@GetMapping("/lesson/mypage")
-	public String getMYpage(HttpSession session, Model model) {
+	public String getMYpage(@RequestParam(value = "buyTime", required = false) String buyTime,
+							HttpSession session,
+							Model model) {
 		// ログインチェック
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
@@ -402,8 +452,16 @@ public class UserLessonController {
 		// userIdをセッションから取得する
 		Long userId = loginUser.getUserId();
 		// 紐づいた購入講座情報を検索して情報を渡す
-		List<LessonWithTransactionDto> listSub = lessonService.getLessonPurchases(userId);
+		List<LessonWithTransactionDto> listSub = null;
+		if(buyTime==null) {
+			listSub = lessonService.getLessonPurchases(userId);
+		}else {
+			listSub = lessonService.getLessonPurchases(userId, Integer.parseInt(buyTime));
+			model.addAttribute("buyTime", Integer.parseInt(buyTime));
+		}
+		
 		model.addAttribute("listSub", listSub);
+		
 		return "mypage.html";
 	}
 
@@ -443,7 +501,24 @@ public class UserLessonController {
 		}
 	}
 	
-	
+	/**
+	 * カート内の講座一覧を取得するAPI。
+	 * セッションから現在のカート（講座リスト）を取得して返す。
+	 * ※ログイン必須。未ログインの場合は空のリストを返す。
+	 *
+	 * リクエスト情報
+	 * HTTPメソッド: GET  
+	 * URL: /lesson/cart  
+	 * 戻り値はJSON形式のレスポンス（@ResponseBody による）。
+	 *
+	 * @param session HTTPセッション（ログインユーザーとカート情報の取得用）
+	 * @param model SpringのModel（今回は使用されていないが、引数に含まれる）
+	 * @return カート内に保存された講座のリスト  
+	 *         - 未ログインの場合：空のリストを返す  
+	 *         - ログイン済みでカートが存在しない場合：空のリストを返す  
+	 *         - ログイン済みでカートに講座がある場合：その講座リストを返す
+	 */
+
 	@GetMapping("/lesson/cart")
 	@ResponseBody
 	public List<Lesson> getLessonCart(HttpSession session, Model model) {
@@ -485,5 +560,39 @@ public class UserLessonController {
 	}
 
 
+	/**
+	 * カート追加処理メソッド。  
+	 * 指定された講座をセッション内のカートリストに追加する。  
+	 * ※ログイン必須（未ログインの場合は処理を拒否）。
+	 *
+	 * リクエスト情報
+	 * HTTPメソッド: POST  
+	 * URL: /lesson/cart/all
+	 *
+	 * @param lessonId 追加対象の講座ID（リクエストパラメータ）
+	 * @param session HTTPセッション（ログイン情報・カート情報の保存・取得用）
+	 * @return 処理結果のメッセージ  
+	 *         - 成功: "✅ レッスンをカートに追加しました！"  
+	 *         - 重複: "⚠️ このレッスンはすでにカートに追加されています。"  
+	 *         - 未ログイン: "refuse"
+	 */
+
+	@PostMapping("/lesson/comment/add")
+	public String commentAdd(@RequestParam("lessonId") Long lessonId,
+							 @RequestParam("context") String context,
+						     HttpSession session) {
+		// ログインチェック
+		User loginUser = (User) session.getAttribute("loginUserInfo");
+		// 未ログインならログイン画面へ
+		if (loginUser == null) {
+			return "redirect:/user/login";
+		}
+		// ログイン済みの場合
+		commentDao.save(new Comment(lessonId,loginUser.getUserId(),context,new Timestamp(System.currentTimeMillis())));
+		List<Comment> commentList = commentDao.findAll();
+		session.setAttribute("commentList", commentList);
+		
+		return "redirect:/lesson/detail/" + lessonId;
+	}
 }
 

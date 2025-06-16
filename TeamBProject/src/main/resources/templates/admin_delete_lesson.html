@@ -27,6 +27,11 @@
 				<button type="submit">削除する</button>
 				<div class="number">講座番号<input type="text" name="lessonId" required></div>
 			</div>
+			
+			<div th:if="${isEmpty}" class="no-results">
+			  <p>該当する記事が見つかりませんでした。</p>
+			</div>
+			
 		</form>
 		<table class="delete_table">
 			<tr>

@@ -14,15 +14,15 @@
 </head>
 
 <body>
-  <header>
+    <header>
         <div th:if="${loginFlg}">
-             <h1><img th:src="@{/img/logo.png}"></h1>
-             <p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
-             <p id="user_register_6" style="color: white;" th:text="${userName}"></p>   
+            <h1><img th:src="@{/img/logo.png}"></h1>
+            <p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+            <p id="user_register_6" style="color: white;" th:text="${userName}"></p>
         </div>
-         <div th:if="${!loginFlg}">
-             <h1><img th:src="@{/img/logo.png}"></h1>
-             <p id="mypage"><a th:href="@{/lesson/mypage}">マイページ</a></p>   
+        <div th:if="${!loginFlg}">
+            <h1><img th:src="@{/img/logo.png}"></h1>
+            <p id="mypage"><a th:href="@{/lesson/mypage}">マイページ</a></p>
         </div>
     </header>
     <article>
@@ -33,36 +33,61 @@
                 <tr>
                     <th>開催日</th>
                     <td>
-                        <input type="text" readonly="readonly" th:value="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'">
+                        <input type="text" readonly="readonly"
+                            th:value="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'">
                     </td>
                 </tr>
                 <tr>
                     <th>開催時間</th>
                     <td>
-                        <input type="text" readonly="readonly" th:value="${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
+                        <input type="text" readonly="readonly"
+                            th:value="${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
                     </td>
                 </tr>
                 <tr>
                     <th>講座内容</th>
                     <td>
-                        <textarea name="講座内容" cols="30" rows="5" readonly="readonly" th:text="${lesson.lessonDetail}"></textarea>
+                        <textarea name="講座内容" cols="30" rows="5" readonly="readonly"
+                            th:text="${lesson.lessonDetail}"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <th>受講料</th>
                     <td>
-                        <input type="text" readonly="readonly" th:value="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')}">
+                        <input type="text" readonly="readonly"
+                            th:value="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')}">
                     </td>
             </table>
             <div class="change-button">
                 <button id="return_btn" onclick="history.back();" type="button">戻る</button>
-				<button th:if="${loginFlg}" id="like_btn" th:class="${liked} ? liked : not-liked" th:text="${liked} ? '❤️ お気に入り済み' : 'お気に入り'" th:onclick="|addToLike([[${lesson.lessonId}]])|" type="button"></button>
+                <button th:if="${loginFlg}" id="like_btn" th:class="${liked} ? liked : not-liked"
+                    th:text="${liked} ? '❤️ お気に入り済み' : 'お気に入り'" th:onclick="|addToLike([[${lesson.lessonId}]])|"
+                    type="button"></button>
                 <button id="change_btn" th:onclick="|addToCart([[${lesson.lessonId}]])|">カートに追加</button>
             </div>
         </div>
-		<div class="messageBox" id="messageBox"></div>
+        <div class="messageBox" id="messageBox"></div>
+    </article>
+    <article>
+        <h2>コメント</h2>
+        <form action="/lesson/comment/add" method="post" style="text-align: center;margin-bottom: 30px;">
+            <textarea style="width: 100%;margin-bottom: 10px;" name="context" id="" cols="30" rows="7"></textarea>
+            <button name="lessonId" th:value="${lesson.lessonId}"
+                style="margin: auto; background-color: orange;width: 100px;height: 30px;border-radius: 10px;">提出</button>
+        </form>
+        <ul>
+            <li th:each="comment:${commentList}">
+                <div style="border: solid 1px gray;padding: 20px 10px;position: relative;margin-bottom: 30px;">
+                    <p><span style="font-weight: 700;" th:text="${comment.userName}"></span><span
+                            style="position: absolute; left: 200px;" th:text="${#dates.format(comment.registerDate, 'yyyy/MM/dd')}"></span></p>
+                    <p style="margin-top: 30px;" th:text="${comment.context}"></p>
+                </div>
+            </li>
+        </ul>
+
     </article>
     <footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
 </body>
 <script th:src="@{/js/addToCart.js}"></script>
+
 </html>
