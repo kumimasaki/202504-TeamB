@@ -59,7 +59,7 @@ article h2 {
     
     /* 橙色系动态渐变底线 */
     border-bottom: none;
-    background: linear-gradient(90deg, #ff6b35, rgb(241, 160, 80), rgb(245, 224, 31), rgb(235, 159, 58), #ff6b35);
+    background: linear-gradient(90deg, rgb(255, 79, 53), rgb(245, 224, 31), rgb(253, 70, 55));
     background-size: 300% 3px;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -1548,4 +1548,15 @@ td {
 	white-space: nowrap;
 	vertical-align: middle;
 	font-size: 16px;
+}
+@keyframes gradient-move {
+    0% {
+        background-position: 0% bottom;
+    }
+    50% {
+        background-position: 100% bottom;
+    }
+    100% {
+        background-position: 0% bottom;
+    }
 }
