@@ -3,6 +3,8 @@ package ec.com.services;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +119,41 @@ public class LessonService {
 		 List<Object[]> result = transactionHistoryDao.findLessonAndTransactionByUserId(userId);
 		    List<LessonWithTransactionDto> list = new ArrayList<>();
 		    for (Object[] row : result) {
+		        LessonWithTransactionDto dto = new LessonWithTransactionDto();
+		        dto.setLessonId(((Long) row[0]).longValue());
+		        dto.setLessonName((String) row[1]);
+		        dto.setLessonDetail((String) row[2]);
+		        dto.setImageName((String) row[3]);
+		        dto.setStartDate(((Date) row[4]).toLocalDate());
+		        dto.setStartTime(((Time) row[5]).toLocalTime());
+		        dto.setFinishTime(((Time) row[6]).toLocalTime());
+		        dto.setLessonFee((Integer) row[7]);
+		        dto.setTransactionDate(((Timestamp) row[8]).toLocalDateTime().toLocalDate());
+		        dto.setTransactionId(((Number) row[9]).longValue());
+		        dto.setId(((Number) row[10]).longValue());
+		        list.add(dto);
+		    }
+		return list;
+	}
+	
+	public List<LessonWithTransactionDto> getLessonPurchases(Long userId, Integer buyTime) {
+		List<Object[]> resultList = null;
+		
+		if (buyTime == 1) { // 今日
+		    LocalDateTime today = LocalDate.now().atStartOfDay();
+		    resultList = transactionHistoryDao.findByUserIdAndFromDate(userId, Timestamp.valueOf(today));
+		} else if (buyTime == 2) { // 1ヶ月
+		    LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+		    resultList = transactionHistoryDao.findByUserIdAndFromDate(userId, Timestamp.valueOf(oneMonthAgo));
+		} else if (buyTime == 3) { // 1年
+		    LocalDateTime oneYearAgo = LocalDateTime.now().minusYears(1);
+		    resultList = transactionHistoryDao.findByUserIdAndFromDate(userId, Timestamp.valueOf(oneYearAgo));
+		} else {
+		    resultList = transactionHistoryDao.findLessonAndTransactionByUserId(userId);
+		}
+		
+		    List<LessonWithTransactionDto> list = new ArrayList<>();
+		    for (Object[] row : resultList) {
 		        LessonWithTransactionDto dto = new LessonWithTransactionDto();
 		        dto.setLessonId(((Long) row[0]).longValue());
 		        dto.setLessonName((String) row[1]);

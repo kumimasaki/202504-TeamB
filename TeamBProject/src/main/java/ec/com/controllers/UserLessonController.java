@@ -436,9 +436,13 @@ public class UserLessonController {
 		List<LessonWithTransactionDto> listSub = null;
 		if(buyTime==null) {
 			listSub = lessonService.getLessonPurchases(userId);
+		}else {
+			listSub = lessonService.getLessonPurchases(userId, Integer.parseInt(buyTime));
+			model.addAttribute("buyTime", Integer.parseInt(buyTime));
 		}
 		
 		model.addAttribute("listSub", listSub);
+		
 		return "mypage.html";
 	}
 
