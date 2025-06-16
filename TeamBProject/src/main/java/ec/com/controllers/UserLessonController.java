@@ -282,6 +282,23 @@ public class UserLessonController {
 		return "user_apply_select_payment.html";
 	}
 
+	/**
+	 * 講座申込内容確認画面の表示処理。
+	 * 選択された支払方法とセッション内のカート情報をもとに、確認画面に必要な情報をModelに設定する。
+	 * 
+	 * リクエスト情報
+	 * HTTPメソッド: POST  
+	 * URL: /lesson/confirm
+	 * 
+	 * @param payment 支払方法（0: 現金、1: 銀行振込、2: クレジットカード）
+	 * @param session HTTPセッション（ログイン情報とカート情報の取得用）
+	 * @param model Viewに渡すデータ格納用のModelオブジェクト
+	 * @return user_confirm_apply_detail.html（申込内容確認画面）  
+	 *         - 未ログイン：ログイン画面へリダイレクト  
+	 *         - カートが空：講座メニュー画面へリダイレクト  
+	 *         - それ以外：確認画面を表示
+	 */
+
 	@PostMapping("/lesson/confirm")
 	public String confirmApplyDetail(@RequestParam("payment") Integer payment,
 			HttpSession session,
@@ -482,7 +499,24 @@ public class UserLessonController {
 		}
 	}
 	
-	
+	/**
+	 * カート内の講座一覧を取得するAPI。
+	 * セッションから現在のカート（講座リスト）を取得して返す。
+	 * ※ログイン必須。未ログインの場合は空のリストを返す。
+	 *
+	 * リクエスト情報
+	 * HTTPメソッド: GET  
+	 * URL: /lesson/cart  
+	 * 戻り値はJSON形式のレスポンス（@ResponseBody による）。
+	 *
+	 * @param session HTTPセッション（ログインユーザーとカート情報の取得用）
+	 * @param model SpringのModel（今回は使用されていないが、引数に含まれる）
+	 * @return カート内に保存された講座のリスト  
+	 *         - 未ログインの場合：空のリストを返す  
+	 *         - ログイン済みでカートが存在しない場合：空のリストを返す  
+	 *         - ログイン済みでカートに講座がある場合：その講座リストを返す
+	 */
+
 	@GetMapping("/lesson/cart")
 	@ResponseBody
 	public List<Lesson> getLessonCart(HttpSession session, Model model) {
@@ -501,6 +535,23 @@ public class UserLessonController {
 		return list;
 	}
 	
+	/**
+	 * カート追加処理メソッド。  
+	 * 指定された講座をセッション内のカートリストに追加する。  
+	 * ※ログイン必須（未ログインの場合は処理を拒否）。
+	 *
+	 * リクエスト情報
+	 * HTTPメソッド: POST  
+	 * URL: /lesson/cart/all
+	 *
+	 * @param lessonId 追加対象の講座ID（リクエストパラメータ）
+	 * @param session HTTPセッション（ログイン情報・カート情報の保存・取得用）
+	 * @return 処理結果のメッセージ  
+	 *         - 成功: "✅ レッスンをカートに追加しました！"  
+	 *         - 重複: "⚠️ このレッスンはすでにカートに追加されています。"  
+	 *         - 未ログイン: "refuse"
+	 */
+
 	@PostMapping("/lesson/comment/add")
 	public String commentAdd(@RequestParam("lessonId") Long lessonId,
 							 @RequestParam("context") String context,
