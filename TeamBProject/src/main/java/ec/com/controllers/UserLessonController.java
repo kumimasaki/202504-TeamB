@@ -312,16 +312,29 @@ public class UserLessonController {
 
 		model.addAttribute("loginFlg", true);
 		System.out.println("stripeEmail: " + stripeEmail);
+		
 
 		int amount = (int) session.getAttribute("amount");
-		TransactionHistory transactionHistory = new TransactionHistory(user.getUserId(), amount,
-				new Timestamp(System.currentTimeMillis()));
-		transactionHistory = transactionHistoryDao.save(transactionHistory);
-
 		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
+
 		for (Lesson lesson : list) {
-			transactionItemDao.save(new TransactionItem(lesson.getLessonId(), transactionHistory.getTransactionId()));
+			// 保存transaction_history
+		    TransactionHistory transactionHistory = new TransactionHistory(
+		        user.getUserId(),
+		        lesson.getLessonId(),
+		        amount,
+		        new Timestamp(System.currentTimeMillis())
+		    );
+		    transactionHistory = transactionHistoryDao.save(transactionHistory);
+		 // transaction_item に1件ずつ保存（講座ID + 取引ID + 単価）
+		    TransactionItem item = new TransactionItem(
+		        lesson.getLessonId(),
+		        transactionHistory.getTransactionId(),
+		        lesson.getLessonFee()
+		    );
+		    transactionItemDao.save(item);
 		}
+
 
 		session.removeAttribute("list");
 		return "user_apply_complete.html";

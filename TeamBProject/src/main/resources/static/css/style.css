@@ -1439,3 +1439,9 @@ table, tr, th, td {
 	gap: 1em;
 	justify-content: center;
 }
+
+.lineup_table td {
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: 16px;
+}

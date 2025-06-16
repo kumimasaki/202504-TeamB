@@ -37,4 +37,18 @@ public interface TransactionHistoryDao extends JpaRepository<TransactionHistory,
 			WHERE th.user_id = :userId
 			""", nativeQuery = true)
 	List<Object[]> findLessonAndTransactionByUserId(@Param("userId") Long userId);
+	
+	@Query(value = """
+					   SELECT
+			  l.lesson_id,
+			  l.lesson_name,
+			  l.lesson_fee,
+			  COUNT(ti.id) AS apply_count,
+			  COUNT(ti.id) * l.lesson_fee AS total_sales
+			FROM lesson l
+			LEFT JOIN transaction_item ti ON l.lesson_id = ti.lesson_id
+			GROUP BY l.lesson_id, l.lesson_name, l.lesson_fee
+					    """, nativeQuery = true)
+	List<Object[]> countApplicationsAndSalesPerLesson();
+
 }

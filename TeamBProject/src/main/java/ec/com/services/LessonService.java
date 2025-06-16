@@ -14,6 +14,7 @@ import ec.com.model.dao.TransactionItemDao;
 import ec.com.model.dto.LessonWithTransactionDto;
 import ec.com.model.entity.Lesson;
 import jakarta.transaction.Transactional;
+import ec.com.model.dto.LessonStatsWithInfoDto;
 
 @Service
 public class LessonService {
@@ -136,5 +137,43 @@ public class LessonService {
 		public void deleteTransactionHistory(Long transactionId) {
 		transactionItemDao.deleteByTransactionId(transactionId);
 		transactionHistoryDao.deleteById(transactionId);	
+	}
+	
+	public List<LessonStatsWithInfoDto> getLessonStatsList(Long adminId) {
+	    // 統計データ（講座ID, 申込数, 売上）
+	    List<Object[]> results = transactionHistoryDao.countApplicationsAndSalesPerLesson();
+	    // 講座情報（講座ID, 名前, 料金...）
+	    List<Lesson> lessons = lessonDao.findByAdminId(adminId);
+
+	    List<LessonStatsWithInfoDto> statsList = new ArrayList<>();
+
+	    for (Lesson lesson : lessons) {
+	        LessonStatsWithInfoDto dto = new LessonStatsWithInfoDto();
+	        dto.setLessonId(lesson.getLessonId());
+	        dto.setLessonName(lesson.getLessonName());
+	        dto.setLessonFee(lesson.getLessonFee());
+
+	        // 初期値（該当する統計がない場合）
+	        dto.setApplyCount(0);
+	        dto.setTotalSales(0);
+
+	     // 統計結果と照合
+	        for (Object[] row : results) {
+	            // row[0] 是 lessonId
+	            if (row[0] != null && lesson.getLessonId().equals(Long.parseLong(row[0].toString()))) {
+	                // row[3] 是申込人数（apply_count），先取出来
+	                int applyCount = row[3] != null ? Integer.parseInt(row[3].toString()) : 0;
+
+	                dto.setApplyCount(applyCount);
+	                dto.setTotalSales(lesson.getLessonFee() * applyCount); // 直接用 fee * 人数
+	                break;
+	            }
+	        }
+	       
+
+	        statsList.add(dto);
+	    }
+
+	    return statsList;
 	}
 }

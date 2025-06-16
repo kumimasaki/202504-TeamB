@@ -9,14 +9,18 @@ import org.springframework.stereotype.Repository;
 import ec.com.model.entity.TransactionItem;
 
 @Repository
-public interface TransactionItemDao extends JpaRepository<TransactionItem, Long>{
+public interface TransactionItemDao extends JpaRepository<TransactionItem, Long> {
 	TransactionItem save(TransactionItem transactionItem);
+
 	List<TransactionItem> findAll();
+
 	TransactionItem findByLessonId(Long lessonId);
+
 	List<TransactionItem> findByTransactionId(Long transactionId);
-	  @Modifying
-	    @Query(
-	    	"DELETE FROM TransactionItem ti "
-	    	+ "WHERE ti.transactionId = :transactionId")
-	    void deleteByTransactionId(@Param("transactionId") Long transactionId);
+
+	@Modifying
+	@Query("DELETE FROM TransactionItem ti " + "WHERE ti.transactionId = :transactionId")
+	void deleteByTransactionId(@Param("transactionId") Long transactionId);
+
+
 }
