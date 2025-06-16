@@ -1471,6 +1471,7 @@ td {
 	justify-content: center;
 }
 
+<<<<<<< HEAD
 .like button {
 	width: 150px !important;
 	height: 26px !important;
@@ -1541,4 +1542,10 @@ td {
 
 .search-box button:hover {
 	background-color: #1a5fab;
+}
+
+.lineup_table td {
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: 16px;
 }

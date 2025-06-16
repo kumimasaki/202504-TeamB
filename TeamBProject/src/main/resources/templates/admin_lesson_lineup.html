@@ -12,6 +12,85 @@
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" th:href="@{/css/style.css}">
 
+	<!--  追加されたスタイル -->
+	<style>
+		.search-box {
+			margin-bottom: 10px;
+			display: flex;
+			justify-content: flex-end;
+		}
+
+		.search-box form {
+			display: flex;
+			gap: 8px;
+		}
+
+		.search-box input[type="text"] {
+			padding: 6px 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 14px;
+		}
+
+		.search-box button {
+			padding: 6px 12px;
+			background-color: #2c88d9;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		.search-box button:hover {
+			background-color: #1a5fab;
+		}
+
+		.lineup_table {
+		  table-layout: fixed;
+		  width: 100%;
+		  border-collapse: collapse;
+		}
+
+		.lineup_table th,
+		.lineup_table td {
+		  text-align: center;
+		  white-space: nowrap;
+		  padding: 10px;
+		  font-size: 16px;
+		}
+
+		.lineup_table th:nth-child(1),
+		.lineup_table td:nth-child(1) {
+		  width: 10%;
+		}
+
+		.lineup_table th:nth-child(2),
+		.lineup_table td:nth-child(2) {
+		  width: 20%;
+		}
+
+		.lineup_table th:nth-child(3),
+		.lineup_table td:nth-child(3) {
+		  width: 15%;
+		}
+
+		.lineup_table th:nth-child(4),
+		.lineup_table td:nth-child(4) {
+		  width: 15%;
+		}
+
+		.lineup_table th:nth-child(5),
+		.lineup_table td:nth-child(5) {
+		  width: 20%;
+		}
+
+		.lineup_table th:nth-child(6),
+		.lineup_table td:nth-child(6) {
+		  width: 10%;
+		}
+
+	</style>
 </head>
 
 <body>
@@ -21,6 +100,7 @@
 			<p text="loginAdminName"></p>
 		</div>
 	</header>
+
 	<article>
 		<h2>講座一覧</h2>
 
@@ -36,22 +116,38 @@
 			<button onclick="location.href='/admin/delete/lesson'">講座削除</button>
 		</div>
 
+		<!-- ✅ 一覧形式で申込人数・売上も一緒に表示 -->
 		<table class="lineup_table">
-			<tr>
-				<th>講座番号</th>
-				<th>商品名</th>
-				<th>価格</th>
-				<th>変更</th>
-			</tr>
-			<tr th:each="lesson:${lessonList}">
-				<td th:text="${lesson.lessonId}"></td>
-				<td th:text="${lesson.lessonName}"></td>
-				<td th:text="${#numbers.formatInteger(lesson.lessonFee, 1, 'COMMA')}"></td>
-				<td>
-					<button
-						th:attr="onClick='location.href=\''+'/admin/lesson/edit/'+${lesson.lessonId}+'\''">変更</button>
-				</td>
-			</tr>
+			<thead>
+				<tr>
+					<th>講座番号</th>
+					<th>商品名</th>
+					<th>価格</th>
+					<th>申込人数</th>
+					<th>売上</th>
+					<th>変更</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="stat : ${statsList}">
+					<td th:text="${stat.lessonId}"></td>
+					<td th:text="${stat.lessonName}"></td>
+					<td th:text="${#numbers.formatInteger(stat.lessonFee, 1, 'COMMA')} + '円'"></td>
+					<td>
+						<span th:text="${stat.applyCount}"></span><span>人</span>
+					</td>
+					<td>
+						<span th:text="${#numbers.formatInteger(stat.totalSales, 1, 'COMMA')}"></span><span>円</span>
+					</td>
+
+
+					<td>
+						<button
+							th:attr="onClick='location.href=\''+'/admin/lesson/edit/'+${stat.lessonId}+'\''">変更</button>
+					</td>
+				</tr>
+
+			</tbody>
 		</table>
 
 		<button class="logout" onclick="location.href='/admin/logout'">ログアウト</button>
