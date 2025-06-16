@@ -38,24 +38,24 @@ public interface TransactionHistoryDao extends JpaRepository<TransactionHistory,
 			WHERE th.user_id = :userId
 			""", nativeQuery = true)
 	List<Object[]> findLessonAndTransactionByUserId(@Param("userId") Long userId);
-	
-	@Query(value = """
-			SELECT
-			  l.lesson_id,
-			  l.lesson_name,
-			  l.lesson_detail,
-			  l.image_name,
-			  l.start_date,
-			  l.start_time,
-			  l.finish_time,
-			  l.lesson_fee,
-			  th.transaction_date,
-			  th.transaction_id,
-			  ti.id
-			FROM transaction_history th
-			JOIN transaction_item ti ON th.transaction_id = ti.transaction_id
-			JOIN lesson l ON l.lesson_id = ti.lesson_id
-			WHERE th.user_id = :userId
-			""", nativeQuery = true)
-	List<Object[]> findLessonAndTransactionByUserIdAndBuyTime(@Param("userId") Long userId);
+//	
+//	@Query(value = """
+//			SELECT
+//			  l.lesson_id,
+//			  l.lesson_name,
+//			  l.lesson_detail,
+//			  l.image_name,
+//			  l.start_date,
+//			  l.start_time,
+//			  l.finish_time,
+//			  l.lesson_fee,
+//			  th.transaction_date,
+//			  th.transaction_id,
+//			  ti.id
+//			FROM transaction_history th
+//			JOIN transaction_item ti ON th.transaction_id = ti.transaction_id
+//			JOIN lesson l ON l.lesson_id = ti.lesson_id
+//			WHERE th.user_id = :userId
+//			""", nativeQuery = true)
+//	List<Object[]> findLessonAndTransactionByUserIdAndBuyTime(@Param("userId") Long userId,Long userId);
 }
