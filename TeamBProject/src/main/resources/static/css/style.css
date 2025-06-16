@@ -1446,3 +1446,66 @@ table, tr, th, td {
     line-height: 26px !important;
     border-radius: 13px !important;
 }
+
+/*ranking*/
+.ranking {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.ranking-item{
+	display: flex;              /* これを追加！ */
+	align-items: center;        /* 子要素を中央揃えに */
+    flex-direction: column;
+}
+
+.ranking li {
+    width: 50%;
+    margin: 15px auto;
+}
+
+.ranking li:nth-child(2), .ranking li:nth-child(4) {
+    padding-left: 47px;
+}
+.ranking li a img {
+	object-fit: cover;
+	height: 300px;
+	width: 100%;
+}
+.ranking li h3 {
+    width: 384px;
+    font-size: 22px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.ranking li p {
+    width: 384px;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.lesson-image {
+    width: 384px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lesson-image img{
+    width: 384px;
+    height: 300px;
+    object-fit: contain;
+    display: block;
+}
+
+.ranking-position{
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+}

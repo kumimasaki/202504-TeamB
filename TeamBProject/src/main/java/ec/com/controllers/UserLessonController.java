@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -459,5 +461,29 @@ public class UserLessonController {
 		
 		return list;
 	}
+	
+	@GetMapping("/lesson/ranking")
+	public String showLikeRanking(Model model) {
+		User loginUser = (User) session.getAttribute("loginUserInfo");
+	if (loginUser != null) {
+		// ログイン済みの場合
+		model.addAttribute("loginFlg", true);
+		model.addAttribute("userName", loginUser.getUserName());
+		} else {
+		// 未ログインの場合
+		model.addAttribute("loginFlg", false);
+	}
+	List<Map<String, Object>> ranking = lessonService.getLikeRanking();
+	model.addAttribute("rankingList", ranking);
+	return "lesson_ranking.html"; 
+	}
+	
+	@GetMapping("/lesson/ranking/test")
+	@ResponseBody
+	public List<Map<String, Object>> testRanking() {
+	    return lessonService.getLikeRanking();
+	}
+
+
 }
 
