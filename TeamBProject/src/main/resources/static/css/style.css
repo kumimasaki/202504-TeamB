@@ -984,13 +984,8 @@ td {
 }
 
 .menu li {
-	width: 50%;
+	width: 45%;
 	margin: 15px auto;
-}
-
-.menu li:nth-child(2),
-.menu li:nth-child(4) {
-	padding-left: 47px;
 }
 
 .menu li a img {
@@ -1471,7 +1466,6 @@ td {
 	justify-content: center;
 }
 
-<<<<<<< HEAD
 .like button {
 	width: 150px !important;
 	height: 26px !important;
@@ -1545,7 +1539,7 @@ td {
 }
 
 .lineup_table td {
-  white-space: nowrap;
-  vertical-align: middle;
-  font-size: 16px;
+	white-space: nowrap;
+	vertical-align: middle;
+	font-size: 16px;
 }
