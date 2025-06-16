@@ -59,7 +59,7 @@ article h2 {
     
     /* 橙色系动态渐变底线 */
     border-bottom: none;
-    background: linear-gradient(90deg, #ff6b35, #ff8c42, #f7931e, #ffa726, #ff6b35);
+    background: linear-gradient(90deg, #ff6b35, rgb(241, 160, 80), rgb(245, 224, 31), rgb(235, 159, 58), #ff6b35);
     background-size: 300% 3px;
     background-repeat: no-repeat;
     background-position: bottom;
