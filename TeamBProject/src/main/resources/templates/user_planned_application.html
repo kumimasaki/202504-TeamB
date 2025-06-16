@@ -62,7 +62,7 @@
                 </div>
                 <div
                     style="display: flex;flex-direction: column;justify-content: space-evenly;">
-                    <button style="background-color: #F56823;" th:onclick="|addToCart([[${lesson.lessonId}]])|">カートに追加</button>
+                    <button style="background-color: #F56823;" th:onclick="|addToCartInPlan([[${lesson.lessonId}]])|">カートに追加</button>
                     <button th:if="${loginFlg}" id="like_btn" th:class="${lesson.liked} ? liked : not-liked"
                         th:text="${lesson.liked} ? 'お気に入りから削除' : 'お気に入り'" th:onclick="|addToLike([[${lesson.lessonId}]])|"
                         type="button"></button>

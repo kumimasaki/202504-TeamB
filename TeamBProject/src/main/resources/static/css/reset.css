@@ -21,9 +21,12 @@
  */
 
 html {
-  line-height: 1.15; /* 1 */
-  -webkit-text-size-adjust: 100%; /* 2 */
-  -webkit-tap-highlight-color: transparent; /* 3*/
+  line-height: 1.15;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-tap-highlight-color: transparent;
+  /* 3*/
 }
 
 /* Sections */
@@ -105,9 +108,12 @@ dd {
  */
 
 hr {
-  box-sizing: content-box; /* 1 */
-  height: 0; /* 1 */
-  overflow: visible; /* 2 */
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */
   border-top-width: 1px;
   margin: 0;
   clear: both;
@@ -120,8 +126,10 @@ hr {
  */
 
 pre {
-  font-family: monospace, monospace; /* 1 */
-  font-size: inherit; /* 2 */
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: inherit;
+  /* 2 */
 }
 
 address {
@@ -147,8 +155,10 @@ a {
  */
 
 abbr[title] {
-  text-decoration: underline; /* 2 */
-  text-decoration: underline dotted; /* 2 */
+  text-decoration: underline;
+  /* 2 */
+  text-decoration: underline dotted;
+  /* 2 */
 }
 
 /**
@@ -168,8 +178,10 @@ strong {
 code,
 kbd,
 samp {
-  font-family: monospace, monospace; /* 1 */
-  font-size: inherit; /* 2 */
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: inherit;
+  /* 2 */
 }
 
 /**
@@ -225,8 +237,7 @@ iframe {
 button,
 optgroup,
 input,
-select,
-textarea {
+select {
   -webkit-appearance: none;
   appearance: none;
   vertical-align: middle;
@@ -353,11 +364,16 @@ fieldset {
  */
 
 legend {
-  color: inherit; /* 2 */
-  display: table; /* 1 */
-  max-width: 100%; /* 1 */
-  padding: 0; /* 3 */
-  white-space: normal; /* 1 */
+  color: inherit;
+  /* 2 */
+  display: table;
+  /* 1 */
+  max-width: 100%;
+  /* 1 */
+  padding: 0;
+  /* 3 */
+  white-space: normal;
+  /* 1 */
 }
 
 /**
@@ -372,9 +388,6 @@ progress {
  * Remove the default vertical scrollbar in IE 10+.
  */
 
-textarea {
-  overflow: auto;
-}
 
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
@@ -390,7 +403,8 @@ textarea {
  */
 
 [type="search"] {
-  outline-offset: -2px; /* 1 */
+  outline-offset: -2px;
+  /* 1 */
 }
 
 /**
@@ -407,8 +421,10 @@ textarea {
  */
 
 ::-webkit-file-upload-button {
-  -webkit-appearance: button; /* 1 */
-  font: inherit; /* 2 */
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
 }
 
 /**
@@ -488,6 +504,7 @@ template {
   display: none;
 }
 
-textarea{
-	resize: none;
+textarea {
+  resize: none;
+  border: 1px solid gray;
 }

@@ -4,7 +4,9 @@ body {
     font-weight: 400;
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
     font-weight: 700;
 }
 
@@ -80,7 +82,10 @@ button:hover {
     opacity: 0.8;
 }
 
-table, tr, th, td {
+table,
+tr,
+th,
+td {
     box-sizing: border-box;
 }
 
@@ -129,15 +134,20 @@ table, tr, th, td {
     border: #fff 4px solid;
 }
 
-.lineup_table th:nth-child(1), .lineup_table td:nth-child(1), .lineup_table th:nth-child(4), .lineup_table td:nth-child(4) {
+.lineup_table th:nth-child(1),
+.lineup_table td:nth-child(1),
+.lineup_table th:nth-child(4),
+.lineup_table td:nth-child(4) {
     width: 15%;
 }
 
-.lineup_table th:nth-child(2), .lineup_table td:nth-child(2) {
+.lineup_table th:nth-child(2),
+.lineup_table td:nth-child(2) {
     width: 40%;
 }
 
-.lineup_table th:nth-child(3), .lineup_table td:nth-child(3) {
+.lineup_table th:nth-child(3),
+.lineup_table td:nth-child(3) {
     width: 30%;
 }
 
@@ -212,19 +222,23 @@ table, tr, th, td {
     border: #fff 4px solid;
 }
 
-.delete_table th:nth-child(1), .delete_table td:nth-child(1) {
+.delete_table th:nth-child(1),
+.delete_table td:nth-child(1) {
     width: 15%;
 }
 
-.delete_table th:nth-child(2), .delete_table td:nth-child(2) {
+.delete_table th:nth-child(2),
+.delete_table td:nth-child(2) {
     width: 22%;
 }
 
-.delete_table th:nth-child(3), .delete_table td:nth-child(3) {
+.delete_table th:nth-child(3),
+.delete_table td:nth-child(3) {
     width: 40%;
 }
 
-.delete_table th:nth-child(4), .delete_table td:nth-child(4) {
+.delete_table th:nth-child(4),
+.delete_table td:nth-child(4) {
     width: 23%;
 }
 
@@ -267,7 +281,8 @@ table, tr, th, td {
     font-size: 20px;
 }
 
-#userid, #password {
+#userid,
+#password {
     background-color: #D6EEE1;
     height: 40px;
     line-height: 40px;
@@ -354,7 +369,7 @@ table, tr, th, td {
 .lesson_details img {
     display: block;
     margin: 0 auto;
-	height: 300px;
+    height: 300px;
     padding-top: 30px;
     margin-bottom: 25px;
 }
@@ -390,7 +405,7 @@ table, tr, th, td {
 }
 
 #like_btn.not-liked {
-    background-color: rgb(202, 34, 30); 
+    background-color: rgb(202, 34, 30);
 }
 
 #like_btn.liked {
@@ -615,8 +630,8 @@ table, tr, th, td {
     width: 400px;
     background-color: #D6EEE1;
     margin: 0 auto 28px;
-	border-radius: 30px; 
-	padding: 20px;
+    border-radius: 30px;
+    padding: 20px;
 }
 
 .user_login_table td input[type="text"] {
@@ -630,7 +645,8 @@ table, tr, th, td {
     padding-left: 1rem;
 }
 
-#user_userid, #user_password {
+#user_userid,
+#user_password {
     height: 40px;
     line-height: 40px;
     font-size: 18px;
@@ -679,7 +695,7 @@ table, tr, th, td {
     width: 100%;
     background-color: #D6EEE1;
     padding-bottom: 30px;
-	border-radius: 30px;
+    border-radius: 30px;
 }
 
 .register_table {
@@ -913,8 +929,8 @@ table, tr, th, td {
 
 /*user_register_6 */
 #user_register_6 {
-  /*   display: none; */
-  float: right;
+    /*   display: none; */
+    float: right;
 }
 
 .register_6 {
@@ -922,7 +938,7 @@ table, tr, th, td {
     background-color: #D6EEE1;
     padding-top: 40px;
     padding-bottom: 15px;
-     color:#fff;
+    color: #fff;
 }
 
 .register_6 p {
@@ -930,7 +946,7 @@ table, tr, th, td {
     line-height: 23px;
     text-align: center;
     margin-bottom: 40px;
-    color:#fff;
+    color: #fff;
 }
 
 .register_6 button {
@@ -972,14 +988,17 @@ table, tr, th, td {
     margin: 15px auto;
 }
 
-.menu li:nth-child(2), .menu li:nth-child(4) {
+.menu li:nth-child(2),
+.menu li:nth-child(4) {
     padding-left: 47px;
 }
+
 .menu li a img {
-	object-fit: cover;
-	height: 300px;
-	width: 100%;
+    object-fit: cover;
+    height: 300px;
+    width: 100%;
 }
+
 .menu li h3 {
     width: 384px;
     font-size: 22px;
@@ -1047,11 +1066,13 @@ table, tr, th, td {
     width: 100%;
     margin: 45px auto;
 }
-.con li img{
-	width: 150px;
-	height: 150px;
+
+.con li img {
+    width: 150px;
+    height: 150px;
     object-fit: contain;
 }
+
 .con_p {
     display: flex;
     flex-direction: column;
@@ -1144,8 +1165,9 @@ table, tr, th, td {
     width: 720px;
     margin: 50px auto;
 }
-.apply img{
-	width: 300px;
+
+.apply img {
+    width: 300px;
 }
 
 .apply_p p {
@@ -1297,7 +1319,7 @@ table, tr, th, td {
     margin-left: 71px;
 }
 
-.apply_2_decide { 
+.apply_2_decide {
     display: block;
     width: 280px;
     height: 50px;
@@ -1307,23 +1329,26 @@ table, tr, th, td {
     background-color: #F59923;
     margin-left: 30px;
 }
-.stripe-button-el{
+
+.stripe-button-el {
     margin-left: 30px;
 }
 
 /* カートページのボタンエリアのスタイル調整 */
-.apply-btn{
+.apply-btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px; /* ボタン間の間隔 */
+    gap: 20px;
+    /* ボタン間の間隔 */
     margin: 30px auto;
 }
 
 /* ボタンが横並びの時のマージン調整 */
-.apply-btn > .con_btn,
-.apply-btn > .apply_btn {
-    margin: 0; /* 元のマージンをリセット */
+.apply-btn>.con_btn,
+.apply-btn>.apply_btn {
+    margin: 0;
+    /* 元のマージンをリセット */
 }
 
 /* apply_3 */
@@ -1389,7 +1414,7 @@ table, tr, th, td {
 
 /*user_detail*/
 #mypage {
-    color:#fff;
+    color: #fff;
 }
 
 .login_table td input[type="password"] {
@@ -1404,46 +1429,46 @@ table, tr, th, td {
 }
 
 .messageBox {
-	margin-top:10px;
-	color: red;
-	text-align: center;
+    margin-top: 10px;
+    color: red;
+    text-align: center;
 }
 
 .change_table input[type="date"],
 .change_table input[type="time"],
 .change_table input[type="text"],
 .change_table textarea {
-  width: 100%;
-  height: 40px;
-  padding: 0 10px;
-  font-size: 1rem;
-  border: none;
-  background-color: #fff;
-  box-shadow: 0 3px 5px #999;
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    font-size: 1rem;
+    border: none;
+    background-color: #fff;
+    box-shadow: 0 3px 5px #999;
 }
 
 
 .change_table textarea {
-  height: auto;
-  min-height: 100px;
+    height: auto;
+    min-height: 100px;
 }
 
 .center-box {
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .image-box {
-	margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
 .button-box {
-	margin-top: 1em;
-	display: flex;
-	gap: 1em;
-	justify-content: center;
+    margin-top: 1em;
+    display: flex;
+    gap: 1em;
+    justify-content: center;
 }
 
 .like button {

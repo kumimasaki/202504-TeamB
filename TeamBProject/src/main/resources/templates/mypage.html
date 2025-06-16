@@ -27,7 +27,18 @@
 	</header>
 	<article>
 		<h2>申込完了講座一覧</h2>
-		<button class="menu_btn" onclick="location.href='/lesson/menu'">メニュー一覧へ</button>
+		<label for="buyTime">購入時期：</label>
+		<form id="buyTimeForm" action="/lesson/mypage" method="get">
+		            <label for="buyTime">購入時期：</label>
+		            <select name="buyTime" style="border: 1px solid black;height: 25px;width: 100px; font-size: 15px;" onchange="document.getElementById('buyTimeForm').submit();">
+		                <option value="1">今日</option>
+		                <option value="2">一ヶ月内</option>
+		                <option value="3">一年内</option>
+		                <option value="4" selected>全部</option>
+		            </select>
+		        </form>
+		       <button class="menu_btn" style="display: inline !important; margin-left: 400px !important;"
+		           onclick="location.href='/lesson/menu'">メニュー一覧へ</button>
 		<ul class="menu menu2">
 			<li th:each="lesson:${listSub}">
 				<a th:href="@{/lesson/detail/{lessonId}(lessonId=${lesson.lessonId})}">

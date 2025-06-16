@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ec.com.model.dao.LessonDao;
-import ec.com.model.dao.LikeDao;
-import ec.com.model.dao.TransactionHistoryDao;
-import ec.com.model.dao.TransactionItemDao;
+
+import ec.com.model.dao.*;
+import ec.com.model.dto.CommentDto;
 import ec.com.model.dto.LessonLikeDto;
 import ec.com.model.dto.LessonWithTransactionDto;
+import ec.com.model.entity.Comment;
 import ec.com.model.entity.Lesson;
 import ec.com.model.entity.Like;
 import ec.com.model.entity.TransactionHistory;
@@ -35,6 +35,8 @@ import jakarta.servlet.http.HttpSession;
  */
 @Controller
 public class UserLessonController {
+
+    private final UserDao userDao;
 
 	/**
 	 * HTTPセッション管理オブジェクト ユーザーのログイン状態やカート情報を管理
@@ -59,6 +61,13 @@ public class UserLessonController {
 
 	@Autowired
 	private LikeDao likeDao;
+	
+	@Autowired
+	private CommentDao commentDao;
+
+    UserLessonController(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
 	/**
 	 * 講座一覧画面表示メソッド（メニュー画面） 現在時刻以降の講座のみを取得し、時分まで精密チェックを行う
@@ -119,6 +128,15 @@ public class UserLessonController {
 		} else {
 			model.addAttribute("loginFlg", false);
 		}
+		
+		List<Comment> comments = commentDao.findByLessonId(lessonId);
+		ArrayList<CommentDto> commentList = new ArrayList<CommentDto>();
+		for (Comment comment : comments) {
+			Long userId = comment.getUserId();
+			String userName = userDao.findByUserId(userId).getUserName();
+			commentList.add(new CommentDto(userName, comment.getContext(), comment.getRegisterDate()));
+		}
+		model.addAttribute("commentList", commentList);
 
 		return "user_lesson_detail.html";
 	}
@@ -386,7 +404,9 @@ public class UserLessonController {
 	 */
   
 	@GetMapping("/lesson/mypage")
-	public String getMYpage(HttpSession session, Model model) {
+	public String getMYpage(@RequestParam(value = "buyTime", required = false) String buyTime,
+							HttpSession session,
+							Model model) {
 		// ログインチェック
 		User loginUser = (User) session.getAttribute("loginUserInfo");
 		// 未ログインならログイン画面へ
@@ -400,7 +420,11 @@ public class UserLessonController {
 		// userIdをセッションから取得する
 		Long userId = loginUser.getUserId();
 		// 紐づいた購入講座情報を検索して情報を渡す
-		List<LessonWithTransactionDto> listSub = lessonService.getLessonPurchases(userId);
+		List<LessonWithTransactionDto> listSub = null;
+		if(buyTime==null) {
+			listSub = lessonService.getLessonPurchases(userId);
+		}
+		
 		model.addAttribute("listSub", listSub);
 		return "mypage.html";
 	}
@@ -458,6 +482,24 @@ public class UserLessonController {
 		}
 		
 		return list;
+	}
+	
+	@PostMapping("/lesson/comment/add")
+	public String commentAdd(@RequestParam("lessonId") Long lessonId,
+							 @RequestParam("context") String context,
+						     HttpSession session) {
+		// ログインチェック
+		User loginUser = (User) session.getAttribute("loginUserInfo");
+		// 未ログインならログイン画面へ
+		if (loginUser == null) {
+			return "redirect:/user/login";
+		}
+		// ログイン済みの場合
+		commentDao.save(new Comment(lessonId,loginUser.getUserId(),context,new Timestamp(System.currentTimeMillis())));
+		List<Comment> commentList = commentDao.findAll();
+		session.setAttribute("commentList", commentList);
+		
+		return "redirect:/lesson/detail/" + lessonId;
 	}
 }
 
