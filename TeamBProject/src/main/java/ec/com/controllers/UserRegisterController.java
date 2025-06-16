@@ -4,12 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import ec.com.model.dao.UserDao;
+import ec.com.model.entity.Lesson;
 import ec.com.model.entity.User;
 import ec.com.services.UserService;
 //import ec.com.services.UserService;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * ユーザー登録コントローラークラス ユーザー登録に関するHTTPリクエストを処理する
@@ -22,6 +27,9 @@ public class UserRegisterController {
 	 */
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserDao userDao;
 
 	/**
 	 * ユーザー登録画面表示メソッド
@@ -54,5 +62,18 @@ public class UserRegisterController {
 			return "user_Register.html";
 		}
 			
+		}
+	
+	// 登録内容の確認処理
+		@GetMapping("/user/check")
+		@ResponseBody
+		public boolean checkEmail(@RequestParam String email) {
+			User user = userDao.findByUserEmail(email);
+			
+			if(user==null) {
+				return true;
+			}else {
+				return false;
+			}
 		}
 }
