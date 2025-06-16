@@ -9,7 +9,7 @@ h2, h3, h4 {
 }
 
 header {
-    background-color: #163867;
+    background: linear-gradient(to right, #1e3c72, #4a90e2, #1e3c72) !important;
     padding: 10px;
     overflow: hidden;
 }
@@ -705,7 +705,7 @@ table, tr, th, td {
     box-shadow: 2px 2px 3px 0px gray inset;
     padding-left: 1rem;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 20px;
     font-size: 16px;
     box-sizing: border-box;
 }
