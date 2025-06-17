@@ -17,8 +17,6 @@ public class TransactionItem {
 
     private Long transactionId;
 
-    @Column(name = "amount") // ：金額（価格）
-    private Integer amount;
 
     // --- Getter / Setter ---
     public Long getId() {
@@ -43,14 +41,7 @@ public class TransactionItem {
 
     public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
+   
     }
 
     // --- コンストラクタ（引数なし）---
@@ -62,10 +53,4 @@ public class TransactionItem {
         this.transactionId = transactionId;
     }
 
-    // 🆕 オプション：amountまで含むコンストラクタも追加したいなら下記もOK
-    public TransactionItem(Long lessonId, Long transactionId, Integer amount) {
-        this.lessonId = lessonId;
-        this.transactionId = transactionId;
-        this.amount = amount;
-    }
 }

@@ -38,7 +38,7 @@
 			<button onclick="location.href='/admin/delete/lesson'">講座削除</button>
 		</div>
 
-		<!-- ✅ 一覧形式で申込人数・売上も一緒に表示 -->
+		<!-- 一覧形式で申込人数・売上も一緒に表示 -->
 		<table class="lineup_table">
 			<thead>
 				<tr>
@@ -47,6 +47,7 @@
 					<th>価格</th>
 					<th>申込人数</th>
 					<th>売上</th>
+					<th>定員</th>
 					<th>変更</th>
 				</tr>
 			</thead>
@@ -61,8 +62,7 @@
 					<td>
 						<span th:text="${#numbers.formatInteger(stat.totalSales, 1, 'COMMA')}"></span><span>円</span>
 					</td>
-
-
+					<td th:text="${stat.capacity} + '人'"></td> 
 					<td>
 						<button
 							th:attr="onClick='location.href=\''+'/admin/lesson/edit/'+${stat.lessonId}+'\''">変更</button>

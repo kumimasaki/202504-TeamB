@@ -29,10 +29,6 @@ public interface LessonDao extends JpaRepository<Lesson, Long> {
 	// 講座IDを使って講座情報を取得する
 	Lesson findByLessonId(Long lessonId);
 
-	// SELECT * FROM lesson WHERE admin_id = ?
-	// 管理者IDに紐づく講座をすべて取得
-	List<Lesson> findByAdminId(Long adminId);
-
 	// 【新規追加】現在時刻以降の講座のみ取得（時分まで精密チェック）
 	// 開始日時（日付+時刻）が現在時刻以降の講座を抽出
 	@Query("SELECT l FROM Lesson l WHERE "
@@ -43,19 +39,16 @@ public interface LessonDao extends JpaRepository<Lesson, Long> {
 	// キーワードで講座名を部分一致検索し、
 	// さらに「開始日 > 指定日」または「開始日 = 指定日 かつ 開始時刻 >= 指定時刻」の条件に一致する講座を取得
 	@Query("SELECT l FROM Lesson l WHERE l.lessonName LIKE %:keyword% AND (l.startDate > :date OR (l.startDate = :date AND l.startTime >= :time))")
-	List<Lesson> findByLessonNameContainingAndDateTimeCondition(
-			@Param("keyword") String keyword,
-			@Param("date") LocalDate date,
-			@Param("time") LocalTime time);
+	List<Lesson> findByLessonNameContainingAndDateTimeCondition(@Param("keyword") String keyword,
+			@Param("date") LocalDate date, @Param("time") LocalTime time);
 
 	// DELETE FROM lesson WHERE lesson_id = ?
 	// 削除使用
 	// ここではデータを丸ごと処理する必要あり
 	void deleteById(Long lessonId);
-	
-	// 講座名 or 講座番号 に keyword が含まれていて、かつ adminId 一致
-	@Query("SELECT l FROM Lesson l WHERE l.adminId = :adminId AND (CAST(l.lessonId AS string) LIKE %:keyword% OR l.lessonName LIKE %:keyword%)")
-	List<Lesson> searchByKeyword(@Param("adminId") Long adminId, @Param("keyword") String keyword);
 
+	// 講座名 or 講座番号 に keyword が含まれていて、
+	@Query("SELECT l FROM Lesson l WHERE CAST(l.lessonId AS string) LIKE :keyword OR l.lessonName LIKE :keyword")
+	List<Lesson> searchByKeyword(@Param("keyword") String keyword);
 
 }

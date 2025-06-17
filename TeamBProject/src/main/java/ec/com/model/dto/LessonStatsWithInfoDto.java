@@ -1,5 +1,8 @@
 package ec.com.model.dto;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 /**
  * 管理者用：講座の基本情報 + 申込人数 + 売上金額 をまとめたDTO
  */
@@ -9,6 +12,8 @@ public class LessonStatsWithInfoDto {
     private Integer lessonFee;
     private Integer applyCount;
     private Integer totalSales;
+    private Integer capacity;
+
 
     // --- Getter & Setter ---
     public Long getLessonId() {
@@ -50,5 +55,13 @@ public class LessonStatsWithInfoDto {
     public void setTotalSales(Integer totalSales) {
         this.totalSales = totalSales;
     }
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
 }
 
