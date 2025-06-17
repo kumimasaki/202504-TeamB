@@ -11,9 +11,14 @@ h4 {
 }
 
 header {
-	background: linear-gradient(to right, #1e3c72, #4a90e2, #1e3c72) !important;
+	background: linear-gradient(-45deg, #1e3c72, #4a90e2, #2980b9, #6bb6ff, #1e3c72, #4a90e2) !important;
+	background-size: 400% 400%;
 	padding: 10px;
 	overflow: hidden;
+	position: relative;
+	animation: header-gradient-move 8s ease-in-out infinite,
+	           header-glow 6s ease-in-out infinite alternate;
+	box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
 }
 
 header div {
@@ -1698,4 +1703,64 @@ td {
     display: flex;
     justify-content: center;
     font-size: 30px;
+}
+@keyframes header-gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes header-glow {
+    0% {
+        box-shadow: 
+            0 4px 15px rgba(30, 60, 114, 0.3),
+            0 0 20px rgba(74, 144, 226, 0.2),
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+        box-shadow: 
+            0 4px 25px rgba(30, 60, 114, 0.5),
+            0 0 40px rgba(74, 144, 226, 0.4),
+            inset 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+    animation: header-shine 4s infinite;
+}
+
+@keyframes header-shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+header div {
+    position: relative;
+    z-index: 1;
 }
