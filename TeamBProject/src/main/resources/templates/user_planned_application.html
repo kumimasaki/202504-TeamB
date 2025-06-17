@@ -30,22 +30,11 @@
     <article>
         <h2>申し込み予定講座</h2>
         <ul class="con" id="lessonList">
-<<<<<<< HEAD
-            <li th:each="lesson:${list}">
-				<div class="image-box">
-					<img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
-				</div>
-                <div class="con_p">
-                    <p
-                        th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
-                    </p>
-                    <h3 th:text="${lesson.lessonName}"></h3>
-                    <p id="con_price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'">
-                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="">講座詳細</a></p>
-=======
             <li th:each="lesson:${list}" style="flex-direction: column;margin-bottom: 80px;">
                 <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                    <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
+                    <div class="image-box">
+						<img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+					</div>
                     <div class="con_p">
                         <p
                             th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
@@ -56,8 +45,6 @@
                     </div>
                     <button
                         th:attr="onClick='location.href=\''+'/lesson/cart/delete/'+${lesson.lessonId}+'\''">削除</button>
-
->>>>>>> 4103cb1b95cbdc1207bb36d6980c9b9acf5c866e
                 </div>
                 <div class="messageBox" th:id="'messageBox2-' + ${lesson.lessonId}"></div>
             </li>
