@@ -19,20 +19,21 @@
 			<h1><img src="/img/logo.png"></h1>
 			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
 			<p id="user_register_6" style="color: white;" th:text="${userName}"></p>
+			<p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
 		</div>
 		<div th:if="${!loginFlg}">
 			<h1><img src="/img/logo.png"></h1>
 			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+			<p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
 		</div>
 	</header>
 
 	<main>
 		<article>
-
 			<section class="ranking">
 				<h2>人気レッスンランキング</h2>
-				<ul class="ranking">
-					<button class="menu_btn" onclick="location.href='/lesson/menu'">メニュー一覧へ</button>
+				<button class="menu_btn" onclick="location.href='/lesson/menu'">メニュー一覧へ</button>
+				<ul>
 					<li th:each="entry, stat : ${rankingList}">
 						<div class="ranking-item">
 							<div class="ranking-position">
@@ -44,7 +45,7 @@
 										alt="レッスン画像">
 								</a>
 							</div>
-							<div class="lesson-info">
+							<div class="lesson-info2">
 								<p
 									th:text="${#temporals.format(entry.lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(entry.lesson.startDate)}+')'+${#temporals.format(entry.lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(entry.lesson.finishTime, 'HH:mm')}">
 									レッスンの説明</p>
