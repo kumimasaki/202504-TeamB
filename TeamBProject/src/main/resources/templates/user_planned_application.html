@@ -18,62 +18,69 @@
         <div th:if="${loginFlg}">
             <h1><img src="/img/logo.png"></h1>
             <p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
-			<p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
+            <p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
             <p id="user_register_6" style="color: white;" th:text="${userName}"></p>
         </div>
         <div th:if="${!loginFlg}">
             <h1><img src="/img/logo.png"></h1>
             <p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
-			<p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
+            <p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
         </div>
     </header>
     <article>
         <h2>申し込み予定講座</h2>
         <ul class="con" id="lessonList">
-            <li th:each="lesson:${list}">
-                <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
-                <div class="con_p">
-                    <p
-                        th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
-                    </p>
-                    <h3 th:text="${lesson.lessonName}"></h3>
-                    <p id="con_price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'">
-                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="">講座詳細</a></p>
+            <li th:each="lesson:${list}" style="flex-direction: column;margin-bottom: 80px;">
+                <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                    <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
+                    <div class="con_p">
+                        <p
+                            th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
+                        </p>
+                        <h3 th:text="${lesson.lessonName}"></h3>
+                        <p id="con_price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'">
+                            &nbsp;&nbsp;&nbsp;&nbsp;<a href="">講座詳細</a></p>
+                    </div>
+                    <button
+                        th:attr="onClick='location.href=\''+'/lesson/cart/delete/'+${lesson.lessonId}+'\''">削除</button>
+
                 </div>
-                <button th:attr="onClick='location.href=\''+'/lesson/cart/delete/'+${lesson.lessonId}+'\''">削除</button>
+                <div class="messageBox" th:id="'messageBox2-' + ${lesson.lessonId}"></div>
             </li>
         </ul>
-        <!-- 按钮容器 -->
         <div class="apply-btn">
             <button class="con_btn" onclick="location.href='/lesson/menu'">メニューに戻る</button>
-            <button class="apply_btn" onclick="location.href='/lesson/request'">購入</button>
+            <button class="apply_btn" th:attr="data-lesson-ids=${lessonIds}" onclick="buy(this)">購入</button>
         </div>
     </article>
     <article>
         <h2>お気に入り</h2>
         <ul class="con like">
-            <li th:each="lesson:${likeList}">
-                <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
-                <div class="con_p">
-                    <p
-                        th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
-                    </p>
-                    <h3 th:text="${lesson.lessonName}"></h3>
-                    <p id="con_price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'">
-                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="">講座詳細</a></p>
+            <li th:each="lesson:${likeList}" style="flex-direction: column;margin-bottom: 80px;">
+                <div style="display: flex;flex-direction: row;justify-content: space-between;">
+                    <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
+                    <div class="con_p">
+                        <p
+                            th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
+                        </p>
+                        <h3 th:text="${lesson.lessonName}"></h3>
+                        <p id="con_price" th:text="${#numbers.formatInteger(lesson.lessonFee,3,'COMMA')} + '円（税込み）'">
+                            &nbsp;&nbsp;&nbsp;&nbsp;<a href="">講座詳細</a></p>
+                    </div>
+                    <div style="display: flex;flex-direction: column;justify-content: space-evenly;">
+                        <button style="background-color: #F56823;"
+                            th:onclick="|addToCartInPlan([[${lesson.lessonId}]])|">カートに追加</button>
+                        <button th:if="${loginFlg}" id="like_btn" th:class="${lesson.liked} ? liked : not-liked"
+                            th:text="${lesson.liked} ? 'お気に入りから削除' : 'お気に入り'"
+                            th:onclick="|addToLike([[${lesson.lessonId}]])|" type="button"></button>
+                    </div>
                 </div>
-                <div
-                    style="display: flex;flex-direction: column;justify-content: space-evenly;">
-                    <button style="background-color: #F56823;" th:onclick="|addToCartInPlan([[${lesson.lessonId}]])|">カートに追加</button>
-                    <button th:if="${loginFlg}" id="like_btn" th:class="${lesson.liked} ? liked : not-liked"
-                        th:text="${lesson.liked} ? 'お気に入りから削除' : 'お気に入り'" th:onclick="|addToLike([[${lesson.lessonId}]])|"
-                        type="button"></button>
-                </div>
-				<div class="messageBox" th:id="'messageBox-' + ${lesson.lessonId}"></div>
+                <div class="messageBox" th:id="'messageBox-' + ${lesson.lessonId}"></div>
             </li>
         </ul>
     </article>
     <footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
 </body>
 <script th:src="@{/js/addToCart.js}"></script>
+
 </html>

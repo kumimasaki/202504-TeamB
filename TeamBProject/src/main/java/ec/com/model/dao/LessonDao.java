@@ -50,5 +50,8 @@ public interface LessonDao extends JpaRepository<Lesson, Long> {
 	// 講座名 or 講座番号 に keyword が含まれていて、
 	@Query("SELECT l FROM Lesson l WHERE CAST(l.lessonId AS string) LIKE :keyword OR l.lessonName LIKE :keyword")
 	List<Lesson> searchByKeyword(@Param("keyword") String keyword);
+	
+	@Query(value = "SELECT COUNT(*) FROM transaction_item t2 LEFT JOIN lesson t3 ON t2.lesson_id = t3.lesson_id WHERE t3.lesson_id = :lessonId", nativeQuery = true)
+	Integer findLessonCountByLessonId(@Param("lessonId") Long lessonId);
 
 }
