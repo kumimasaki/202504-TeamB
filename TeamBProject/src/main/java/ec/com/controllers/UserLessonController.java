@@ -6,8 +6,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -233,10 +236,13 @@ public class UserLessonController {
 		if (list == null) {
 			list = new ArrayList<>();
 		}
-		model.addAttribute("userName", loginUser.getUserName());
 		model.addAttribute("loginFlg", true);
 		model.addAttribute("list", list);
 		
+		String lessonIds = list.stream()
+                .map(lesson -> String.valueOf(lesson.getLessonId()))
+                .collect(Collectors.joining(","));
+		model.addAttribute("lessonIds", lessonIds);
 		
 		List<Like> likes = likeDao.findByUserId(loginUser.getUserId());
 		List<LessonLikeDto> likeList = new ArrayList<LessonLikeDto>();
@@ -265,9 +271,7 @@ public class UserLessonController {
 	 * ログインユーザーかどうかを確認し、未ログインならログイン画面にリダイレクト。
 	 * セッション内の講座リストが存在しない場合はメニュー画面に戻る。
 	 */
-
 	@GetMapping("/lesson/request")
-
 	public String applySelectPayment(HttpSession session,
 			Model model) {
 		User user = (User) session.getAttribute("loginUserInfo");
@@ -284,6 +288,46 @@ public class UserLessonController {
 		model.addAttribute("payFlg", false);
 
 		return "user_apply_select_payment.html";
+	}
+	
+	/**
+	 * 購入処理を行うメソッド（POST）
+	 *
+	 * 指定された講座IDリストを受け取り、各講座の現在の購入数と定員を比較して、
+	 * 上限に達している講座があれば、それらのIDをリストとして返す。
+	 * 
+	 * ユーザーがログインしていない場合は "refuse" を返す。
+	 *
+	 * @param lessonIds カンマ区切りの講座ID（例："1,2,3"）
+	 * @return レスポンスマップ
+	 *         - "message": 処理結果メッセージ（例: "refuse", "この講座の購入人数は上限に達しています。"）
+	 *         - "lessonIdList": 上限に達している講座IDのString（例: "2,5"）
+	 */
+	@PostMapping("/lesson/buy")
+	@ResponseBody
+	public Map<String, Object> lessonBuy(@RequestParam("lessonIds") String lessonIds) {
+		Map<String, Object> response = new HashMap<>();
+		
+		User user = (User) session.getAttribute("loginUserInfo");
+		if (user == null) {
+			response.put("message", "refuse");
+			return response;
+		}
+		
+		ArrayList<String> lessonIdList = new ArrayList<String>();
+	    String[] ids = lessonIds.split(",");
+	    for (String id : ids) {
+			Integer lessonCount = lessonDao.findLessonCountByLessonId(Long.parseLong(id));
+			Integer capacity = lessonDao.findByLessonId(Long.parseLong(id)).getCapacity();
+			
+			if(lessonCount >= capacity) {
+				lessonIdList.add(id);
+			}
+		}
+	    
+	    response.put("message", "この講座の購入人数は上限に達しています。");
+	    response.put("lessonIdList", lessonIdList);
+	    return response;
 	}
 
 	/**
@@ -554,6 +598,13 @@ public class UserLessonController {
 	return "lesson_ranking.html"; 
 	}
 	
+	@GetMapping("/lesson/ranking/test")
+	@ResponseBody
+	public List<Map<String, Object>> testRanking() {
+	    return lessonService.getLikeRanking();
+	}
+
+
 	/**
 	 * カート追加処理メソッド。  
 	 * 指定された講座をセッション内のカートリストに追加する。  
