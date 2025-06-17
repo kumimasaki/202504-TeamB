@@ -22,17 +22,18 @@
 	</header>
 	<article>
 		<h2>講座一覧</h2>
+		<!-- エラーメッセージ表示 -->
+		<div th:if="${error}" class="error-message">
+			<p th:text="${error}"></p>
+		</div>
+		<!-- 削除フォーム -->
 		<form action="/admin/lesson/delete/remove" method="post">
 			<div class="delete_btn">
 				<button type="submit">削除する</button>
 				<div class="number">講座番号<input type="text" name="lessonId" required></div>
 			</div>
-			
-			<div th:if="${isEmpty}" class="no-results">
-			  <p>該当する記事が見つかりませんでした。</p>
-			</div>
-			
 		</form>
+		<!-- 講座一覧表示 -->
 		<table class="delete_table">
 			<tr>
 				<th>講座番号</th>

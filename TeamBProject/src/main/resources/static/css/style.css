@@ -1795,3 +1795,15 @@ header div {
 position: relative;
 z-index: 1;
 }
+
+
+.error-message {
+	color: red;
+	background-color: rgb(251, 204, 204);
+	border: 1px solid red;
+	padding: 10px;
+	margin-bottom: 15px;
+	border-radius: 5px;
+	text-align: center;
+	justify-content: center;
+}

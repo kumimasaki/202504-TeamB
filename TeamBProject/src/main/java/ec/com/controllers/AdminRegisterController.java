@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ec.com.model.dao.AdminDao;
 import ec.com.model.entity.Admin;
-import ec.com.model.entity.User;
 import ec.com.services.AdminService;
-import jakarta.servlet.http.HttpSession;
 
 //これがHTMLページを返すControllerであることを示すもの。
 @Controller
@@ -20,9 +18,6 @@ public class AdminRegisterController {
 	@Autowired
 	private AdminService adminService;
 
-	@Autowired
-	private HttpSession session;
-	
 	@Autowired
 	private AdminDao adminDao;
 
@@ -37,13 +32,12 @@ public class AdminRegisterController {
 	 * 
 	 * URL: POST /admin/confirm 機能: 登録フォームから送信されたデータを確認する
 	 * 
-	 * @param adminName     管理者名（HTMLフォームから送信）
-	 * @param adminEmail    管理者メールアドレス（HTMLフォームから送信）
-	 * @param password パスワード（HTMLフォームから送信）
-	 * @param assword パスワード（HTMLフォームから送信）
-	 * @return String 遷移先ページのファイル名 
-	 * 失敗時：admin_register.html（登録画面に留まる）
-	 * 成功時：admin_confirm_register.html（ログイン画面に遷移）
+	 * @param adminName  管理者名（HTMLフォームから送信）
+	 * @param adminEmail 管理者メールアドレス（HTMLフォームから送信）
+	 * @param password   パスワード（HTMLフォームから送信）
+	 * @param assword    パスワード（HTMLフォームから送信）
+	 * @return String 遷移先ページのファイル名 失敗時：admin_register.html（登録画面に留まる）
+	 *         成功時：admin_confirm_register.html（ログイン画面に遷移）
 	 */
 
 	// 登録確認 @PostMapping("/admin/confirm")
@@ -77,16 +71,16 @@ public class AdminRegisterController {
 			return "redirect:/admin/register";
 		}
 	}
-	
+
 	// 管理者存在するかをチェックする
 	@GetMapping("/admin/check")
 	@ResponseBody
 	public boolean checkAdminEmail(@RequestParam String email) {
 		Admin admin = adminDao.findByAdminEmail(email);
-		
-		if(admin==null) {
+
+		if (admin == null) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
