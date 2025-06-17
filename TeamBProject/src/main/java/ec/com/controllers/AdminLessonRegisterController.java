@@ -87,6 +87,7 @@ public class AdminLessonRegisterController {
         // DBに保存
         lessonService.registerLesson(lesson);
 
-        return "redirect:/admin/lesson/all";
+        return "admin_fix_register";
+
     }
 }
