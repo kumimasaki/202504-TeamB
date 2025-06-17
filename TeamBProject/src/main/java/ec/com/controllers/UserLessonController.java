@@ -375,10 +375,9 @@ public class UserLessonController {
 		    transactionHistory = transactionHistoryDao.save(transactionHistory);
 		 // transaction_item に1件ずつ保存（講座ID + 取引ID + 単価）
 		    TransactionItem item = new TransactionItem(
-		        lesson.getLessonId(),
-		        transactionHistory.getTransactionId(),
-		        lesson.getLessonFee()
-		    );
+		    	    lesson.getLessonId(),
+		    	    transactionHistory.getTransactionId()
+		    	);
 		    transactionItemDao.save(item);
 		}
 
