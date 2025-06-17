@@ -18,11 +18,13 @@
 		<div th:if="${loginFlg}">
 			<h1><img src="/img/logo.png"></h1>
 			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+			<p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
 			<p id="user_register_6" style="color: white;" th:text="${userName}"></p>
 		</div>
 		<div th:if="${!loginFlg}">
 			<h1><img src="/img/logo.png"></h1>
 			<p id="mypage"><a href="/lesson/mypage">マイページ</a></p>
+			<p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
 		</div>
 	</header>
 	<article>
