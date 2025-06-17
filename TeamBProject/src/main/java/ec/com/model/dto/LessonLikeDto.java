@@ -22,7 +22,6 @@ public class LessonLikeDto {
 	private Integer lessonFee;
 	private String imageName;
 	private Timestamp registerDate;
-	private Long adminId;
 	private boolean liked;
 
 	// --- Getter & Setter ---
@@ -80,12 +79,6 @@ public class LessonLikeDto {
 	public void setRegisterDate(Timestamp registerDate) {
 		this.registerDate = registerDate;
 	}
-	public Long getAdminId() {
-		return adminId;
-	}
-	public void setAdminId(Long adminId) {
-		this.adminId = adminId;
-	}
 	public boolean isLiked() {
 		return liked;
 	}
@@ -106,7 +99,6 @@ public class LessonLikeDto {
 		this.lessonFee = lesson.getLessonFee();
 		this.imageName = lesson.getImageName();
 		this.registerDate = lesson.getRegisterDate();
-		this.adminId = lesson.getAdminId();
 		this.liked = true;
 	}
 }

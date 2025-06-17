@@ -19,6 +19,7 @@
             <h1><img th:src="@{/img/logo.png}"></h1>
             <p id="mypage"><a th:href="@{/lesson/mypage}">マイページ</a></p>
             <p style="color: white;"><a th:href="@{/lesson/show/cart}">カート一覧</a></p>
+			<p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
             <!-- 修正：ユーザー名を正しく表示 -->
             <p id="user_register_6" style="color: white;" th:text="${userName}"></p>
             <!-- 【修正】ログアウト機能を実装 -->
@@ -27,6 +28,7 @@
         <div th:if="${!loginFlg}">
             <h1><img src="/img/logo.png"></h1>
             <p id="mypage"><a th:href="@{/user/login}">ログイン</a></p>
+			<p id="ranking" style="color: white;"><a href="/lesson/ranking">ランキング</a></p>
             <!-- 修正：不要な属性を削除 -->
             <p style="color: white;"></p>
         </div>
@@ -37,7 +39,7 @@
                 style="background-color: rgb(241, 240, 240);height: 40px;border: 2px black solid;border-radius: 5%;font-size: 15px;"
                 name="keyword" type="text">
             <button
-                style="color: black !important;background-color: rgb(35, 109, 173);padding: 10px 20px;border: 1px black solid;border-radius: 5%;">検索</button>
+                style="color: white !important;background-color: rgb(35, 109, 173);padding: 10px 20px;border: 1px black solid;border-radius: 5%;">検索</button>
         </form>
     </div>
     <article>

@@ -31,7 +31,6 @@ public class Lesson {
 	private Integer lessonFee;
 	private String imageName;
 	private Timestamp registerDate;
-	private Long adminId;
 
 	// --- Getter & Setter ---
 	public Long getLessonId() {
@@ -76,6 +75,17 @@ public class Lesson {
 	public void setLessonFee(Integer lessonFee) {
 		this.lessonFee = lessonFee;
 	}
+	// 講座の定員（人数上限）
+	private Integer capacity;
+
+	// Getter & Setter
+	public Integer getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(Integer capacity) {
+		this.capacity = capacity;
+	}
 	public String getImageName() {
 		return imageName;
 	}
@@ -88,27 +98,22 @@ public class Lesson {
 	public void setRegisterDate(Timestamp registerDate) {
 		this.registerDate = registerDate;
 	}
-	public Long getAdminId() {
-		return adminId;
-	}
-	public void setAdminId(Long adminId) {
-		this.adminId = adminId;
-	}
+	
 
 	// --- Constructors ---
 	public Lesson() {}
-
 	public Lesson(LocalDate startDate, LocalTime startTime, LocalTime finishTime,
-	              String lessonName, String lessonDetail, Integer lessonFee, String imageName,
-	              Timestamp registerDate, Long adminId) {
-		this.startDate = startDate;
-		this.startTime = startTime;
-		this.finishTime = finishTime;
-		this.lessonName = lessonName;
-		this.lessonDetail = lessonDetail;
-		this.lessonFee = lessonFee;
-		this.imageName = imageName;
-		this.registerDate = registerDate;
-		this.adminId = adminId;
-	}
+            String lessonName, String lessonDetail, Integer lessonFee, String imageName,
+            Timestamp registerDate, Integer capacity) {
+  this.startDate = startDate;
+  this.startTime = startTime;
+  this.finishTime = finishTime;
+  this.lessonName = lessonName;
+  this.lessonDetail = lessonDetail;
+  this.lessonFee = lessonFee;
+  this.imageName = imageName;
+  this.registerDate = registerDate;
+  this.capacity = capacity;
+}
+
 }

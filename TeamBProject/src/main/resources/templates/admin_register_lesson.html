@@ -11,6 +11,12 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<style>	.input-field {
+		background-color: white;
+		border: 1px solid #ccc;
+		padding: 2.5px;
+	}</style>
+	
 </head>
 
 <body>
@@ -25,20 +31,20 @@
 		<h2>新規講座追加</h2>
 
 		<div class="add">
-			<form action="/admin/lesson/register/create" method="post" enctype="multipart/form-data"
+			<form action="/admin/lesson/register" method="post" enctype="multipart/form-data"
 				th:object="${lesson}">
 				<table class="add_table">
 					<tr>
 						<th>開始日</th>
-						<td><input type="date" name="startDate" /></td>
+						<td><input type="date" name="startDate" required/></td>
 					</tr>
 					<tr>
 						<th>受講開始時間</th>
-						<td><input type="time" name="startTime" /></td>
+						<td><input type="time" name="startTime" required /></td>
 					</tr>
 					<tr>
 						<th>受講終了時間</th>
-						<td><input type="time" name="finishTime" /></td>
+						<td><input type="time" name="finishTime" required /></td>
 					</tr>
 					<tr>
 						<th>講座名</th>
@@ -62,6 +68,12 @@
 						<th>受講料</th>
 						<td><input type="text" name="lessonFee" required /></td>
 					</tr>
+					<tr>
+						<th>定員</th>
+						<td><input type="number" name="capacity" class="input-field" min="1" required /></td>
+							</tr>
+					</tr>
+
 				</table>
 
 				<div class="change-button">
