@@ -233,8 +233,10 @@ public class UserLessonController {
 		if (list == null) {
 			list = new ArrayList<>();
 		}
+		model.addAttribute("userName", loginUser.getUserName());
 		model.addAttribute("loginFlg", true);
 		model.addAttribute("list", list);
+		
 		
 		List<Like> likes = likeDao.findByUserId(loginUser.getUserId());
 		List<LessonLikeDto> likeList = new ArrayList<LessonLikeDto>();
@@ -553,13 +555,6 @@ public class UserLessonController {
 	return "lesson_ranking.html"; 
 	}
 	
-	@GetMapping("/lesson/ranking/test")
-	@ResponseBody
-	public List<Map<String, Object>> testRanking() {
-	    return lessonService.getLikeRanking();
-	}
-
-
 	/**
 	 * カート追加処理メソッド。  
 	 * 指定された講座をセッション内のカートリストに追加する。  
