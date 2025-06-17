@@ -31,7 +31,9 @@
         <h2>申し込み予定講座</h2>
         <ul class="con" id="lessonList">
             <li th:each="lesson:${list}">
-                <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
+				<div class="image-box">
+					<img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+				</div>
                 <div class="con_p">
                     <p
                         th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
