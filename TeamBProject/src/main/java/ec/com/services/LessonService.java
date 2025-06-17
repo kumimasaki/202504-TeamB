@@ -172,5 +172,11 @@ public class LessonService {
             transactionHistoryDao.deleteById(transactionId);
         }
     }
+
+	// lesson削除前に取引記録の存在チェックを追加
+	public boolean hasTransaction(Long lessonId) {
+		return transactionItemDao.existsByLessonId(lessonId);
+	}
+
 }
 

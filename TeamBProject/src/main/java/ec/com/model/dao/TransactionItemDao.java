@@ -29,4 +29,7 @@ public interface TransactionItemDao extends JpaRepository<TransactionItem, Long>
 
 	// 同じtransactionIdを持つitemがあるか判定
 	boolean existsByTransactionId(Long transactionId);
+	
+	//lessonIDに紐づく取引アイテムの存在チェックメソッドを追加
+	boolean existsByLessonId(Long lessonId);
 }
