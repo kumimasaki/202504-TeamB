@@ -1809,7 +1809,6 @@ header div {
 	z-index: 1;
 }
 
-<<<<<<< HEAD
 .menu2 li .image-box {
     width: 400px;
     height: 300px;
@@ -1829,8 +1828,6 @@ header div {
     display: block;
 }
 
-=======
->>>>>>> 4103cb1b95cbdc1207bb36d6980c9b9acf5c866e
 .error-message {
 	color: red;
 	background-color: rgb(251, 204, 204);
@@ -1842,11 +1839,9 @@ header div {
 	justify-content: center;
 }
 
-<<<<<<< HEAD
-=======
+
 .messageBox {
 	margin-top: 10px;
 	color: red;
 	font-weight: bold;
 }
->>>>>>> 4103cb1b95cbdc1207bb36d6980c9b9acf5c866e
