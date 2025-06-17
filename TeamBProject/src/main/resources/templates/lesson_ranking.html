@@ -33,13 +33,13 @@
 			<section class="ranking">
 				<h2>人気レッスンランキング</h2>
 				<button class="menu_btn" onclick="location.href='/lesson/menu'">メニュー一覧へ</button>
-				<ul>
+				<ul class="menu2">
 					<li th:each="entry, stat : ${rankingList}">
 						<div class="ranking-item">
 							<div class="ranking-position">
 								<span th:text="${stat.index + 1} + '位'">1位</span>
 							</div>
-							<div class="lesson-image">
+							<div class="image-box">
 								<a th:href="@{/lesson/detail/{lessonId}(lessonId=${entry.lesson.lessonId})}">
 									<img th:src="@{/lesson-image/{items}(items=${entry.lesson.imageName})}"
 										alt="レッスン画像">

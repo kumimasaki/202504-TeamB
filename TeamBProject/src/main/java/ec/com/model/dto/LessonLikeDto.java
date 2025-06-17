@@ -94,7 +94,7 @@ public class LessonLikeDto {
 		this.startDate = lesson.getStartDate();
 		this.startTime = lesson.getStartTime();
 		this.finishTime = lesson.getFinishTime();
-		this.lessonName = lesson.getImageName();
+		this.lessonName = lesson.getLessonName();
 		this.lessonDetail = lesson.getLessonDetail();
 		this.lessonFee = lesson.getLessonFee();
 		this.imageName = lesson.getImageName();

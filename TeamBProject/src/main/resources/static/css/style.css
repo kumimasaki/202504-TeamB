@@ -1024,6 +1024,7 @@ td {
 }
 
 #price {
+    white-space: nowrap;
 	width: 50%;
 	font-weight: 500;
 }
@@ -1808,6 +1809,25 @@ header div {
 	z-index: 1;
 }
 
+.menu2 li .image-box {
+    width: 400px;
+    height: 300px;
+    display: flex;
+    border: 3px inset black;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.menu2 li .image-box img {
+    
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
 .error-message {
 	color: red;
 	background-color: rgb(251, 204, 204);
@@ -1818,6 +1838,7 @@ header div {
 	text-align: center;
 	justify-content: center;
 }
+
 
 .messageBox {
 	margin-top: 10px;

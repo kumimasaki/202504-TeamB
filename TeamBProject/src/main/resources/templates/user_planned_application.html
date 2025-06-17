@@ -32,7 +32,9 @@
         <ul class="con" id="lessonList">
             <li th:each="lesson:${list}" style="flex-direction: column;margin-bottom: 80px;">
                 <div style="display: flex;flex-direction: row;justify-content: space-between;">
-                    <div><img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}"></div>
+                    <div class="image-box">
+						<img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+					</div>
                     <div class="con_p">
                         <p
                             th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
@@ -43,7 +45,6 @@
                     </div>
                     <button
                         th:attr="onClick='location.href=\''+'/lesson/cart/delete/'+${lesson.lessonId}+'\''">削除</button>
-
                 </div>
                 <div class="messageBox" th:id="'messageBox2-' + ${lesson.lessonId}"></div>
             </li>

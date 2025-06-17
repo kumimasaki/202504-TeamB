@@ -46,11 +46,13 @@
         <h2>開催講座一覧</h2>
         <!-- 修正：まだ実装していない機能なので一時的に無効化 -->
         <button class="menu_btn" onclick="location.href='/lesson/show/cart'">申し込み予定講座</button>
-        <ul class="menu">
+        <ul class="menu menu2">
             <!-- 修正：詳細リンクを一時的に無効化 -->
             <li th:each="lesson:${lessonList}">
                 <a th:href="@{/lesson/detail/{lessonId}(lessonId=${lesson.lessonId})}">
+					<div class="image-box">
                     <img th:src="@{/lesson-image/{items}(items=${lesson.imageName})}">
+					</div>
                     <p
                         th:text="${#temporals.format(lesson.startDate, 'yyyy/MM/dd')}+'('+${#temporals.dayOfWeekName(lesson.startDate)}+')'+${#temporals.format(lesson.startTime, 'HH:mm')}+'-'+${#temporals.format(lesson.finishTime, 'HH:mm')}">
                     </p>
