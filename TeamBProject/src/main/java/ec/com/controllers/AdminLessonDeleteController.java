@@ -4,23 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ec.com.model.entity.Lesson;
 import ec.com.services.LessonService;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AdminLessonDeleteController {
 	@Autowired
 	private LessonService lessonService;
 
-	@Autowired
-	private HttpSession session;
 	// GET /admin/lesson/delete
-
 	@GetMapping("/admin/delete/lesson")
 	public String getLessonDeletePage(Model model) {
 		// 登録した講座全て表示する
@@ -34,13 +29,24 @@ public class AdminLessonDeleteController {
 	@PostMapping("/admin/lesson/delete/remove")
 	public String lessonDelet(@RequestParam Long lessonId, Model model) {
 		Lesson lesson = lessonService.findById(lessonId);
-		// もしlessonはnullではない、削除する
-		if (lesson != null) {
-			lessonService.deletByLesson(lessonId); // 删除处理
-			return "admin_fix_delete"; // 削除完了画面に移動する
-		} else {
-			return "admin_lesson_delete";
+		// lessonは存在しない
+		if (lesson == null) {
+			// IDが見つからなかった場合、エラーメッセージと共に画面に戻る
+			model.addAttribute("error", "指定された講座は存在しません。");
+			model.addAttribute("lessonList", lessonService.findAll());
+			return "admin_delete_lesson";
 		}
+		// もし購入歴史があれば、削除できません
+		boolean hasTransaction = lessonService.hasTransaction(lessonId);
+		if (hasTransaction) {
+			model.addAttribute("error", "この講座は既に購入されているため、削除できません。");
+			model.addAttribute("lessonList", lessonService.findAll());
+			return "admin_delete_lesson";
+		}
+
+		lessonService.deletByLesson(lessonId);
+		return "admin_fix_delete"; // 削除完了画面に移動する
+
 	}
 
 }
