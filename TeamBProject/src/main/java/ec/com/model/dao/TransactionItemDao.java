@@ -32,4 +32,7 @@ public interface TransactionItemDao extends JpaRepository<TransactionItem, Long>
 	
 	//lessonIDに紐づく取引アイテムの存在チェックメソッドを追加
 	boolean existsByLessonId(Long lessonId);
+	
+	//購入済みレッスンカウント用
+	long countByLessonId(Long lessonId);
 }

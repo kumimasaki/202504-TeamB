@@ -1822,6 +1822,7 @@ header div {
 .menu2 li .image-box img {
     max-width: 100%;
     max-height: 100%;
+	border-radius: 15%;
     object-fit: cover;
     display: block;
 }
@@ -1837,7 +1838,6 @@ header div {
 	justify-content: center;
 }
 
-
 .messageBox {
 	margin-top: 10px;
 	color: red;
@@ -1850,4 +1850,23 @@ header div {
 	color: red;
 	font-weight: bold;
 	
+}
+
+.lesson-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.lesson-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.lesson-capacity {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  margin-left: 10px;
 }
