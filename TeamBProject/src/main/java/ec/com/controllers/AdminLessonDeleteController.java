@@ -18,8 +18,8 @@ public class AdminLessonDeleteController {
 	// GET /admin/lesson/delete
 	@GetMapping("/admin/delete/lesson")
 	public String getLessonDeletePage(Model model) {
-		// 登録した講座全て表示する
-		model.addAttribute("lessonList", lessonService.findAll());
+		// 全ての講座の統計情報を取得
+		model.addAttribute("statsList", lessonService.getLessonStatsList());
 		// 画面表示する
 		return "admin_delete_lesson";
 	}
