@@ -1845,3 +1845,11 @@ header div {
 	color: red;
 	font-weight: bold;
 }
+
+.userErrormsg {
+	text-align: center;
+	margin: 10px 0;
+	color: red;
+	font-weight: bold;
+	
+}
