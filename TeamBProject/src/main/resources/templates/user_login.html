@@ -22,6 +22,7 @@
     <article>
         <h2>ログイン</h2>
         <form th:action="@{/user/login/process}" method="post">
+			<p class="userErrormsg"><span th:if="${loginError}" th:text="${loginError}"></span></p>
             <table class="user_login_table">
                 <tr>
                     <th id="user_userid">メールアドレス</th>

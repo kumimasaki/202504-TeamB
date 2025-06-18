@@ -37,7 +37,7 @@ public class UserChangePasswordController {
 				return "user_change_password_complete.html";
 			} else {
 				// 失敗時
-				model.addAttribute("pass-err", "パスワードが一致しません");
+				model.addAttribute("passErr", "パスワードが一致しません");
 				model.addAttribute("userEmail", userEmail);
 				return "user_password_change.html";
 			}

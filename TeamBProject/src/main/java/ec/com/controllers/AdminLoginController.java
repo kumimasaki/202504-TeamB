@@ -20,7 +20,7 @@ public class AdminLoginController {
 	@GetMapping("/admin/login")
 	public String showLoginForm(@RequestParam(name = "error", required = false) String error, Model model) {
 		if (error != null) {
-			model.addAttribute("error", "メールアドレスまたはパスワードが間違っています。");
+			model.addAttribute("loginError", "メールアドレスまたはパスワードが間違っています。");
 		}
 		return "admin_login";  
 	}
