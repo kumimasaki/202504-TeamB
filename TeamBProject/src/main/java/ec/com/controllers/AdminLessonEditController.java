@@ -36,17 +36,17 @@ public class AdminLessonEditController {
 		return "admin_edit_lesson";
 	}
 
-	// 講座情報の更新処理（編集画面からのPOSTを受け取る）
+	// 編集内容保存Add commentMore actions
 	@PostMapping("/admin/lesson/edit/update")
-	public String updateLesson(@ModelAttribute Lesson lesson) {
+	public String updateLesson(@ModelAttribute Lesson lesson, @RequestParam Long lessonId, Model model) {
+		lessonService.updateLesson(lesson);
+		/*
+		 * 編集完了画面に移動する もし引き続き編集したい場合 完了画面から該当lessonに戻ることができる
+		 */
+		model.addAttribute("lessonId", lesson.getLessonId());
 
-	    // フォームから送られてきた講座情報（Lessonオブジェクト）をDBに更新
-	    lessonService.updateLesson(lesson);
-
-	    // 講座一覧画面にリダイレクト（変更結果をすぐに確認できる）
-	    return "redirect:/admin/lesson/all";
+		return "admin_fix_edit";
 	}
-
 
 	// 画像変更ページを表示
 	@GetMapping("/admin/lesson/image/edit/{lessonId}")
