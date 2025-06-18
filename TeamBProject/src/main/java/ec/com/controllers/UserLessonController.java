@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ec.com.model.dao.*;
 import ec.com.model.dto.CommentDto;
 import ec.com.model.dto.LessonLikeDto;
+import ec.com.model.dto.LessonWithStatDto;
 import ec.com.model.dto.LessonWithTransactionDto;
 import ec.com.model.entity.Comment;
 import ec.com.model.entity.Lesson;
@@ -83,7 +84,6 @@ public class UserLessonController {
 	 * @return String 遷移先画面のテンプレートファイル名 (user_menu.html)
 	 */
 	@GetMapping("/lesson/menu")
-
 	public String getLessonMenuPage(Model model) {
 		// ログイン状態をチェック
 		User loginUser = (User) session.getAttribute("loginUserInfo");
@@ -99,9 +99,10 @@ public class UserLessonController {
 
 		// 現在時刻以降の講座のみ取得
 		LocalDateTime currentDateTime = LocalDateTime.now();
-		List<Lesson> lessonList = lessonDao.findUpcomingLessons(currentDateTime);
+		
+		//DTO変換
+		List<LessonWithStatDto> lessonList = lessonService.getLessonDto(LocalDateTime.now());
 		model.addAttribute("lessonList", lessonList);
-
 		return "user_menu.html";
 	}
 
@@ -616,13 +617,6 @@ public class UserLessonController {
 	model.addAttribute("rankingList", ranking);
 	return "lesson_ranking.html"; 
 	}
-	
-	@GetMapping("/lesson/ranking/test")
-	@ResponseBody
-	public List<Map<String, Object>> testRanking() {
-	    return lessonService.getLikeRanking();
-	}
-
 
 	/**
 	 * カート追加処理メソッド。  

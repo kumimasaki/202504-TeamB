@@ -19,6 +19,7 @@ import ec.com.model.entity.Lesson;
 import ec.com.model.entity.TransactionItem;
 import jakarta.transaction.Transactional;
 import ec.com.model.dto.LessonStatsWithInfoDto;
+import ec.com.model.dto.LessonWithStatDto;
 
 @Service
 public class LessonService {
@@ -177,6 +178,32 @@ public class LessonService {
 	public boolean hasTransaction(Long lessonId) {
 		return transactionItemDao.existsByLessonId(lessonId);
 	}
+	
+	//DTOへの変換処理(現在よりも後の口座)
+	public List<LessonWithStatDto> getLessonDto(LocalDateTime fromTime) {
+        List<Lesson> lessons = lessonDao.findUpcomingLessons(fromTime);
+        List<LessonWithStatDto> dtoList = new ArrayList<>();
+
+        for (Lesson lesson : lessons) {
+            int applyCount = (int)transactionItemDao.countByLessonId(lesson.getLessonId());
+            int capacity = lesson.getCapacity();
+
+            LessonWithStatDto dto = new LessonWithStatDto();
+            dto.setLessonId(lesson.getLessonId());
+            dto.setLessonName(lesson.getLessonName());
+            dto.setLessonDetail(lesson.getLessonDetail());
+            dto.setImageName(lesson.getImageName());
+            dto.setStartDate(lesson.getStartDate());
+            dto.setStartTime(lesson.getStartTime());
+            dto.setFinishTime(lesson.getFinishTime());
+            dto.setLessonFee(lesson.getLessonFee());
+            dto.setApplyCount(applyCount);
+            dto.setCapacity(capacity);
+
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
 
 }
 
