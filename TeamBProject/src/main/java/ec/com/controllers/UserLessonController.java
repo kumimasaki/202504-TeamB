@@ -366,18 +366,20 @@ public class UserLessonController {
 		switch (payment) {
 			case 0:
 				payMethod = "当日現金支払い（無料講座の場合は、こちらを選択する。）";
+				model.addAttribute("payFlg", false);
 				break;
 			case 1:
 				payMethod = "事前銀行振込";
+				model.addAttribute("payFlg", false);
 				break;
 			case 2:
 				payMethod = "クレジットカード決済";
+				model.addAttribute("payFlg", true);
 				break;
 		}
 		model.addAttribute("payMethod", payMethod);
 		model.addAttribute("loginFlg", true);
-		model.addAttribute("payFlg", true);
-
+		
 		int amount = 0;
 		for (Lesson lesson : list) {
 			amount += lesson.getLessonFee();
@@ -394,18 +396,15 @@ public class UserLessonController {
 	 * また、講座の合計金額を計算し、セッションに保存。
 	 */
 
-	@PostMapping("/lesson/pay")
-	public String applyComplete(@RequestParam("stripeEmail") String stripeEmail,
-			HttpSession session,
-			Model model) {
+	@GetMapping("/lesson/pay")
+	public String applyComplete(HttpSession session,
+								Model model) {
 		User user = (User) session.getAttribute("loginUserInfo");
 		if (user == null) {
 			return "redirect:/user/login";
 		}
 
 		model.addAttribute("loginFlg", true);
-		System.out.println("stripeEmail: " + stripeEmail);
-		
 
 		int amount = (int) session.getAttribute("amount");
 		List<Lesson> list = (List<Lesson>) session.getAttribute("list");

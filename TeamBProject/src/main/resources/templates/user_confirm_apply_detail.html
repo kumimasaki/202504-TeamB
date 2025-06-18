@@ -50,13 +50,13 @@
 		</div>
 
 		<div class="apply-btn" th:if="${!payFlg}">
-			<button class="apply_2_back" onclick="history.back();" type="button">&lsaquo;&lsaquo;&nbsp;&nbsp;戻る</button>
-			<button class="apply_2_decide" onclick="location.href='/lesson/complete'">申し込み内容確定</button>
+			<button class="con_btn" type="button" onclick="history.back();">前の画面へ</button>
+			<button class="apply_2_decide" onclick="location.href='/lesson/pay'">申し込み内容確定</button>
 		</div>
 
 		<div class="apply-btn" th:if="${payFlg}">
-			<button class="apply_2_back" onclick="history.back();" type="button">&lsaquo;&lsaquo;&nbsp;&nbsp;戻る</button>
-			<form action="/lesson/pay" method="POST">
+			<button class="con_btn" type="button" onclick="history.back();">前の画面へ</button>
+			<form action="/lesson/pay" method="GET">
 				<script th:inline="javascript" src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 					data-key="pk_test_51K0KmoGyEksY9WnlGR386CRIGUtqosOClvEtLO1D8T4L5YpwCVu6k7nlciAt4CS7Ydf4INYoTx7n0Yx5Igo33XUj00PGNqaTUV"
 					th:data-amount="${amount}" data-currency="jpy">
