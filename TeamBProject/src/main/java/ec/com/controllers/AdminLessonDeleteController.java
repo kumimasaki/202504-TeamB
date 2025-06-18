@@ -33,14 +33,14 @@ public class AdminLessonDeleteController {
 		if (lesson == null) {
 			// IDが見つからなかった場合、エラーメッセージと共に画面に戻る
 			model.addAttribute("error", "指定された講座は存在しません。");
-			model.addAttribute("lessonList", lessonService.findAll());
+			model.addAttribute("statsList", lessonService.getLessonStatsList());
 			return "admin_delete_lesson";
 		}
 		// もし購入歴史があれば、削除できません
 		boolean hasTransaction = lessonService.hasTransaction(lessonId);
 		if (hasTransaction) {
 			model.addAttribute("error", "この講座は既に購入されているため、削除できません。");
-			model.addAttribute("lessonList", lessonService.findAll());
+			model.addAttribute("statsList", lessonService.getLessonStatsList());
 			return "admin_delete_lesson";
 		}
 

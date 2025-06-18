@@ -39,8 +39,15 @@
 		<form action="/admin/lesson/delete/remove" method="post">
 			<div class="delete_btn">
 				<button type="submit">削除する</button>
-				<div class="number">講座番号<input type="text" name="lessonId" required></div>
+				<!-- 数字のみ入力可能にする（正規表現 + スマホ数字キーボード） -->
+				<div class="number">
+					講座番号
+					<input type="text" name="lessonId" required pattern="\d*" inputmode="numeric"
+						oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="半角数字のみ">
+				</div>
 			</div>
+
+
 		</form>
 		<!-- 講座一覧表示 -->
 		<table class="delete_table">
