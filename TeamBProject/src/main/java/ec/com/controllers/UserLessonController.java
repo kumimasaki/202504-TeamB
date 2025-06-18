@@ -243,6 +243,12 @@ public class UserLessonController {
                 .map(lesson -> String.valueOf(lesson.getLessonId()))
                 .collect(Collectors.joining(","));
 		model.addAttribute("lessonIds", lessonIds);
+		//カート内商品合計金額計算
+		int totalFee = list.stream()
+			// 各レッスンから金額だけ取り出す
+			    .mapToInt(Lesson::getLessonFee)
+			    .sum();
+			model.addAttribute("totalFee", totalFee);
 		
 		List<Like> likes = likeDao.findByUserId(loginUser.getUserId());
 		List<LessonLikeDto> likeList = new ArrayList<LessonLikeDto>();
@@ -254,7 +260,9 @@ public class UserLessonController {
 		
 		return "user_planned_application.html";
 	}
-
+	
+	
+	
 	// カート商品削除機能
 	@GetMapping("/lesson/cart/delete/{lessonId}")
 	public String lessonCartDelete(@PathVariable Long lessonId, HttpSession session, Model model) {
@@ -284,6 +292,12 @@ public class UserLessonController {
 		} else {
 			model.addAttribute("list", list);
 		}
+		//カート内商品合計金額計算
+		int totalFee = list.stream()
+		// 各レッスンから金額だけ取り出す
+		.mapToInt(Lesson::getLessonFee)
+		.sum();
+		model.addAttribute("totalFee", totalFee);
 		model.addAttribute("loginFlg", true);
 		model.addAttribute("payFlg", false);
 
@@ -361,7 +375,13 @@ public class UserLessonController {
 		} else {
 			model.addAttribute("list", list);
 		}
-
+		//カート内商品合計金額計算
+		int totalFee = list.stream()
+		// 各レッスンから金額だけ取り出す
+		.mapToInt(Lesson::getLessonFee)
+		.sum();
+		model.addAttribute("totalFee", totalFee);
+		
 		String payMethod = "";
 		switch (payment) {
 			case 0:

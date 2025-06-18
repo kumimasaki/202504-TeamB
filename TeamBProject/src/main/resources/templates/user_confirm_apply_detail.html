@@ -44,6 +44,9 @@
 				</div>
 			</li>
 		</ul>
+		<div class="sumPrice">
+			<h2 th:text="${'合計金額' + #numbers.formatInteger(totalFee,3,'COMMA')} + '円'"></h2>
+		</div>
 		<div class="pay_2">
 			<p id="method">お支払い方法</p>
 			<p id="selection" th:text="${payMethod}"></p>
