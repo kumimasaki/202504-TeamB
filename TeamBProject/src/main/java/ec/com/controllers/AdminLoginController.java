@@ -44,4 +44,5 @@ public class AdminLoginController {
 		adminService.logout(session);
 		return "redirect:/admin/login";
 	}
+
 }

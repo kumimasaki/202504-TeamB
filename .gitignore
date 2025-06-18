@@ -29,3 +29,4 @@ Thumbs.db
 
 # プロパティファイル（機密情報がある場合）
 *.properties
+TeamBProject/logtest*.gz
