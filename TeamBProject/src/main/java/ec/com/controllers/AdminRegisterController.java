@@ -35,7 +35,7 @@ public class AdminRegisterController {
 	 * @param adminName  管理者名（HTMLフォームから送信）
 	 * @param adminEmail 管理者メールアドレス（HTMLフォームから送信）
 	 * @param password   パスワード（HTMLフォームから送信）
-	 * @param assword    パスワード（HTMLフォームから送信）
+	 * @param adminpassword    パスワード（HTMLフォームから送信）
 	 * @return String 遷移先ページのファイル名 失敗時：admin_register.html（登録画面に留まる）
 	 *         成功時：admin_confirm_register.html（ログイン画面に遷移）
 	 */
