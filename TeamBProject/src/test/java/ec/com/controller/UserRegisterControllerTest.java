@@ -70,7 +70,7 @@ import org.springframework.test.web.servlet.MockMvc;
 	                .andExpect(model().attributeExists("registerError"));
 	    }
 
-	    // 存在確認API (true: 可注册)
+	    // メールアドレス存在確認 (true: 登録可能)
 	    @Test
 	    public void testCheckEmailAvailable() throws Exception {
 	        mockMvc.perform(get("/user/check")
@@ -79,7 +79,7 @@ import org.springframework.test.web.servlet.MockMvc;
 	                .andExpect(content().string("true"));
 	    }
 
-	    // 存在確認API (false: 已存在)
+	    // メールアドレス存在確認 (false: 登録不可能)
 	    @Test
 	    public void testCheckEmailExists() throws Exception {
 	        mockMvc.perform(get("/user/check")
