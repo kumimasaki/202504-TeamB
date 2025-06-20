@@ -18,6 +18,7 @@ public class LessonWithTransactionDto {
 	private LocalDate transactionDate;
 	private Long transactionId;
 	private Long id;
+	private Boolean isVisible;
 
 	public Long getLessonId() {
 		return lessonId;

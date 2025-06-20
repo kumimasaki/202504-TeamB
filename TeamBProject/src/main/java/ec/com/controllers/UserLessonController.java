@@ -264,7 +264,7 @@ public class UserLessonController {
 	
 	
 	
-	// カート商品削除機能
+	// カート商品履歴削除機能
 	@GetMapping("/lesson/cart/delete/{lessonId}")
 	public String lessonCartDelete(@PathVariable Long lessonId, HttpSession session, Model model) {
 		List<Lesson> list = (List<Lesson>) session.getAttribute("list");
@@ -542,7 +542,8 @@ public class UserLessonController {
 		// ログイン済みの場合
 		model.addAttribute("loginName", loginUser.getUserName());
 		model.addAttribute("loginFlg", true);
-		//購入履歴(transaction_item)を削除する
+		
+		//購入履歴を非表示にする
 		 lessonService.deleteTransactionItemAndHistory(id);
 		return "redirect:/lesson/mypage";
 	}

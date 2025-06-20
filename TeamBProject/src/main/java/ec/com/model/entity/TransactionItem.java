@@ -16,7 +16,10 @@ public class TransactionItem {
     private Long lessonId;
 
     private Long transactionId;
+    
+    private Long amount;
 
+    private Boolean isVisible =true;
 
     // --- Getter / Setter ---
     public Long getId() {
@@ -43,6 +46,19 @@ public class TransactionItem {
         this.transactionId = transactionId;
    
     }
+    
+    public Long getAmount(Long amount) {
+        return amount;
+    }
+    
+    public Boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setIsVisible(Boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
 
     // --- コンストラクタ（引数なし）---
     public TransactionItem() {}
@@ -52,5 +68,7 @@ public class TransactionItem {
         this.lessonId = lessonId;
         this.transactionId = transactionId;
     }
+    
+    
 
 }
