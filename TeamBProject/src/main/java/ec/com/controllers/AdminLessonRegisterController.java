@@ -33,7 +33,6 @@ public class AdminLessonRegisterController {
     // 登録画面の表示
     @GetMapping("/admin/lesson/register")
     public String showRegisterForm(HttpSession session) {
-        // ログインチェックのみ（adminId使わない）
         Admin admin = (Admin) session.getAttribute("AdminLogin");
         if (admin == null) {
             return "redirect:/admin/login";
@@ -41,7 +40,7 @@ public class AdminLessonRegisterController {
         return "admin_register_lesson.html";
     }
 
-    // 新規講座登録処理（画像保存・定員など含む）
+    // 新規講座登録処理（DTOなしバージョン）
     @PostMapping("/admin/lesson/register")
     public String registerLesson(
             @RequestParam("imageName") MultipartFile imageFile,
@@ -52,12 +51,19 @@ public class AdminLessonRegisterController {
             @RequestParam("lessonDetail") String lessonDetail,
             @RequestParam("lessonFee") String lessonFee,
             @RequestParam("capacity") String capacity,
-            HttpSession session) {
+            HttpSession session,
+            Model model) {
 
-        // 講座オブジェクト生成
+        // 入力バリデーション（簡易）
+        if (lessonName.isBlank() || lessonDetail.isBlank() || startDate.isBlank() ||
+                startTime.isBlank() || finishTime.isBlank() || lessonFee.isBlank() || capacity.isBlank()) {
+            model.addAttribute("registerError", "すべての項目を入力してください。");
+            return "admin_register_lesson.html";
+        }
+
         Lesson lesson = new Lesson();
 
-        // --- 画像保存処理 ---
+        // 画像保存
         if (imageFile != null && !imageFile.isEmpty()) {
             try {
                 String originalFileName = imageFile.getOriginalFilename();
@@ -72,22 +78,20 @@ public class AdminLessonRegisterController {
             }
         }
 
-        // --- 各項目セット ---
-        if (!startDate.isBlank()) lesson.setStartDate(LocalDate.parse(startDate));
-        if (!startTime.isBlank()) lesson.setStartTime(LocalTime.parse(startTime));
-        if (!finishTime.isBlank()) lesson.setFinishTime(LocalTime.parse(finishTime));
+        // 各項目セット
+        lesson.setStartDate(LocalDate.parse(startDate));
+        lesson.setStartTime(LocalTime.parse(startTime));
+        lesson.setFinishTime(LocalTime.parse(finishTime));
         lesson.setLessonName(lessonName);
         lesson.setLessonDetail(lessonDetail);
-        if (!lessonFee.isBlank()) lesson.setLessonFee(Integer.parseInt(lessonFee));
-        if (!capacity.isBlank()) lesson.setCapacity(Integer.parseInt(capacity));
-
-        // 登録日
+        lesson.setLessonFee(Integer.parseInt(lessonFee));
+        lesson.setCapacity(Integer.parseInt(capacity));
         lesson.setRegisterDate(Timestamp.valueOf(LocalDateTime.now()));
 
-        // DBに保存
+        // DB登録
         lessonService.registerLesson(lesson);
 
         return "admin_fix_register";
-
     }
 }
+
