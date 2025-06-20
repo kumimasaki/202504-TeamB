@@ -30,11 +30,12 @@ public interface TransactionHistoryDao extends JpaRepository<TransactionHistory,
 			l.lesson_fee,
 			th.transaction_date,
 			th.transaction_id,
-			ti.id
+			ti.id,
+			ti.is_visible
 		FROM transaction_history th
 		JOIN transaction_item ti ON th.transaction_id = ti.transaction_id
 		JOIN lesson l ON l.lesson_id = ti.lesson_id
-		WHERE th.user_id = :userId
+		WHERE th.user_id = :userId AND ti.is_visible=true
 	""", nativeQuery = true)
 	List<Object[]> findLessonAndTransactionByUserId(@Param("userId") Long userId);
 
@@ -67,12 +68,14 @@ public interface TransactionHistoryDao extends JpaRepository<TransactionHistory,
 			  l.lesson_fee,
 			  th.transaction_date,
 			  th.transaction_id,
-			  ti.id
+			  ti.id,
+			  ti.is_visible
 			FROM transaction_history th
 			JOIN transaction_item ti ON th.transaction_id = ti.transaction_id
 			JOIN lesson l ON l.lesson_id = ti.lesson_id
 			WHERE th.user_id = :userId
 			  AND th.transaction_date >= :fromDate
+			  AND ti.is_visible = true
 			""", nativeQuery = true)
 		List<Object[]> findByUserIdAndFromDate(@Param("userId") Long userId, @Param("fromDate") java.sql.Timestamp fromDate);
 

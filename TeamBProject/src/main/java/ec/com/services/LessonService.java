@@ -159,19 +159,10 @@ public class LessonService {
         return statsList;
     }
 
-    // トランザクション履歴削除
+    // トランザクション履歴削除(非表示)
     @Transactional
     public void deleteTransactionItemAndHistory(Long id) {
-        TransactionItem item = transactionItemDao.findById(id).orElse(null);
-        if (item == null) return;
-
-        Long transactionId = item.getTransactionId();
-        transactionItemDao.deleteById(id);
-
-        boolean hasItems = transactionItemDao.existsByTransactionId(transactionId);
-        if (!hasItems) {
-            transactionHistoryDao.deleteById(transactionId);
-        }
+    	transactionItemDao.updateIsVisibleById(id);
     }
 
 	// lesson削除前に取引記録の存在チェックを追加
