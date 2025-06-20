@@ -1,4 +1,4 @@
-package ec.com.controller;
+package ec.com.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

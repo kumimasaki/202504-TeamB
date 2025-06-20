@@ -1,4 +1,4 @@
-package ec.com.controller;
+package ec.com.controllers;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
