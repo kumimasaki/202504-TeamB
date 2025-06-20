@@ -31,8 +31,9 @@
 		<h2>新規講座追加</h2>
 
 		<div class="add">
-			<form action="/admin/lesson/register" method="post" enctype="multipart/form-data"
-				th:object="${lesson}">
+			<form action="/admin/lesson/register" method="post" enctype="multipart/form-data">
+				<!-- エラーメッセージ表示 -->
+				    <p th:if="${registerError}" th:text="${registerError}" class="error-message" style="color:red; font-weight:bold;"></p>
 				<table class="add_table">
 					<tr>
 						<th>開始日</th>
