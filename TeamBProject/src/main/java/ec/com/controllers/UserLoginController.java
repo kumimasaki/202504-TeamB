@@ -42,5 +42,4 @@ public class UserLoginController {
 			return "redirect:/lesson/menu";
 		}
 	}
-
 }
