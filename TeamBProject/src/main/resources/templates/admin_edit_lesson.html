@@ -34,6 +34,8 @@
 					</button>
 				</div>
 			</div>
+			<p th:if="${editError}" th:text="${editError}"  class="error-message" style="color:red; font-weight:bold;"></p>
+
 			<form th:action="@{/admin/lesson/edit/update}" th:object="${lesson}" method="post">
 				<table class="change_table">
 					<tr>
