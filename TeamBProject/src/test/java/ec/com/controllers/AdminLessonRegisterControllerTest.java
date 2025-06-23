@@ -1,4 +1,4 @@
-package ec.com.controller;
+package ec.com.controllers;
 
 import ec.com.model.entity.Lesson;
 import ec.com.services.LessonService;

@@ -31,6 +31,8 @@ public class Lesson {
 	private Integer lessonFee;
 	private String imageName;
 	private Timestamp registerDate;
+	// 講座の定員（人数上限）
+	private Integer capacity;
 
 	// --- Getter & Setter ---
 	public Long getLessonId() {
@@ -75,8 +77,7 @@ public class Lesson {
 	public void setLessonFee(Integer lessonFee) {
 		this.lessonFee = lessonFee;
 	}
-	// 講座の定員（人数上限）
-	private Integer capacity;
+	
 
 	// Getter & Setter
 	public Integer getCapacity() {
