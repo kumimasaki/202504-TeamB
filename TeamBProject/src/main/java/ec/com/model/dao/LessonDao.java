@@ -38,9 +38,18 @@ public interface LessonDao extends JpaRepository<Lesson, Long> {
 
 	// キーワードで講座名を部分一致検索し、
 	// さらに「開始日 > 指定日」または「開始日 = 指定日 かつ 開始時刻 >= 指定時刻」の条件に一致する講座を取得
-	@Query("SELECT l FROM Lesson l WHERE l.lessonName LIKE %:keyword% AND (l.startDate > :date OR (l.startDate = :date AND l.startTime >= :time))")
-	List<Lesson> findByLessonNameContainingAndDateTimeCondition(@Param("keyword") String keyword,
-			@Param("date") LocalDate date, @Param("time") LocalTime time);
+	@Query("""
+		    SELECT l FROM Lesson l 
+		    WHERE 
+		        (l.lessonName LIKE %:keyword% OR l.lessonDetail LIKE %:keyword%)
+		        AND (l.startDate > :date OR (l.startDate = :date AND l.startTime >= :time))
+		""")
+		List<Lesson> findByLessonNameContainingAndDateTimeCondition(
+		    @Param("keyword") String keyword,
+		    @Param("date") LocalDate date,
+		    @Param("time") LocalTime time
+		);
+
 
 	// DELETE FROM lesson WHERE lesson_id = ?
 	// 削除使用
