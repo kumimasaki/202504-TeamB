@@ -39,12 +39,46 @@ public class AdminLessonEditController {
 	// 編集内容保存Add commentMore actions
 	@PostMapping("/admin/lesson/edit/update")
 	public String updateLesson(@ModelAttribute Lesson lesson, @RequestParam Long lessonId, Model model) {
-		lessonService.updateLesson(lesson);
-		/*
-		 * 編集完了画面に移動する もし引き続き編集したい場合 完了画面から該当lessonに戻ることができる
-		 */
-		model.addAttribute("lessonId", lesson.getLessonId());
 
+		// 🔍 開始日時チェックのために値を取得
+		LocalDate startDate = lesson.getStartDate();
+		LocalTime startTime = lesson.getStartTime();
+		LocalTime finishTime = lesson.getFinishTime();
+
+		// 🕒 現在時刻
+		LocalDateTime now = LocalDateTime.now();
+
+		// ⏰ 日時チェック（すべての値が揃ってる時のみ実行）
+		if (startDate != null && startTime != null && finishTime != null) {
+
+			// ① 開始日時が現在より前
+			LocalDateTime lessonStartDateTime = LocalDateTime.of(startDate, startTime);
+			if (lessonStartDateTime.isBefore(now)) {
+				model.addAttribute("editError", "開始日時は現在より後にしてください。");
+				model.addAttribute("lesson", lesson);
+				return "admin_edit_lesson";
+			}
+
+			// ② 開始日が今日より前
+			if (startDate.isBefore(now.toLocalDate())) {
+				model.addAttribute("editError", "開始日は今日以降にしてください。");
+				model.addAttribute("lesson", lesson);
+				return "admin_edit_lesson";
+			}
+
+			// ③ 開始時間 > 終了時間
+			if (startTime.isAfter(finishTime)) {
+				model.addAttribute("editError", "開始時間は終了時間より前にしてください。");
+				model.addAttribute("lesson", lesson);
+				return "admin_edit_lesson";
+			}
+		}
+
+		// 更新実行
+		lessonService.updateLesson(lesson);
+
+		// 完了画面に lessonId を渡す（画面に再編集リンクがある場合など）
+		model.addAttribute("lessonId", lesson.getLessonId());
 		return "admin_fix_edit";
 	}
 
@@ -105,6 +139,5 @@ public class AdminLessonEditController {
 		return "redirect:/admin/lesson/all";
 	}
 
-	}
-
+}
 
