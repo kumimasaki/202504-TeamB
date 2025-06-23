@@ -21,7 +21,7 @@
 	</header>
 	<article>
 		<h2>登録内容確認</h2>
-		<form th:action="@{/user/register/process}" method="post" onclick="return checkUserExistsAndSubmit()">
+		<form th:action="@{/user/register/process}" method="post" onsubmit="return checkPasswordMatch()">
 			<div class="register_2">
 				<table class="register_2_table">
 					<tr>
