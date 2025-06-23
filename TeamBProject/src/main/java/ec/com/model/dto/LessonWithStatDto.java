@@ -3,6 +3,8 @@ package ec.com.model.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import ec.com.model.entity.Lesson;
+
 	//lessonに定員を表示させるためのDto
 public class LessonWithStatDto {
 	    private Long lessonId;
@@ -103,7 +105,23 @@ public class LessonWithStatDto {
 		public void setCapacity(int capacity) {
 			this.capacity = capacity;
 		}
-	    
+
+		public LessonWithStatDto() {
+			
+		}
+		
+		public LessonWithStatDto(Lesson lesson,int applyCount) {
+			this.lessonId = lesson.getLessonId();
+			this.lessonName = lesson.getLessonName();
+			this.lessonDetail = lesson.getLessonDetail();
+			this.imageName = lesson.getImageName();
+			this.startDate = lesson.getStartDate();
+			this.startTime = lesson.getStartTime();
+			this.finishTime = lesson.getFinishTime();
+			this.lessonFee = lesson.getLessonFee();
+			this.applyCount = applyCount;
+			this.capacity = lesson.getCapacity();
+		}
 }
 
 

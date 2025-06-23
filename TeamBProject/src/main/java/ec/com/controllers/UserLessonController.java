@@ -476,8 +476,15 @@ public class UserLessonController {
 		// 現在時刻以降の講座のみ取得
 		LocalDate localDate = LocalDate.now();
 		LocalTime localTime = LocalTime.now();
-		List<Lesson> lessonList = lessonDao.findByLessonNameContainingAndDateTimeCondition(keyword, localDate,
+		List<Lesson> lessonList1 = lessonDao.findByLessonNameContainingAndDateTimeCondition(keyword, localDate,
 				localTime);
+		
+		//DTO変換
+		List<LessonWithStatDto> lessonList = new ArrayList<LessonWithStatDto>();
+		for (Lesson lesson : lessonList1) {
+			lessonList.add(new LessonWithStatDto(lesson,lessonDao.findLessonCountByLessonId(lesson.getLessonId()))); 
+		}
+		
 		model.addAttribute("lessonList", lessonList);
 
 		return "user_menu.html";

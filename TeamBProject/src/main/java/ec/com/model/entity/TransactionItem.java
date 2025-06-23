@@ -67,6 +67,7 @@ public class TransactionItem {
     public TransactionItem(Long lessonId, Long transactionId) {
         this.lessonId = lessonId;
         this.transactionId = transactionId;
+        this.isVisible = true;
     }
     
     
