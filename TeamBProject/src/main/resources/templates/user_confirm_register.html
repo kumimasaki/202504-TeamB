@@ -21,7 +21,7 @@
 	</header>
 	<article>
 		<h2>登録内容確認</h2>
-		<form th:action="@{/user/register/process}" method="post" onsubmit="return checkPasswordMatch()">
+		<form id="registerForm" th:action="@{/user/register/process}" method="post" onsubmit="checkUserExistsAndSubmit(event)">
 			<div class="register_2">
 				<table class="register_2_table">
 					<tr>
@@ -51,7 +51,8 @@
 	<footer><small>Copyright &copy; Academy All rights reserved.</small></footer>
 </body>
 <script>
-function checkUserExistsAndSubmit() {
+function checkUserExistsAndSubmit(event) {
+	event.preventDefault();
     const email = document.querySelector('input[name="userEmail"]').value;
 
     fetch(`/user/check?email=${email}`)
@@ -59,10 +60,9 @@ function checkUserExistsAndSubmit() {
 	    .then(message => {
             if (message == "true") {
 				alert("ユーザー登録は成功しました。");
-				return true;
+				document.getElementById("registerForm").submit();
             } else {
 				alert("⚠️ このメールアドレスはすでに登録されています。");
-				return false;
             }
         })
         .catch(error => {
