@@ -115,7 +115,7 @@ public class AdminLessonEditController {
 			return "redirect:/admin/lesson/all";
 		}
 		// 画像編集用にlessonオブジェクトをモデルにセット
-		model.addAttribute("lessonList", lesson);
+		model.addAttribute("lesson", lesson);
 		return "admin_edit_lesson_img";
 	}
 
@@ -133,7 +133,7 @@ public class AdminLessonEditController {
 	 * @return 一覧画面へのリダイレクトURL（エラー時は同画面にerrorパラメータ付き）
 	 */
 	@PostMapping("/admin/lesson/image/edit/update")
-	public String updateLessonImage(@RequestParam("imageName") MultipartFile imageFile,
+	public String updateLessonImage(@RequestParam("imageFile") MultipartFile imageFile,
 			@RequestParam("lessonId") Long lessonId, @RequestParam("startDate") String startDate,
 			@RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime,
 			@RequestParam("lessonName") String lessonName, @RequestParam("lessonDetail") String lessonDetail,
@@ -186,7 +186,7 @@ public class AdminLessonEditController {
 		lessonService.updateLesson(lesson);
 
 		// 更新後は一覧画面へリダイレクト
-		return "redirect:/admin/lesson/all";
+		return "redirect:/admin/lesson/edit/" + lessonId;
 	}
 
 }
