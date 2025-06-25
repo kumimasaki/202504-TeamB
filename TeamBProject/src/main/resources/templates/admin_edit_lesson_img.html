@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -17,41 +17,41 @@
 	<header>
 		<div>
 			<h1></h1>
-			
+
 		</div>
 	</header>
 	<article>
 		<h2>登録講座画像の変更</h2>
-		<div class="change center-box"> 
-				<form th:action="@{/admin/lesson/image/edit/update}" method="post" enctype="multipart/form-data">
-					
-					<div class="image-box">
-						<img th:if="${lessonList.imageName != null}" 
-						     th:src="@{'/lesson-image/' + ${lessonList.imageName}}"
-						     alt="講座画像" width="300">
-					</div>
+		<div class="change center-box">
+			<form th:action="@{/admin/lesson/image/edit/update}" method="post" enctype="multipart/form-data">
 
-					<table>
-						<tr>
-							<th>講座画像</th>
-							<td><input type="file" name="imageName"></td>
-						</tr>
-					</table>
+				<div class="image-box">
+					<img th:if="${lesson.imageName != null}" th:src="@{'/lesson-image/' + ${lesson.imageName}}"
+						alt="講座画像" width="300">
+				</div>
 
-					<!-- 隠しフィールド -->
-					<input type="hidden" name="startDate" th:value="${lessonList.startDate}">
-					<input type="hidden" name="startTime" th:value="${lessonList.startTime}">
-					<input type="hidden" name="finishTime" th:value="${lessonList.finishTime}">
-					<input type="hidden" name="lessonName" th:value="${lessonList.lessonName}">
-					<input type="hidden" name="lessonDetail" th:value="${lessonList.lessonDetail}">
-					<input type="hidden" name="lessonFee" th:value="${lessonList.lessonFee}">
-					<input type="hidden" name="lessonId" th:value="${lessonList.lessonId}">
+				<table>
+					<tr>
+						<th>講座画像</th>
+						<td><input type="file" name="imageFile"></td>
+					</tr>
+				</table>
 
-					<div class="button-box">
-						<button type="button" onclick="history.back();">戻る</button>
-						<button type="submit">変更</button>
-					</div>
-				</form>
+				<!-- 隠しフィールド -->
+				<input type="hidden" name="lessonId" th:value="${lesson.lessonId}">
+				<input type="hidden" name="startDate" th:value="${lesson.startDate}">
+				<input type="hidden" name="startTime" th:value="${lesson.startTime}">
+				<input type="hidden" name="finishTime" th:value="${lesson.finishTime}">
+				<input type="hidden" name="lessonName" th:value="${lesson.lessonName}">
+				<input type="hidden" name="lessonDetail" th:value="${lesson.lessonDetail}">
+				<input type="hidden" name="lessonFee" th:value="${lesson.lessonFee}">
+
+
+				<div class="button-box">
+					<button type="button" onclick="history.back();">戻る</button>
+					<button type="submit">変更</button>
+				</div>
+			</form>
 
 		</div>
 	</article>
